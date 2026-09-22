@@ -98,6 +98,8 @@ describe('translation bundles', () => {
     'errors.observation.futureDate',
     'errors.leaderboard.aliasRequired',
     'errors.cycle.invalidRange',
+    'errors.avatar.invalidImage',
+    'errors.avatar.tooLarge',
   ]
 
   const disclaimers = ['cycle.disclaimer.estimate', 'cycle.disclaimer.notContraception']

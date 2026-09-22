@@ -8,16 +8,20 @@ interface AvatarProps {
   emoji?: string | null
   name: string
   size?: keyof typeof sizes
+  /** Profile photo (object URL). Takes precedence over emoji/initial. */
+  imageUrl?: string | null
 }
 
-/** Emoji if the person picked one, otherwise their initial. */
-export function Avatar({ emoji, name, size = 'md' }: AvatarProps) {
+/** Photo if uploaded, else emoji if picked, else the person's initial. */
+export function Avatar({ emoji, name, size = 'md', imageUrl }: AvatarProps) {
   return (
     <div
       aria-hidden="true"
-      className={`flex shrink-0 items-center justify-center rounded-full bg-peach-soft ${sizes[size]}`}
+      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-peach-soft ${sizes[size]}`}
     >
-      {emoji ? (
+      {imageUrl ? (
+        <img src={imageUrl} alt="" className="h-full w-full object-cover" />
+      ) : emoji ? (
         <span>{emoji}</span>
       ) : (
         <span className="font-display font-semibold text-peach">

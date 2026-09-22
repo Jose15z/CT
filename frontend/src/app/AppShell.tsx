@@ -13,6 +13,7 @@ import {
   UserCircle,
 } from 'lucide-react'
 import { useAuth } from '../lib/auth'
+import { useMyAvatar } from '../lib/queries'
 import { Avatar } from '../components/ui/Avatar'
 
 const iconProps = { size: 17, strokeWidth: 1.9 }
@@ -52,6 +53,7 @@ function BottomLink({ to, icon, label }: { to: string; icon: React.ReactNode; la
 export function AppShell() {
   const { t } = useTranslation()
   const { user, logout } = useAuth()
+  const { data: avatarUrl } = useMyAvatar(!!user?.hasAvatar)
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -82,7 +84,12 @@ export function AppShell() {
         </nav>
         {user && (
           <div className="flex items-center gap-2.5 border-t border-border px-2 pt-3">
-            <Avatar emoji={user.avatarEmoji} name={user.displayName} size="sm" />
+            <Avatar
+              emoji={user.avatarEmoji}
+              name={user.displayName}
+              size="sm"
+              imageUrl={avatarUrl}
+            />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[13px] font-medium text-ink">{user.displayName}</p>
               <p className="truncate text-[11.5px] text-ink-3">@{user.username}</p>

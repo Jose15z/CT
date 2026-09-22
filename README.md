@@ -114,6 +114,7 @@ frontend/src/
 - **Check-ins**: solo los ve su autor salvo grant explícito, y las notas de texto libre no se comparten nunca.
 - **Observaciones** ("cómo notas a tu pareja"): son percepciones privadas del observador. La interfaz siempre dice "registraste que la notas..." y nunca "ella está...".
 - **Leaderboard**: estrictamente opt-in. Solo publica alias, emoji opcional y un número agregado; jamás nombres de parejas, fechas ni notas.
+- **Foto de perfil**: opcional, solo del propio usuario (las parejas usan emoji a propósito). Se valida por bytes mágicos, se reencodea a JPEG de 256 px (lo que elimina metadatos EXIF/GPS) y solo la puede ver su dueño.
 
 ## Cómo funcionan las predicciones
 

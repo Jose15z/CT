@@ -500,6 +500,11 @@
     "themeLight": "Light",
     "themeDark": "Dark",
     "themeSystem": "System",
+    "avatarUpload": "Upload photo",
+    "avatarRemove": "Remove photo",
+    "avatarHint": "JPG or PNG, up to 2 MB. Cropped to a square, visible only to you.",
+    "avatarSaved": "Profile photo updated",
+    "avatarRemoved": "Profile photo removed",
     "password": "Change password",
     "currentPassword": "Current password",
     "newPassword": "New password",
@@ -571,6 +576,10 @@
     "checkIn": { "futureDate": "You can't check in for a future date." },
     "observation": { "futureDate": "You can't record an observation for a future date." },
     "leaderboard": { "aliasRequired": "Pick an alias before enabling the ranking." },
-    "cycle": { "invalidRange": "Invalid date range." }
+    "cycle": { "invalidRange": "Invalid date range." },
+    "avatar": {
+      "invalidImage": "The file is not a valid JPG or PNG image.",
+      "tooLarge": "The image is over 2 MB."
+    }
   }
 }

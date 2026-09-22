@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ChevronRight, LogOut, ShieldCheck, Trophy } from 'lucide-react'
+import { Camera, ChevronRight, LogOut, ShieldCheck, Trash2, Trophy } from 'lucide-react'
 import { useAuth } from '../../lib/auth'
-import { useChangePassword, useUpdateProfile } from '../../lib/queries'
+import {
+  useChangePassword,
+  useDeleteAvatar,
+  useMyAvatar,
+  useUpdateProfile,
+  useUploadAvatar,
+} from '../../lib/queries'
+import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
 import { Input, Select } from '../../components/ui/Input'
@@ -30,6 +37,10 @@ export function SettingsPage() {
   const { user, logout, refreshUser } = useAuth()
   const updateProfile = useUpdateProfile()
   const changePassword = useChangePassword()
+  const { data: avatarUrl } = useMyAvatar(!!user?.hasAvatar)
+  const uploadAvatar = useUploadAvatar()
+  const deleteAvatar = useDeleteAvatar()
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const [displayName, setDisplayName] = useState(user?.displayName ?? '')
   const [avatarEmoji, setAvatarEmoji] = useState(user?.avatarEmoji ?? '')
@@ -85,7 +96,68 @@ export function SettingsPage() {
       {/* Profile */}
       <section className="rounded-xl border border-border bg-surface p-4 sm:p-5">
         <h2 className="text-[15px] font-semibold text-ink">{t('settings.profile')}</h2>
-        <div className="mt-3 space-y-4">
+
+        {/* Profile photo */}
+        <div className="mt-3 flex items-center gap-4">
+          <Avatar
+            emoji={user.avatarEmoji}
+            name={user.displayName}
+            size="lg"
+            imageUrl={avatarUrl}
+          />
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                icon={<Camera size={13} />}
+                disabled={uploadAvatar.isPending}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {uploadAvatar.isPending ? t('common.saving') : t('settings.avatarUpload')}
+              </Button>
+              {user.hasAvatar && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  icon={<Trash2 size={13} />}
+                  disabled={deleteAvatar.isPending}
+                  onClick={() =>
+                    deleteAvatar.mutate(undefined, {
+                      onSuccess: async () => {
+                        await refreshUser()
+                        toast(t('settings.avatarRemoved'))
+                      },
+                    })
+                  }
+                >
+                  {t('settings.avatarRemove')}
+                </Button>
+              )}
+            </div>
+            <p className="mt-1 text-[12px] text-ink-3">{t('settings.avatarHint')}</p>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                e.target.value = ''
+                if (!file) return
+                uploadAvatar.mutate(file, {
+                  onSuccess: async () => {
+                    await refreshUser()
+                    toast(t('settings.avatarSaved'))
+                  },
+                  onError: (err) => toast(errorMessage(err), 'error'),
+                })
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="mt-4 space-y-4 border-t border-border pt-4">
           <div className="grid grid-cols-[1fr_90px] gap-3">
             <Field label={t('auth.displayName')} htmlFor="settings-name">
               <Input

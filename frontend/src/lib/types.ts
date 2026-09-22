@@ -83,6 +83,7 @@ export interface User {
   displayName: string
   preferredLanguage: string
   avatarEmoji: string | null
+  hasAvatar: boolean
   relationshipSituation: RelationshipSituation
   createdAt: string
 }

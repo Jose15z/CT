@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { api } from './api'
+import { api, apiBlob } from './api'
 import type {
   CheckIn,
   CycleProfile,
@@ -294,5 +294,40 @@ export function useChangePassword() {
   return useMutation({
     mutationFn: (payload: { currentPassword: string; newPassword: string }) =>
       api<void>('/api/users/me/password', { method: 'PATCH', body: payload }),
+  })
+}
+
+// ---- Profile photo ----
+
+/** Object URL of the user's own photo; enable only when user.hasAvatar. */
+export function useMyAvatar(enabled: boolean) {
+  return useQuery({
+    queryKey: ['avatar', 'me'],
+    enabled,
+    staleTime: Infinity,
+    queryFn: async () => {
+      const blob = await apiBlob('/api/users/me/avatar')
+      return URL.createObjectURL(blob)
+    },
+  })
+}
+
+export function useUploadAvatar() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (file: File) => {
+      const form = new FormData()
+      form.append('file', file)
+      return api<void>('/api/users/me/avatar', { method: 'PUT', body: form })
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['avatar', 'me'] }),
+  })
+}
+
+export function useDeleteAvatar() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => api<void>('/api/users/me/avatar', { method: 'DELETE' }),
+    onSuccess: () => queryClient.removeQueries({ queryKey: ['avatar', 'me'] }),
   })
 }
