@@ -11,6 +11,7 @@ import com.culitostracker.infrastructure.security.JwtProperties;
 import com.culitostracker.infrastructure.security.JwtService;
 import com.culitostracker.repository.RefreshTokenRepository;
 import com.culitostracker.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,18 +34,21 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final Duration refreshTtl;
+    private final int bcryptStrength;
     private final SecureRandom secureRandom = new SecureRandom();
 
     public AuthService(UserRepository userRepository,
                        RefreshTokenRepository refreshTokenRepository,
                        PasswordEncoder passwordEncoder,
                        JwtService jwtService,
-                       JwtProperties jwtProperties) {
+                       JwtProperties jwtProperties,
+                       @Value("${app.security.bcrypt-strength:12}") int bcryptStrength) {
         this.userRepository = userRepository;
         this.refreshTokenRepository = refreshTokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.refreshTtl = Duration.ofDays(jwtProperties.refreshDays());
+        this.bcryptStrength = bcryptStrength;
     }
 
     @Transactional
@@ -79,7 +83,26 @@ public class AuthService {
         if (user == null || !passwordEncoder.matches(request.password(), user.getPasswordHash())) {
             throw new DomainRuleException("auth.invalidCredentials", "Invalid credentials");
         }
+        rehashIfCostChanged(user, request.password());
         return issueTokens(user);
+    }
+
+    /**
+     * Transparently re-hashes the password on successful login when the stored
+     * hash's BCrypt cost differs from the configured one, so changing the cost
+     * (e.g. tuning it to the host's CPU) migrates existing accounts over time.
+     */
+    private void rehashIfCostChanged(User user, String rawPassword) {
+        try {
+            // BCrypt format: $2a$12$... — the cost lives in characters 4-5.
+            int storedCost = Integer.parseInt(user.getPasswordHash().substring(4, 6));
+            if (storedCost != bcryptStrength) {
+                user.setPasswordHash(passwordEncoder.encode(rawPassword));
+                userRepository.save(user);
+            }
+        } catch (RuntimeException e) {
+            // Unparseable hash: leave it as is; login already succeeded.
+        }
     }
 
     @Transactional

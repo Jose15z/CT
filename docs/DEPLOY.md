@@ -15,7 +15,7 @@ Nota histórica: el plan original usaba Koyeb, pero fue adquirido por Mistral y 
 
 - Proyecto `culitostracker` en `Jose15z's Team`, región US-Central (única gratuita junto a Europe-West).
 - El plan Sandbox exige una tarjeta **solo para verificación**: su FAQ dice textualmente "No — when you enter a card we only verify the card". Cero facturas mientras se usen los recursos gratuitos (2 servicios, 1 addon).
-- Servicio `backend`: build tipo Dockerfile con contexto `/backend` y Dockerfile `/backend/Dockerfile`, rama `main`, puerto público 8080 (HTTP). El repo se añadió como *repo público por URL*, así que **no hay auto-deploy al hacer push**: tras cambiar el backend hay que pulsar *Rebuild* (o completar el enlace GitHub↔Northflank en Integrations para activar CI).
+- Servicio `backend`: build tipo Dockerfile con contexto `/backend` y Dockerfile `/backend/Dockerfile`, rama `main`, puerto público 8080 (HTTP). Aunque el repo entró como *repo público por URL*, el CI de Northflank **sí detecta los pushes a `main` y redeploya solo** (sondea el repo; tarda unos minutos en verlos). El botón *Rebuild* queda para forzarlo.
 - Credenciales de BD: el secret group `db-credentials` está vinculado al addon y las inyecta con alias `DB_URL` (JDBC), `DB_USER`, `DB_PASSWORD`, `DB_NAME`. Nadie las copia a mano; se revocan al desvincular.
 - Variables del servicio (256 MB de RAM obligan a ajustar la JVM; con esto arranca en ~100 s):
 
@@ -25,7 +25,10 @@ Nota histórica: el plan original usaba Koyeb, pero fue adquirido por Mistral y 
   SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=2
   CORS_ALLOWED_ORIGINS=https://culitostracker.vercel.app,https://culitostracker-jose15zs-projects.vercel.app
   JWT_SECRET=(secreto, generado con openssl rand -base64 48)
+  APP_SECURITY_BCRYPT_STRENGTH=10
   ```
+
+  Con 0.1 vCPU, BCrypt(12) tardaba ~4 s por login; el coste 10 (mínimo OWASP) lo deja en ~1,3 s. Los hashes antiguos se migran solos en el siguiente login correcto, y el warmup de arranque precompila BCrypt y JDBC para que la primera petición real no pague el JIT frío.
 
   Con presupuestos mayores (p. ej. `-Xmx112m -XX:MaxMetaspaceSize=96m`) el cgroup mata el proceso por OOM al final del arranque: si el servicio se queda en crashloop sin excepción en logs, es esto.
 - Tras cambiar variables: **Update & restart** (verifica en la vista View que los valores nuevos quedaron guardados; el editor Env a veces no aplica).
