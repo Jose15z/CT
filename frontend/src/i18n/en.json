@@ -91,7 +91,20 @@
     "registerLink": "Sign up",
     "loginLink": "Log in",
     "loggingIn": "Logging in…",
-    "demoHint": "Demo: demo@culitostracker.local / demo1234"
+    "demoHint": "Demo: demo@culitostracker.local / demo1234",
+    "forgotLink": "Forgot your password?",
+    "forgotTitle": "Recover password",
+    "forgotIntro": "Enter your account email and we'll send you a link to create a new password.",
+    "forgotAction": "Send link",
+    "forgotSent": "If that email matches an account, you'll receive a reset link valid for 30 minutes. Check spam too.",
+    "backToLogin": "Back to log in",
+    "resetTitle": "New password",
+    "resetAction": "Save password",
+    "resetDone": "Password updated. Your previous sessions were signed out; log in with the new password.",
+    "resetMissingToken": "This link is not valid. Request a new one from \"Recover password\".",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat the password",
+    "passwordMismatch": "Passwords don't match."
   },
   "dashboard": {
     "greetingMorning": "Good morning, {{name}}",
@@ -631,7 +644,8 @@
       "usernameTaken": "That username is taken.",
       "emailTaken": "That email is already registered.",
       "invalidCredentials": "Wrong username or password.",
-      "invalidRefreshToken": "Your session expired. Log in again."
+      "invalidRefreshToken": "Your session expired. Log in again.",
+      "invalidResetToken": "The reset link is invalid or has expired. Request a new one."
     },
     "partner": {
       "duplicate": "You already have an active partner with that name.",

@@ -58,6 +58,11 @@ export function LoginPage() {
           {busy ? t('auth.loggingIn') : t('auth.loginAction')}
         </Button>
       </form>
+      <p className="mt-4 text-[13px]">
+        <Link to="/forgot-password" className="text-ink-2 hover:text-ink hover:underline">
+          {t('auth.forgotLink')}
+        </Link>
+      </p>
       <p className="mt-5 text-[13.5px] text-ink-2">
         {t('auth.noAccount')}{' '}
         <Link to="/register" className="font-medium text-peach hover:underline">

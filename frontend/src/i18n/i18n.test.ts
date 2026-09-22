@@ -103,6 +103,7 @@ describe('translation bundles', () => {
     'errors.partner.mustBeAdult',
     'errors.encounter.dateInFuture',
     'errors.encounter.dailyLimit',
+    'errors.auth.invalidResetToken',
   ]
 
   // The XP endpoint emits titleKey ("xp.title.N", N capped at 10) and badges.

@@ -30,6 +30,8 @@ Nota histórica: el plan original usaba Koyeb, pero fue adquirido por Mistral y 
 
   Con 0.1 vCPU, BCrypt(12) tardaba ~4 s por login; el coste 10 (mínimo OWASP) lo deja en ~1,3 s. Los hashes antiguos se migran solos en el siguiente login correcto, y el warmup de arranque precompila BCrypt y JDBC para que la primera petición real no pague el JIT frío.
 
+- **Recuperar contraseña sin SMTP**: no hay proveedor de email configurado, así que cuando alguien usa "¿Olvidaste tu contraseña?" el enlace de restablecimiento aparece en los logs del backend (Observe → Logs, busca `password reset link`). Copia el enlace y entrégaselo al usuario (caduca en 30 min y es de un solo uso). Para enviar emails de verdad, define en el servicio `SPRING_MAIL_HOST`, `SPRING_MAIL_PORT`, `SPRING_MAIL_USERNAME`, `SPRING_MAIL_PASSWORD` y `MAIL_FROM` con cualquier SMTP (p. ej. Brevo tiene 300 emails/día gratis) y reinicia; no hace falta tocar código.
+
   Con presupuestos mayores (p. ej. `-Xmx112m -XX:MaxMetaspaceSize=96m`) el cgroup mata el proceso por OOM al final del arranque: si el servicio se queda en crashloop sin excepción en logs, es esto.
 - Tras cambiar variables: **Update & restart** (verifica en la vista View que los valores nuevos quedaron guardados; el editor Env a veces no aplica).
 

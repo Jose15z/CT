@@ -60,6 +60,8 @@ class ApiIntegrationTest {
     PartnerRepository partnerRepository;
     @Autowired
     PartnerAccessRepository partnerAccessRepository;
+    @Autowired
+    com.culitostracker.application.PasswordResetService passwordResetService;
 
     String tokenA;
     String tokenB;
@@ -464,6 +466,49 @@ class ApiIntegrationTest {
                         .header("Authorization", "Bearer " + tokenA))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalXp").value(37));
+    }
+
+    @Test
+    @Order(15)
+    void passwordResetFlow() throws Exception {
+        // Unknown email gets the same 204: the endpoint can't enumerate accounts.
+        mockMvc.perform(post("/api/auth/forgot")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"email\":\"nobody@test.local\"}"))
+                .andExpect(status().isNoContent());
+
+        // Obtain the raw token via the service (in production it travels by
+        // email, or in the server log when no SMTP is configured).
+        String token = passwordResetService.requestReset("alice@test.local").orElseThrow();
+
+        // Garbage tokens are rejected with a generic code.
+        mockMvc.perform(post("/api/auth/reset")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"token\":\"not-a-token\",\"newPassword\":\"whatever-123\"}"))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("auth.invalidResetToken"));
+
+        mockMvc.perform(post("/api/auth/reset")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"token\":\"%s\",\"newPassword\":\"new-password-a1\"}".formatted(token)))
+                .andExpect(status().isNoContent());
+
+        // Old password no longer works; the new one does.
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"usernameOrEmail\":\"alice\",\"password\":\"password-a1\"}"))
+                .andExpect(status().isUnprocessableEntity());
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"usernameOrEmail\":\"alice\",\"password\":\"new-password-a1\"}"))
+                .andExpect(status().isOk());
+
+        // The token is single use.
+        mockMvc.perform(post("/api/auth/reset")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"token\":\"%s\",\"newPassword\":\"another-pass-1\"}".formatted(token)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("auth.invalidResetToken"));
     }
 
     private UUID registerIdOf(String username) throws Exception {

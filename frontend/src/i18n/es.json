@@ -91,7 +91,20 @@
     "registerLink": "Regístrate",
     "loginLink": "Entra",
     "loggingIn": "Entrando…",
-    "demoHint": "Demo: demo@culitostracker.local / demo1234"
+    "demoHint": "Demo: demo@culitostracker.local / demo1234",
+    "forgotLink": "¿Olvidaste tu contraseña?",
+    "forgotTitle": "Recuperar contraseña",
+    "forgotIntro": "Escribe el email de tu cuenta y te enviaremos un enlace para crear una contraseña nueva.",
+    "forgotAction": "Enviar enlace",
+    "forgotSent": "Si ese email corresponde a una cuenta, recibirás un enlace de restablecimiento válido durante 30 minutos. Revisa también el spam.",
+    "backToLogin": "Volver a entrar",
+    "resetTitle": "Nueva contraseña",
+    "resetAction": "Guardar contraseña",
+    "resetDone": "Contraseña actualizada. Tus sesiones anteriores se han cerrado; entra con la nueva contraseña.",
+    "resetMissingToken": "Este enlace no es válido. Pide uno nuevo desde \"Recuperar contraseña\".",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Repite la contraseña",
+    "passwordMismatch": "Las contraseñas no coinciden."
   },
   "dashboard": {
     "greetingMorning": "Buenos días, {{name}}",
@@ -631,7 +644,8 @@
       "usernameTaken": "Ese usuario ya existe.",
       "emailTaken": "Ese email ya está registrado.",
       "invalidCredentials": "Usuario o contraseña incorrectos.",
-      "invalidRefreshToken": "Tu sesión expiró. Entra de nuevo."
+      "invalidRefreshToken": "Tu sesión expiró. Entra de nuevo.",
+      "invalidResetToken": "El enlace de restablecimiento no es válido o ya caducó. Pide uno nuevo."
     },
     "partner": {
       "duplicate": "Ya tienes una pareja activa con ese nombre.",

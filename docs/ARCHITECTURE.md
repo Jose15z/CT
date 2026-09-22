@@ -132,6 +132,8 @@ POST   /api/auth/register           # crea cuenta, devuelve tokens
 POST   /api/auth/login
 POST   /api/auth/refresh            # rota el refresh token
 POST   /api/auth/logout             # revoca el refresh token
+POST   /api/auth/forgot             # siempre 204 (sin enumeración de cuentas)
+POST   /api/auth/reset              # token de un solo uso + contraseña nueva
 
 GET    /api/users/me
 PATCH  /api/users/me                # displayName, preferredLanguage, situation...
@@ -244,6 +246,7 @@ Añadido después del MVP: agenda de citas, registro de encuentros y gamificaci�
 - Access token: JWT firmado HS256 (jjwt), 15 min, claims mínimos (sub = userId).
 - Refresh token: opaco (256 bits aleatorios), guardado **hasheado** (SHA-256) en `refresh_tokens`, 30 días, rotación en cada refresh, revocación en logout. Permite invalidar sesiones desde el servidor, cosa que un refresh-JWT stateless no permite.
 - Contraseñas con BCrypt (fuerza 12). Validación de password ≥ 8 caracteres.
+- **Recuperación de contraseña**: `POST /api/auth/forgot` responde 204 exista o no el email (sin enumeración) y genera un token opaco de 30 min guardado hasheado (SHA-256) en `password_reset_tokens`, con throttle de 1 token/5 min por cuenta. `POST /api/auth/reset` lo consume (un solo uso), fija la contraseña nueva y revoca todos los refresh tokens del usuario. El enlace se envía por email si hay SMTP configurado (`SPRING_MAIL_HOST` etc.); sin SMTP se escribe en el log del servidor para que el operador lo entregue.
 - El frontend guarda los tokens en localStorage en el MVP; el README documenta la migración recomendada a cookies httpOnly para producción.
 
 ## 11. Plan de implementación por fases
