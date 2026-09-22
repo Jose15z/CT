@@ -87,12 +87,16 @@ public class PartnerService {
         relationshipRules.validateExclusivity(request.relationshipType(), RelationshipStatus.ACTIVE,
                 active, user.getRelationshipSituation());
 
+        validateAdultBirthDate(request.birthDate());
+
         Partner partner = new Partner();
         partner.setOwnerUserId(userId);
         partner.rename(request.name().trim());
         partner.setNickname(request.nickname());
         partner.setNotes(request.notes());
         partner.setAvatarEmoji(request.avatarEmoji());
+        partner.setBirthDate(request.birthDate());
+        partner.setWeightKg(request.weightKg());
         partner = partnerRepository.save(partner);
 
         Relationship relationship = new Relationship();
@@ -157,6 +161,13 @@ public class PartnerService {
         }
         if (request.avatarEmoji() != null) {
             partner.setAvatarEmoji(request.avatarEmoji().isBlank() ? null : request.avatarEmoji());
+        }
+        if (request.birthDate() != null) {
+            validateAdultBirthDate(request.birthDate());
+            partner.setBirthDate(request.birthDate());
+        }
+        if (request.weightKg() != null) {
+            partner.setWeightKg(request.weightKg());
         }
         partner = partnerRepository.save(partner);
         Relationship relationship = relationshipRepository.findByPartnerId(partnerId).orElse(null);
@@ -229,6 +240,14 @@ public class PartnerService {
         return toRelationshipResponse(saved, LocalDate.now());
     }
 
+    /** Everyone registered in this app is an adult; a birth date must agree. */
+    private static void validateAdultBirthDate(LocalDate birthDate) {
+        if (birthDate != null && birthDate.isAfter(LocalDate.now().minusYears(18))) {
+            throw new DomainRuleException("partner.mustBeAdult",
+                    "Partners must be adults (18+)");
+        }
+    }
+
     PartnerResponse toResponse(Partner partner, Relationship relationship, LocalDate today) {
         return new PartnerResponse(
                 partner.getId(),
@@ -236,6 +255,9 @@ public class PartnerService {
                 partner.getNickname(),
                 partner.getNotes(),
                 partner.getAvatarEmoji(),
+                partner.getBirthDate(),
+                partner.ageAt(today),
+                partner.getWeightKg(),
                 partner.getLinkedUserId() != null,
                 partner.isDeleted(),
                 relationship == null ? null : toRelationshipResponse(relationship, today),

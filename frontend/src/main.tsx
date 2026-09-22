@@ -16,7 +16,8 @@ import { DashboardPage } from './features/dashboard/DashboardPage'
 import { PartnersPage } from './features/partners/PartnersPage'
 import { PartnerDetailPage } from './features/partners/PartnerDetailPage'
 import { TimelinePage } from './features/partners/TimelinePage'
-import { CalendarHub, PartnerCalendarPage } from './features/calendar/CalendarPage'
+import { PartnerCalendarPage } from './features/calendar/CalendarPage'
+import { AgendaPage } from './features/calendar/AgendaPage'
 import { CheckInPage } from './features/checkin/CheckInPage'
 import { StatsPage } from './features/stats/StatsPage'
 import { LeaderboardPage } from './features/leaderboard/LeaderboardPage'
@@ -56,7 +57,7 @@ createRoot(document.getElementById('root')!).render(
                   <Route path="/partners/:id" element={<PartnerDetailPage />} />
                   <Route path="/partners/:id/calendar" element={<PartnerCalendarPage />} />
                   <Route path="/partners/:id/timeline" element={<TimelinePage />} />
-                  <Route path="/calendar" element={<CalendarHub />} />
+                  <Route path="/calendar" element={<AgendaPage />} />
                   <Route path="/check-in" element={<CheckInPage />} />
                   <Route path="/stats" element={<StatsPage />} />
                   <Route path="/leaderboard" element={<LeaderboardPage />} />

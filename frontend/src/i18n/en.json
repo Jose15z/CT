@@ -129,6 +129,11 @@
     "notes": "Notes",
     "avatar": "Emoji",
     "avatarHint": "An emoji that represents her",
+    "birthDate": "Birth date",
+    "weight": "Weight (kg)",
+    "age": "{{age}} years old",
+    "xpFields": "XP data (optional)",
+    "xpFieldsHint": "If you record their age and approximate weight, every encounter with this person is worth more XP. Adults only.",
     "relationshipType": "Relationship type",
     "status": "Status",
     "since": "Since {{date}}",
@@ -420,6 +425,81 @@
       "gratitude": "Saying out loud something you appreciate about each other changes the tone of the day. Try it."
     }
   },
+  "agenda": {
+    "title": "Agenda",
+    "subtitle": "Planned dates and logged encounters, all in one calendar.",
+    "schedulePlan": "Schedule a date",
+    "logEncounter": "Log encounter",
+    "plans": "Dates",
+    "encounters": "Encounters",
+    "upcoming": "Upcoming dates",
+    "noUpcoming": "No dates scheduled.",
+    "nothingThatDay": "Nothing scheduled or logged this day.",
+    "cycleCalendars": "Cycle calendars",
+    "encounterWith": "Encounter with {{name}}",
+    "unknownPartner": "Deleted record",
+    "legend": { "plan": "Date", "encounter": "Encounter" },
+    "deletePlanConfirm": "Delete this date?",
+    "deleteEncounterConfirm": "Delete this encounter from the log?",
+    "planSaved": "Date scheduled",
+    "encounterSaved": "Encounter logged",
+    "scheduleHere": "Schedule a date this day",
+    "logHere": "Log an encounter this day",
+    "form": {
+      "planTitle": "New date",
+      "encounterTitle": "Log encounter",
+      "partner": "With whom?",
+      "title": "Plan",
+      "titlePlaceholder": "Dinner, movies, getaway…",
+      "date": "Date",
+      "time": "Time (optional)",
+      "location": "Place",
+      "notes": "Notes",
+      "noPartners": "Register a partner first to use the agenda."
+    }
+  },
+  "xp": {
+    "sectionTitle": "Level & XP",
+    "level": "Level {{level}}",
+    "totalXp": "{{xp}} XP",
+    "progress": "{{current}} of {{needed}} XP to level {{next}}",
+    "encounters_one": "{{count}} encounter logged",
+    "encounters_other": "{{count}} encounters logged",
+    "streakWith": "Streak of {{count}} with {{name}}",
+    "exclusiveBonus": "Exclusive couple ×1.5",
+    "loyaltyBonus": "Loyalty ×{{value}}",
+    "breakdown": "XP per partner",
+    "badges": "Badges",
+    "empty": "Log encounters in the agenda to start earning XP.",
+    "private": "Your XP is private: it never appears in the ranking.",
+    "how": {
+      "title": "How it's calculated",
+      "base": "Each encounter is worth a base 10 XP.",
+      "age": "Partner's age: +1 XP per year over 18 (max +40).",
+      "weight": "Recorded weight: +1 XP per 2 kg over 50 (max +25).",
+      "exclusive": "Exclusive relationship (monogamous, engaged or married): everything ×1.5.",
+      "loyalty": "Loyalty: +5% per consecutive encounter with the same person, up to +50%.",
+      "note": "The multipliers stack: farming XP with a single person in a serious relationship yields up to ×2.25 per encounter."
+    },
+    "title": {
+      "1": "Rookie",
+      "2": "Flirt",
+      "3": "Spark",
+      "4": "Heartbreaker",
+      "5": "Charmer",
+      "6": "Strategist",
+      "7": "Faithful heart",
+      "8": "Soulmate",
+      "9": "Local legend",
+      "10": "Absolute legend"
+    },
+    "badge": {
+      "firstSteps": "First steps",
+      "loyal": "Loyalty streak",
+      "exclusive": "Exclusive couple",
+      "veteran": "Veteran"
+    }
+  },
   "calendar": {
     "title": "Calendar",
     "of": "{{name}}'s calendar",
@@ -555,7 +635,12 @@
     },
     "partner": {
       "duplicate": "You already have an active partner with that name.",
-      "rateLimit": "You've created too many partners today. Try tomorrow."
+      "rateLimit": "You've created too many partners today. Try tomorrow.",
+      "mustBeAdult": "The birth date must belong to an adult (18+)."
+    },
+    "encounter": {
+      "dateInFuture": "You can't log an encounter in the future.",
+      "dailyLimit": "You've logged too many encounters for that day."
     },
     "relationship": {
       "monogamousConflict": "You have an active monogamous relationship: you can't have another active romantic relationship at the same time.",

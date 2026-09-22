@@ -26,4 +26,9 @@ public enum RelationshipType {
         return this == SERIOUS_RELATIONSHIP || this == MONOGAMOUS
                 || this == ENGAGED || this == MARRIED || this == POLYAMOROUS;
     }
+
+    /** Exclusive commitments: these earn the XP engine's couple bonus. */
+    public boolean isExclusive() {
+        return this == MONOGAMOUS || this == ENGAGED || this == MARRIED;
+    }
 }

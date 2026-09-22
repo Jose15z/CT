@@ -100,11 +100,23 @@ describe('translation bundles', () => {
     'errors.cycle.invalidRange',
     'errors.avatar.invalidImage',
     'errors.avatar.tooLarge',
+    'errors.partner.mustBeAdult',
+    'errors.encounter.dateInFuture',
+    'errors.encounter.dailyLimit',
+  ]
+
+  // The XP endpoint emits titleKey ("xp.title.N", N capped at 10) and badges.
+  const backendXpKeys = [
+    ...Array.from({ length: 10 }, (_, i) => `xp.title.${i + 1}`),
+    'xp.badge.firstSteps',
+    'xp.badge.loyal',
+    'xp.badge.exclusive',
+    'xp.badge.veteran',
   ]
 
   const disclaimers = ['cycle.disclaimer.estimate', 'cycle.disclaimer.notContraception']
 
-  it.each([...backendAdviceKeys, ...backendTipKeys, ...backendErrorCodes, ...disclaimers])(
+  it.each([...backendAdviceKeys, ...backendTipKeys, ...backendErrorCodes, ...backendXpKeys, ...disclaimers])(
     'resolves backend key %s in both languages',
     (key) => {
       expect(has(es as Tree, key), `missing in es.json: ${key}`).toBe(true)

@@ -24,6 +24,13 @@ const RELATIONSHIP_TYPES: RelationshipType[] = [
 
 const AVATAR_PRESETS = ['🌸', '🌙', '☀️', '🌊', '🔥', '🍒', '🦋', '⭐']
 
+/** Latest selectable birth date: exactly 18 years ago (adults only). */
+function maxAdultBirthDate(): string {
+  const d = new Date()
+  d.setFullYear(d.getFullYear() - 18)
+  return d.toISOString().slice(0, 10)
+}
+
 interface PartnerFormSheetProps {
   open: boolean
   onClose: () => void
@@ -43,6 +50,8 @@ export function PartnerFormSheet({ open, onClose, partner }: PartnerFormSheetPro
     nickname: '',
     avatarEmoji: '',
     notes: '',
+    birthDate: '',
+    weightKg: '',
     relationshipType: 'DATING' as RelationshipType,
     datingStartDate: '',
     relationshipStartDate: '',
@@ -60,6 +69,8 @@ export function PartnerFormSheet({ open, onClose, partner }: PartnerFormSheetPro
         nickname: partner?.nickname ?? '',
         avatarEmoji: partner?.avatarEmoji ?? '',
         notes: partner?.notes ?? '',
+        birthDate: partner?.birthDate ?? '',
+        weightKg: partner?.weightKg != null ? String(partner.weightKg) : '',
         relationshipType: partner?.relationship?.type ?? 'DATING',
         datingStartDate: partner?.relationship?.datingStartDate ?? '',
         relationshipStartDate: partner?.relationship?.relationshipStartDate ?? '',
@@ -79,6 +90,10 @@ export function PartnerFormSheet({ open, onClose, partner }: PartnerFormSheetPro
 
   const submit = () => {
     setError(null)
+    const xpFields = {
+      birthDate: form.birthDate || undefined,
+      weightKg: form.weightKg ? Number(form.weightKg) : undefined,
+    }
     if (editing) {
       updatePartner.mutate(
         {
@@ -86,6 +101,7 @@ export function PartnerFormSheet({ open, onClose, partner }: PartnerFormSheetPro
           nickname: form.nickname,
           notes: form.notes,
           avatarEmoji: form.avatarEmoji,
+          ...xpFields,
         },
         {
           onSuccess: () => {
@@ -108,6 +124,7 @@ export function PartnerFormSheet({ open, onClose, partner }: PartnerFormSheetPro
           engagementDate: showEngagement ? form.engagementDate || undefined : undefined,
           marriageDate: showMarriage ? form.marriageDate || undefined : undefined,
           consentConfirmed: form.consentConfirmed,
+          ...xpFields,
         },
         {
           onSuccess: () => {
@@ -241,6 +258,37 @@ export function PartnerFormSheet({ open, onClose, partner }: PartnerFormSheetPro
             )}
           </>
         )}
+
+        <fieldset className="rounded-md border border-border p-3">
+          <legend className="px-1 text-[12px] font-medium text-ink-2">
+            {t('partner.xpFields')}
+          </legend>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label={t('partner.birthDate')} htmlFor="partner-birth">
+              <Input
+                id="partner-birth"
+                type="date"
+                max={maxAdultBirthDate()}
+                value={form.birthDate}
+                onChange={(e) => set('birthDate', e.target.value)}
+              />
+            </Field>
+            <Field label={t('partner.weight')} htmlFor="partner-weight">
+              <Input
+                id="partner-weight"
+                type="number"
+                min={30}
+                max={300}
+                step={0.5}
+                value={form.weightKg}
+                onChange={(e) => set('weightKg', e.target.value)}
+              />
+            </Field>
+          </div>
+          <p className="mt-1.5 text-[11.5px] leading-snug text-ink-3">
+            {t('partner.xpFieldsHint')}
+          </p>
+        </fieldset>
 
         <Field label={`${t('partner.notes')} (${t('common.optional')})`} htmlFor="partner-notes">
           <Textarea

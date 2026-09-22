@@ -367,6 +367,105 @@ class ApiIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @Order(12)
+    void agendaDatePlansAreOwnerScoped() throws Exception {
+        String plan = """
+                {"partnerId":"%s","title":"Cena en el centro","date":"2026-12-24","startTime":"20:30"}
+                """.formatted(partnerIdOfA);
+        MvcResult created = mockMvc.perform(post("/api/date-plans")
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON).content(plan))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.partnerName").value("Laura Martínez"))
+                .andReturn();
+        String planId = objectMapper.readTree(created.getResponse().getContentAsString())
+                .get("id").asText();
+
+        mockMvc.perform(get("/api/date-plans?from=2026-12-01&to=2026-12-31")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("Cena en el centro"));
+
+        // Bob can neither see nor edit Alice's plan; nor schedule with her partner.
+        mockMvc.perform(patch("/api/date-plans/" + planId)
+                        .header("Authorization", "Bearer " + tokenB)
+                        .contentType(APPLICATION_JSON).content("{\"title\":\"hacked\"}"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(post("/api/date-plans")
+                        .header("Authorization", "Bearer " + tokenB)
+                        .contentType(APPLICATION_JSON).content(plan))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Order(13)
+    void encountersFeedPrivateXp() throws Exception {
+        String encounter = """
+                {"partnerId":"%s","date":"%s"}
+                """.formatted(partnerIdOfA, java.time.LocalDate.now());
+        mockMvc.perform(post("/api/encounters")
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON).content(encounter))
+                .andExpect(status().isCreated());
+
+        // The future is off-limits; other users' partners look nonexistent.
+        mockMvc.perform(post("/api/encounters")
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                {"partnerId":"%s","date":"%s"}
+                                """.formatted(partnerIdOfA, java.time.LocalDate.now().plusDays(1))))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("encounter.dateInFuture"));
+        mockMvc.perform(post("/api/encounters")
+                        .header("Authorization", "Bearer " + tokenB)
+                        .contentType(APPLICATION_JSON).content(encounter))
+                .andExpect(status().isNotFound());
+
+        // XP is personal: Alice's encounter counts for her and only her.
+        mockMvc.perform(get("/api/xp/me")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.encountersCount").value(1))
+                .andExpect(jsonPath("$.totalXp").value(10))
+                .andExpect(jsonPath("$.level").value(1))
+                .andExpect(jsonPath("$.breakdown[0].partnerName").value("Laura Martínez"));
+        mockMvc.perform(get("/api/xp/me")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.encountersCount").value(0))
+                .andExpect(jsonPath("$.totalXp").value(0));
+    }
+
+    @Test
+    @Order(14)
+    void partnerAttributesRequireAdultAndFeedXp() throws Exception {
+        // A birth date implying a minor is rejected outright.
+        mockMvc.perform(patch("/api/partners/" + partnerIdOfA)
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"birthDate\":\"%s\"}".formatted(
+                                java.time.LocalDate.now().minusYears(17))))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("partner.mustBeAdult"));
+
+        // Adult birth date + weight are stored and reflected in XP (10+12+15).
+        mockMvc.perform(patch("/api/partners/" + partnerIdOfA)
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"birthDate\":\"%s\",\"weightKg\":80}".formatted(
+                                java.time.LocalDate.now().minusYears(30).minusDays(1))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.age").value(30))
+                .andExpect(jsonPath("$.weightKg").value(80));
+
+        mockMvc.perform(get("/api/xp/me")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalXp").value(37));
+    }
+
     private UUID registerIdOf(String username) throws Exception {
         String token = username.equals("alice") ? tokenA : tokenB;
         MvcResult result = mockMvc.perform(get("/api/users/me")

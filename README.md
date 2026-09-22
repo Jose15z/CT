@@ -1,6 +1,6 @@
 # 🍑 CulitosTracker
 
-Aplicación web para llevar, con consentimiento, el seguimiento del ciclo menstrual de tu pareja (o parejas), las fechas importantes de la relación, check-ins emocionales de ambos y sugerencias diarias según el contexto. Incluye un leaderboard opcional y anónimo para solteros.
+Aplicación web para llevar, con consentimiento, el seguimiento del ciclo menstrual de tu pareja (o parejas), las fechas importantes de la relación, check-ins emocionales de ambos y sugerencias diarias según el contexto. Incluye agenda de citas, registro privado de encuentros con sistema de XP (con bonus para relaciones exclusivas y fieles), y un leaderboard opcional y anónimo para solteros.
 
 Las predicciones de ciclo son estimaciones calculadas a partir de los datos registrados. No son información médica y no sirven como método anticonceptivo.
 

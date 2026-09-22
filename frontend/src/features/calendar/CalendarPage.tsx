@@ -1,11 +1,9 @@
 import { useMemo, useState } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, CalendarDays, ChevronLeft, ChevronRight, Droplet, Heart } from 'lucide-react'
-import { useMilestones, usePartner, usePartners, usePredictions } from '../../lib/queries'
+import { ArrowLeft, ChevronLeft, ChevronRight, Droplet, Heart } from 'lucide-react'
+import { useMilestones, usePartner, usePredictions } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
-import { EmptyState } from '../../components/ui/EmptyState'
-import { Avatar } from '../../components/ui/Avatar'
 import { Tag } from '../../components/ui/Tag'
 import { Button } from '../../components/ui/Button'
 import { LogPeriodSheet } from './LogPeriodSheet'
@@ -18,58 +16,6 @@ import {
   weekdayInitials,
 } from '../../lib/dates'
 import type { CycleDay, Milestone } from '../../lib/types'
-
-/** /calendar: with one partner jump straight in, otherwise pick. */
-export function CalendarHub() {
-  const { t } = useTranslation()
-  const { data: partners, isLoading } = usePartners()
-
-  if (isLoading) return <PageLoader />
-  const active = (partners ?? []).filter((p) => p.relationship?.status !== 'ENDED')
-
-  if (active.length === 1) {
-    return <Navigate to={`/partners/${active[0].id}/calendar`} replace />
-  }
-  if (active.length === 0) {
-    return (
-      <div className="rounded-xl border border-border bg-surface">
-        <EmptyState
-          icon={<CalendarDays size={28} strokeWidth={1.5} />}
-          title={t('calendar.title')}
-          body={t('calendar.noPartner')}
-          action={
-            <Link
-              to="/partners"
-              className="inline-flex h-9 items-center rounded-md bg-peach px-3.5 text-[13.5px] font-medium text-on-peach hover:bg-peach-strong"
-            >
-              {t('partner.add')}
-            </Link>
-          }
-        />
-      </div>
-    )
-  }
-  return (
-    <div className="space-y-4">
-      <h1 className="font-display text-[21px] font-semibold text-ink">{t('calendar.title')}</h1>
-      <p className="text-[13.5px] text-ink-2">{t('calendar.pickPartner')}</p>
-      <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
-        {active.map((partner) => (
-          <li key={partner.id}>
-            <Link
-              to={`/partners/${partner.id}/calendar`}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-surface-2"
-            >
-              <Avatar emoji={partner.avatarEmoji} name={partner.name} size="sm" />
-              <span className="text-[14px] font-medium text-ink">{partner.name}</span>
-              <ChevronRight size={15} className="ml-auto text-ink-3" aria-hidden="true" />
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
 
 interface DayEvent {
   kind: 'milestone' | 'anniversary'

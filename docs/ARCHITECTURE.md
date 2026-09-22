@@ -175,6 +175,18 @@ GET    /api/leaderboard/me
 PATCH  /api/leaderboard/me/settings
 
 GET    /api/stats/me
+
+GET    /api/date-plans?from=YYYY-MM-DD&to=YYYY-MM-DD
+GET    /api/date-plans/upcoming          # próximas 5 citas
+POST   /api/date-plans
+PATCH  /api/date-plans/{id}
+DELETE /api/date-plans/{id}
+
+GET    /api/encounters?from=YYYY-MM-DD&to=YYYY-MM-DD
+POST   /api/encounters                   # hoy o pasado; máx. 10/día
+DELETE /api/encounters/{id}
+
+GET    /api/xp/me                        # nivel, progreso, desglose, insignias
 ```
 
 Cambios sobre la propuesta del enunciado: se añade `logout`, `users/me/password`, `partners/history` y el parámetro `window` del leaderboard; `PATCH /api/partners/{id}/relationship` absorbe finalizar/reactivar (un solo endpoint de estado en lugar de verbos ad hoc).
@@ -209,6 +221,23 @@ El catálogo genérico (`daily_tips`) aporta los consejos por etapa y por fase c
 - Ventanas GLOBAL / MONTH / YEAR: se cuenta el primer registro de cada nombre normalizado (min(created_at)) dentro de la ventana.
 - Anti-cheat MVP: nombre normalizado único, soft delete (no se puede "resetear" borrando), y rate limit de creación de parejas (10/día por usuario) aplicado en el servicio.
 - La arquitectura deja espacio para más métricas (activePartnerCount, longestRelationship...) porque el cálculo vive en `LeaderboardService` sobre queries agregadas, no en contadores mutables.
+
+## 9b. Agenda y XP
+
+Añadido después del MVP: agenda de citas, registro de encuentros y gamificación privada.
+
+- **`date_plans`**: citas planeadas (título, pareja, fecha, hora opcional, lugar, notas). CRUD del owner con el mismo patrón 404 de autorización.
+- **`encounters`**: registro privado de encuentros íntimos (pareja + fecha + nota opcional). Solo hoy o pasado; tope de 10/día por usuario (anti-farming). Solo el owner los ve; jamás alimentan el leaderboard.
+- **Atributos opcionales de pareja**: `birth_date` y `weight_kg` (30–300, NUMERIC(5,1)). El servicio rechaza fechas de nacimiento de menores (`partner.mustBeAdult`). Son datos aproximados que introduce el owner y solo sirven para el XP.
+- **`XpEngine`** (dominio, puro y determinista): el XP nunca se almacena; se recalcula del log completo en cada lectura, así ediciones y borrados siempre cuadran. Fórmula por encuentro:
+  - base 10 XP
+  - `+ clamp(edad − 18, 0, 40)` si hay fecha de nacimiento (a más edad, más XP)
+  - `+ clamp((peso − 50) / 2, 0, 25)` si hay peso (a más peso, más XP)
+  - `× 1.5` si la relación es exclusiva (MONOGAMOUS / ENGAGED / MARRIED) y el encuentro cae dentro de su vigencia
+  - `× (1 + 0.05 × min(racha − 1, 10))`: racha de encuentros consecutivos con la misma persona, hasta ×1.5
+  - Los multiplicadores se acumulan (máx. ×2.25): la "pequeña ventaja" estructural para quien farmea XP con una sola pareja en una relación seria.
+- **Niveles**: llegar al nivel *n* cuesta `50·n·(n−1)` XP acumulado (cada nivel cuesta `100·n` más). Títulos e insignias son claves i18n (`xp.title.N`, `xp.badge.*`) resueltas en el frontend.
+- **Privacidad**: `GET /api/xp/me` es lo único que existe; no hay ranking de XP ni comparación entre usuarios.
 
 ## 10. Autenticación
 

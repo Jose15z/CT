@@ -4,6 +4,8 @@ import type {
   CheckIn,
   CycleProfile,
   Dashboard,
+  DatePlan,
+  Encounter,
   Leaderboard,
   LeaderboardMe,
   LeaderboardWindow,
@@ -16,6 +18,7 @@ import type {
   Relationship,
   Stats,
   User,
+  XpSummary,
 } from './types'
 
 export function useDashboard() {
@@ -117,6 +120,34 @@ export function useStats() {
   })
 }
 
+export function useDatePlans(from: string, to: string) {
+  return useQuery({
+    queryKey: ['date-plans', from, to],
+    queryFn: () => api<DatePlan[]>(`/api/date-plans?from=${from}&to=${to}`),
+  })
+}
+
+export function useUpcomingDatePlans() {
+  return useQuery({
+    queryKey: ['date-plans', 'upcoming'],
+    queryFn: () => api<DatePlan[]>('/api/date-plans/upcoming'),
+  })
+}
+
+export function useEncounters(from: string, to: string) {
+  return useQuery({
+    queryKey: ['encounters', from, to],
+    queryFn: () => api<Encounter[]>(`/api/encounters?from=${from}&to=${to}`),
+  })
+}
+
+export function useXp() {
+  return useQuery({
+    queryKey: ['xp'],
+    queryFn: () => api<XpSummary>('/api/xp/me'),
+  })
+}
+
 /** Invalidate everything derived from partner data after a write. */
 export function useInvalidatePartnerData() {
   const queryClient = useQueryClient()
@@ -124,6 +155,8 @@ export function useInvalidatePartnerData() {
     queryClient.invalidateQueries({ queryKey: ['dashboard'] })
     queryClient.invalidateQueries({ queryKey: ['partners'] })
     queryClient.invalidateQueries({ queryKey: ['stats'] })
+    // Partner attributes (age, weight, relationship type) feed the XP engine.
+    queryClient.invalidateQueries({ queryKey: ['xp'] })
     if (partnerId) {
       queryClient.invalidateQueries({ queryKey: ['cycle', partnerId] })
       queryClient.invalidateQueries({ queryKey: ['periods', partnerId] })
@@ -144,6 +177,8 @@ export interface PartnerPayload {
   nickname?: string | null
   notes?: string | null
   avatarEmoji?: string | null
+  birthDate?: string | null
+  weightKg?: number | null
   relationshipType: string
   datingStartDate?: string | null
   relationshipStartDate?: string | null
@@ -260,6 +295,53 @@ export function useDeleteMilestone(partnerId: string) {
     mutationFn: (milestoneId: string) =>
       api<void>(`/api/milestones/${milestoneId}`, { method: 'DELETE' }),
     onSuccess: () => invalidate(partnerId),
+  })
+}
+
+export function useCreateDatePlan() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: {
+      partnerId: string
+      title: string
+      location?: string
+      notes?: string
+      date: string
+      startTime?: string
+    }) => api<DatePlan>('/api/date-plans', { method: 'POST', body: payload }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['date-plans'] }),
+  })
+}
+
+export function useDeleteDatePlan() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (planId: string) => api<void>(`/api/date-plans/${planId}`, { method: 'DELETE' }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['date-plans'] }),
+  })
+}
+
+export function useLogEncounter() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: { partnerId: string; date: string; notes?: string }) =>
+      api<Encounter>('/api/encounters', { method: 'POST', body: payload }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['encounters'] })
+      queryClient.invalidateQueries({ queryKey: ['xp'] })
+    },
+  })
+}
+
+export function useDeleteEncounter() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (encounterId: string) =>
+      api<void>(`/api/encounters/${encounterId}`, { method: 'DELETE' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['encounters'] })
+      queryClient.invalidateQueries({ queryKey: ['xp'] })
+    },
   })
 }
 

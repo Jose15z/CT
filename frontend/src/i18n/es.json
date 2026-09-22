@@ -129,6 +129,11 @@
     "notes": "Notas",
     "avatar": "Emoji",
     "avatarHint": "Un emoji que la represente",
+    "birthDate": "Fecha de nacimiento",
+    "weight": "Peso (kg)",
+    "age": "{{age}} años",
+    "xpFields": "Datos para XP (opcionales)",
+    "xpFieldsHint": "Si registras su edad y su peso aproximado, cada encuentro con esta persona vale más XP. Solo personas adultas.",
     "relationshipType": "Tipo de relación",
     "status": "Estado",
     "since": "Desde {{date}}",
@@ -420,6 +425,81 @@
       "gratitude": "Decir en voz alta algo que aprecias del otro cambia el tono del día. Pruébalo."
     }
   },
+  "agenda": {
+    "title": "Agenda",
+    "subtitle": "Citas planeadas y encuentros registrados, todo en un calendario.",
+    "schedulePlan": "Agendar cita",
+    "logEncounter": "Registrar encuentro",
+    "plans": "Citas",
+    "encounters": "Encuentros",
+    "upcoming": "Próximas citas",
+    "noUpcoming": "No tienes citas agendadas.",
+    "nothingThatDay": "Nada agendado ni registrado este día.",
+    "cycleCalendars": "Calendarios de ciclo",
+    "encounterWith": "Encuentro con {{name}}",
+    "unknownPartner": "Registro eliminado",
+    "legend": { "plan": "Cita", "encounter": "Encuentro" },
+    "deletePlanConfirm": "¿Eliminar esta cita?",
+    "deleteEncounterConfirm": "¿Eliminar este encuentro del registro?",
+    "planSaved": "Cita agendada",
+    "encounterSaved": "Encuentro registrado",
+    "scheduleHere": "Agendar cita este día",
+    "logHere": "Registrar encuentro este día",
+    "form": {
+      "planTitle": "Nueva cita",
+      "encounterTitle": "Registrar encuentro",
+      "partner": "¿Con quién?",
+      "title": "Plan",
+      "titlePlaceholder": "Cena, cine, escapada…",
+      "date": "Fecha",
+      "time": "Hora (opcional)",
+      "location": "Lugar",
+      "notes": "Notas",
+      "noPartners": "Registra primero una pareja para usar la agenda."
+    }
+  },
+  "xp": {
+    "sectionTitle": "Nivel y XP",
+    "level": "Nivel {{level}}",
+    "totalXp": "{{xp}} XP",
+    "progress": "{{current}} de {{needed}} XP para el nivel {{next}}",
+    "encounters_one": "{{count}} encuentro registrado",
+    "encounters_other": "{{count}} encuentros registrados",
+    "streakWith": "Racha de {{count}} con {{name}}",
+    "exclusiveBonus": "Pareja exclusiva ×1,5",
+    "loyaltyBonus": "Fidelidad ×{{value}}",
+    "breakdown": "XP por pareja",
+    "badges": "Insignias",
+    "empty": "Registra encuentros en la agenda para empezar a ganar XP.",
+    "private": "Tu XP es privado: no aparece en el ranking.",
+    "how": {
+      "title": "Cómo se calcula",
+      "base": "Cada encuentro vale 10 XP de base.",
+      "age": "Edad de la pareja: +1 XP por año por encima de 18 (máx. +40).",
+      "weight": "Peso registrado: +1 XP por cada 2 kg por encima de 50 (máx. +25).",
+      "exclusive": "Relación exclusiva (monógama, comprometidos o casados): todo ×1,5.",
+      "loyalty": "Fidelidad: +5% por encuentro seguido con la misma persona, hasta +50%.",
+      "note": "Los multiplicadores se acumulan: farmear XP con una sola persona en una relación seria rinde hasta ×2,25 por encuentro."
+    },
+    "title": {
+      "1": "Novato/a",
+      "2": "Coqueto/a",
+      "3": "Con chispa",
+      "4": "Rompecorazones",
+      "5": "Encantador/a",
+      "6": "Estratega",
+      "7": "Corazón fiel",
+      "8": "Alma gemela",
+      "9": "Leyenda local",
+      "10": "Leyenda absoluta"
+    },
+    "badge": {
+      "firstSteps": "Primeros pasos",
+      "loyal": "Fidelidad en racha",
+      "exclusive": "Pareja exclusiva",
+      "veteran": "Veterano/a"
+    }
+  },
   "calendar": {
     "title": "Calendario",
     "of": "Calendario de {{name}}",
@@ -555,7 +635,12 @@
     },
     "partner": {
       "duplicate": "Ya tienes una pareja activa con ese nombre.",
-      "rateLimit": "Has creado demasiadas parejas hoy. Inténtalo mañana."
+      "rateLimit": "Has creado demasiadas parejas hoy. Inténtalo mañana.",
+      "mustBeAdult": "La fecha de nacimiento debe ser de una persona adulta (18+)."
+    },
+    "encounter": {
+      "dateInFuture": "No puedes registrar un encuentro en el futuro.",
+      "dailyLimit": "Has registrado demasiados encuentros para ese día."
     },
     "relationship": {
       "monogamousConflict": "Tienes una relación monógama activa: no puedes tener otra relación romántica activa a la vez.",

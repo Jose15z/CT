@@ -127,6 +127,9 @@ export interface Partner {
   nickname: string | null
   notes: string | null
   avatarEmoji: string | null
+  birthDate: string | null
+  age: number | null
+  weightKg: number | null
   linked: boolean
   deleted: boolean
   relationship: Relationship | null
@@ -275,6 +278,47 @@ export interface Stats {
   milestonesCount: number
   situation: RelationshipSituation
   leaderboardRank: number | null
+}
+
+export interface DatePlan {
+  id: string
+  partnerId: string
+  partnerName: string | null
+  title: string
+  location: string | null
+  notes: string | null
+  date: string
+  /** "HH:mm:ss" or null when no time was set. */
+  startTime: string | null
+}
+
+export interface Encounter {
+  id: string
+  partnerId: string
+  partnerName: string | null
+  date: string
+  notes: string | null
+}
+
+export interface XpPartnerBreakdown {
+  partnerId: string
+  partnerName: string | null
+  encounters: number
+  xp: number
+}
+
+export interface XpSummary {
+  totalXp: number
+  level: number
+  titleKey: string
+  xpIntoLevel: number
+  xpForNextLevel: number
+  encountersCount: number
+  loyaltyStreak: number
+  loyaltyPartnerName: string | null
+  exclusiveBonusActive: boolean
+  badges: string[]
+  breakdown: XpPartnerBreakdown[]
 }
 
 /** RFC 7807 problem detail extended with our business-rule code. */

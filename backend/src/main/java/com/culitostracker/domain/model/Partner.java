@@ -9,8 +9,11 @@ import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -45,6 +48,14 @@ public class Partner {
     @Column(name = "avatar_emoji", length = 16)
     private String avatarEmoji;
 
+    /** Optional, owner-entered. Must correspond to an adult (service-enforced). */
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    /** Optional, owner-entered approximation in kilograms. */
+    @Column(name = "weight_kg", precision = 5, scale = 1)
+    private BigDecimal weightKg;
+
     @Column(name = "deleted_at")
     private Instant deletedAt;
 
@@ -71,6 +82,11 @@ public class Partner {
         return deletedAt != null;
     }
 
+    /** Age in whole years at the given date, or null when the birth date is unknown. */
+    public Integer ageAt(LocalDate date) {
+        return birthDate == null ? null : Period.between(birthDate, date).getYears();
+    }
+
     public UUID getId() { return id; }
     public UUID getOwnerUserId() { return ownerUserId; }
     public void setOwnerUserId(UUID ownerUserId) { this.ownerUserId = ownerUserId; }
@@ -84,6 +100,10 @@ public class Partner {
     public void setNotes(String notes) { this.notes = notes; }
     public String getAvatarEmoji() { return avatarEmoji; }
     public void setAvatarEmoji(String avatarEmoji) { this.avatarEmoji = avatarEmoji; }
+    public LocalDate getBirthDate() { return birthDate; }
+    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+    public BigDecimal getWeightKg() { return weightKg; }
+    public void setWeightKg(BigDecimal weightKg) { this.weightKg = weightKg; }
     public Instant getDeletedAt() { return deletedAt; }
     public void setDeletedAt(Instant deletedAt) { this.deletedAt = deletedAt; }
     public Instant getCreatedAt() { return createdAt; }

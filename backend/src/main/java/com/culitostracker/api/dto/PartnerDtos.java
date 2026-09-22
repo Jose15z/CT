@@ -3,10 +3,13 @@ package com.culitostracker.api.dto;
 import com.culitostracker.domain.model.RelationshipStatus;
 import com.culitostracker.domain.model.RelationshipType;
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -21,6 +24,8 @@ public final class PartnerDtos {
             @Size(max = 60) String nickname,
             @Size(max = 2000) String notes,
             @Size(max = 16) String avatarEmoji,
+            LocalDate birthDate,
+            @DecimalMin("30") @DecimalMax("300") BigDecimal weightKg,
             @NotNull RelationshipType relationshipType,
             LocalDate datingStartDate,
             LocalDate relationshipStartDate,
@@ -36,7 +41,9 @@ public final class PartnerDtos {
             @Size(min = 1, max = 60) String name,
             @Size(max = 60) String nickname,
             @Size(max = 2000) String notes,
-            @Size(max = 16) String avatarEmoji) {
+            @Size(max = 16) String avatarEmoji,
+            LocalDate birthDate,
+            @DecimalMin("30") @DecimalMax("300") BigDecimal weightKg) {
     }
 
     /** PATCH semantics: null fields are left untouched. Setting status ACTIVE clears the end date. */
@@ -74,6 +81,9 @@ public final class PartnerDtos {
                                   String nickname,
                                   String notes,
                                   String avatarEmoji,
+                                  LocalDate birthDate,
+                                  Integer age,
+                                  BigDecimal weightKg,
                                   boolean linked,
                                   boolean deleted,
                                   RelationshipResponse relationship,
