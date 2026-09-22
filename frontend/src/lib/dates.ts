@@ -36,9 +36,21 @@ export function formatDayMonth(iso: string): string {
   return parseISODate(iso).toLocaleDateString(locale(), { day: 'numeric', month: 'long' })
 }
 
-/** "febrero 2026" / "February 2026" */
+/** Spanish month/weekday names are lowercase; only the first letter is raised. */
+export function capitalizeFirst(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+/** "Febrero 2026" / "February 2026" */
 export function formatMonthYear(date: Date): string {
-  return date.toLocaleDateString(locale(), { month: 'long', year: 'numeric' })
+  return capitalizeFirst(date.toLocaleDateString(locale(), { month: 'long', year: 'numeric' }))
+}
+
+/** "Lunes, 21 de septiembre" / "Monday, September 21" */
+export function formatFullDay(date: Date): string {
+  return capitalizeFirst(
+    date.toLocaleDateString(locale(), { weekday: 'long', day: 'numeric', month: 'long' }),
+  )
 }
 
 export function weekdayInitials(): string[] {

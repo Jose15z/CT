@@ -8,7 +8,7 @@ import { EmptyState } from '../../components/ui/EmptyState'
 import { Avatar } from '../../components/ui/Avatar'
 import { Tag } from '../../components/ui/Tag'
 import { moodEmoji, observationEmoji } from '../../lib/emoji'
-import { formatDate, formatDayMonth, formatDuration } from '../../lib/dates'
+import { formatDate, formatDayMonth, formatDuration, formatFullDay } from '../../lib/dates'
 import { LogPeriodSheet } from '../calendar/LogPeriodSheet'
 import type { DashboardPartner } from '../../lib/types'
 
@@ -102,7 +102,9 @@ function PartnerToday({ partner }: { partner: DashboardPartner }) {
             </div>
           )}
 
-          {partner.nextAnniversary && (
+          {/* Anniversaries only make sense for actual relationships. */}
+          {partner.nextAnniversary &&
+            !['CASUAL', 'FRIENDS_WITH_BENEFITS', 'OTHER'].includes(partner.relationshipType) && (
             <p className="text-[12.5px] text-ink-2">
               <Heart size={13} className="mr-1 inline-block text-plum" aria-hidden="true" />
               {t('dashboard.nextAnniversary')}: {formatDayMonth(partner.nextAnniversary.date)}
@@ -194,16 +196,13 @@ function PartnerToday({ partner }: { partner: DashboardPartner }) {
 }
 
 export function DashboardPage() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { data, isLoading } = useDashboard()
 
   if (isLoading) return <PageLoader />
   if (!data) return null
 
-  const todayLabel = new Date().toLocaleDateString(
-    i18n.language?.startsWith('en') ? 'en-US' : 'es-ES',
-    { weekday: 'long', day: 'numeric', month: 'long' },
-  )
+  const todayLabel = formatFullDay(new Date())
 
   return (
     <div className="space-y-5">
@@ -211,7 +210,7 @@ export function DashboardPage() {
         <h1 className="font-display text-[21px] font-semibold text-ink">
           {t(greetingKey(), { name: data.user.displayName.split(' ')[0] })}
         </h1>
-        <p className="text-[13px] capitalize text-ink-3">{todayLabel}</p>
+        <p className="text-[13px] text-ink-3">{todayLabel}</p>
       </header>
 
       {data.partners.length === 0 ? (

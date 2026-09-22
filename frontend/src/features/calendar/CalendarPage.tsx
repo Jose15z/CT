@@ -190,7 +190,7 @@ export function PartnerCalendarPage() {
               <ChevronLeft size={17} />
             </button>
             <div className="flex items-center gap-2">
-              <span className="text-[14.5px] font-semibold capitalize text-ink">
+              <span className="text-[14.5px] font-semibold text-ink">
                 {formatMonthYear(month)}
               </span>
               <button
@@ -277,7 +277,7 @@ export function PartnerCalendarPage() {
 
         {/* Selected day detail */}
         <aside className="rounded-xl border border-border bg-surface p-4">
-          <h2 className="text-[14px] font-semibold capitalize text-ink">{formatDate(selected)}</h2>
+          <h2 className="text-[14px] font-semibold text-ink">{formatDate(selected)}</h2>
 
           {selectedInfo?.phase ? (
             <div className="mt-2 space-y-1.5 text-[13px]">
