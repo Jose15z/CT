@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/fraunces';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * CulitosTracker design tokens.
+ * Semantic variables flip under .dark, so components rarely need dark: prefixes.
+ * Palette: warm neutrals, terracotta-peach primary, plum for relationship
+ * events, rose for menstruation, teal for the fertile window.
+ */
+:root {
+  --bg: #f8f5f2;
+  --surface: #ffffff;
+  --surface-2: #f1ece7;
+  --border: #e5ded7;
+  --border-strong: #d2c8bf;
+  --ink: #262019;
+  --ink-2: #6b6058;
+  --ink-3: #99897d;
+  --peach: #b34a31;
+  --peach-strong: #9c3f2a;
+  --peach-soft: #f7e5de;
+  --on-peach: #ffffff;
+  --plum: #7c4a6e;
+  --plum-soft: #f0e4ec;
+  --rose: #b13048;
+  --rose-soft: #f9e3e8;
+  --teal: #17786b;
+  --teal-soft: #dcefe9;
+  --success: #3d7a46;
+  --warning: #96690f;
+  --danger: #b03a2e;
+  --danger-soft: #f9e5e2;
+}
+
+.dark {
+  --bg: #171310;
+  --surface: #201b17;
+  --surface-2: #2a241f;
+  --border: #37302a;
+  --border-strong: #4c433b;
+  --ink: #efe9e3;
+  --ink-2: #b2a79c;
+  --ink-3: #83786e;
+  --peach: #e08b70;
+  --peach-strong: #eb9c83;
+  --peach-soft: #3a2a23;
+  --on-peach: #24140e;
+  --plum: #c08bb0;
+  --plum-soft: #342533;
+  --rose: #e06a80;
+  --rose-soft: #3d2229;
+  --teal: #4dbfaa;
+  --teal-soft: #1d322d;
+  --success: #7cc287;
+  --warning: #d9a94a;
+  --danger: #e0796d;
+  --danger-soft: #3c2523;
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces Variable', Georgia, serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-peach: var(--peach);
+  --color-peach-strong: var(--peach-strong);
+  --color-peach-soft: var(--peach-soft);
+  --color-on-peach: var(--on-peach);
+  --color-plum: var(--plum);
+  --color-plum-soft: var(--plum-soft);
+  --color-rose: var(--rose);
+  --color-rose-soft: var(--rose-soft);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  ::selection {
+    background-color: var(--peach-soft);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--peach);
+    outline-offset: 2px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}

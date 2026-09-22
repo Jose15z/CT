@@ -1,0 +1,576 @@
+{
+  "app": {
+    "name": "CulitosTracker",
+    "tagline": "Her cycle, your relationship, and how you're both doing. One place."
+  },
+  "nav": {
+    "dashboard": "Home",
+    "partners": "Partners",
+    "calendar": "Calendar",
+    "checkin": "Check-in",
+    "stats": "Stats",
+    "leaderboard": "Ranking",
+    "history": "History",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Log out"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "add": "Add",
+    "confirm": "Confirm",
+    "loading": "Loading…",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "error": "Something went wrong. Try again.",
+    "retry": "Retry",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "optional": "optional",
+    "day_one": "{{count}} day",
+    "day_other": "{{count}} days",
+    "inDays_one": "in {{count}} day",
+    "inDays_other": "in {{count}} days",
+    "year_one": "{{count}} year",
+    "year_other": "{{count}} years",
+    "month_one": "{{count}} month",
+    "month_other": "{{count}} months",
+    "irreversible": "This can't be undone.",
+    "notFound": "This page doesn't exist.",
+    "goHome": "Go home"
+  },
+  "duration": {
+    "together": "{{duration}} together",
+    "full": "{{years}} and {{months}}",
+    "fullWithDays": "{{years}}, {{months}} and {{days}}",
+    "sentence": "{{me}} and {{name}} have been together for {{duration}}."
+  },
+  "landing": {
+    "intro": "Track your partner's cycle with their consent, understand what phase they're in, keep the dates that matter and get suggestions based on how you're both doing.",
+    "cta": "Create account",
+    "login": "I already have an account",
+    "consent": "Another person's data is stored only with their consent, and predictions are estimates: never a contraceptive method.",
+    "features": {
+      "cycle": {
+        "title": "Cycle & phases",
+        "body": "Menstruation, estimated fertile window and next date, computed from the real cycles you log."
+      },
+      "relationship": {
+        "title": "The relationship",
+        "body": "Anniversaries, milestones and time together, with advice that adapts to the stage you're in."
+      },
+      "checkins": {
+        "title": "Check-ins from both",
+        "body": "Each person logs how they feel. Nobody invents anybody's emotions."
+      },
+      "ranking": {
+        "title": "A ranking for singles",
+        "body": "An optional, anonymous leaderboard for those keeping count."
+      }
+    }
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "registerTitle": "Create account",
+    "username": "Username",
+    "usernameOrEmail": "Username or email",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters",
+    "displayName": "Your name",
+    "displayNameHint": "How the app will greet you",
+    "loginAction": "Log in",
+    "registerAction": "Create account",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "registerLink": "Sign up",
+    "loginLink": "Log in",
+    "loggingIn": "Logging in…",
+    "demoHint": "Demo: demo@culitostracker.local / demo1234"
+  },
+  "dashboard": {
+    "greetingMorning": "Good morning, {{name}}",
+    "greetingAfternoon": "Good afternoon, {{name}}",
+    "greetingEvening": "Good evening, {{name}}",
+    "todayWith": "Today with {{name}}",
+    "sheReported": "She reported",
+    "youReported": "You reported",
+    "youObserved": "You noticed",
+    "noCheckInYet": "No check-in today",
+    "checkInNow": "Check in",
+    "logPeriod": "Log period",
+    "viewRelationship": "View relationship",
+    "viewCalendar": "View calendar",
+    "adviceToday": "Today's suggestion",
+    "nextAnniversary": "Next anniversary",
+    "anniversaryYears": "{{years}} year anniversary",
+    "cycleDay": "Cycle day {{day}}",
+    "nextPeriod": "Next period",
+    "ovulation": "Estimated ovulation",
+    "empty": {
+      "title": "No one registered yet",
+      "body": "Add your partner or someone you're seeing to track their cycle, important dates and daily suggestions.",
+      "action": "Add partner"
+    },
+    "noTracking": "Cycle tracking is off",
+    "noCycleData": "No cycle data yet"
+  },
+  "partner": {
+    "listTitle": "Partners",
+    "add": "Add partner",
+    "name": "Name",
+    "nickname": "Nickname",
+    "nicknameHint": "What you call her",
+    "notes": "Notes",
+    "avatar": "Emoji",
+    "avatarHint": "An emoji that represents her",
+    "relationshipType": "Relationship type",
+    "status": "Status",
+    "since": "Since {{date}}",
+    "linked": "Linked account",
+    "deletedTag": "Deleted",
+    "consentLabel": "I have this person's consent to store information about them, including menstrual cycle data.",
+    "consentRequired": "You need to confirm consent",
+    "empty": {
+      "title": "No partners yet",
+      "body": "Once you add someone, you'll see their relationship, calendar and story here.",
+      "action": "Add someone"
+    },
+    "detail": {
+      "relationship": "Relationship",
+      "cycle": "Cycle",
+      "timeline": "Story",
+      "observations": "Your observations",
+      "checkIns": "Check-ins",
+      "actions": "Actions",
+      "endRelationship": "End relationship",
+      "reactivate": "Reactivate relationship",
+      "deleteRecord": "Delete record",
+      "deleteConfirmTitle": "Delete {{name}}?",
+      "deleteConfirmBody": "She'll be hidden from your lists. The record stays in your history and her name still counts only once for the ranking.",
+      "endConfirmTitle": "End the relationship with {{name}}?",
+      "endConfirmBody": "It will be marked as ended today. You can reactivate it later."
+    },
+    "dates": {
+      "title": "Dates",
+      "datingStart": "Started dating",
+      "relationshipStart": "Became a couple",
+      "engagement": "Engagement",
+      "marriage": "Marriage",
+      "end": "Relationship ended"
+    },
+    "form": {
+      "createTitle": "New partner",
+      "editTitle": "Edit partner"
+    }
+  },
+  "relationshipType": {
+    "CASUAL": "Casual",
+    "DATING": "Dating",
+    "SERIOUS_RELATIONSHIP": "Serious relationship",
+    "MONOGAMOUS": "Monogamous",
+    "POLYAMOROUS": "Polyamorous",
+    "ENGAGED": "Engaged",
+    "MARRIED": "Married",
+    "FRIENDS_WITH_BENEFITS": "Friends with benefits",
+    "OTHER": "Other"
+  },
+  "relationshipStatus": {
+    "ACTIVE": "Active",
+    "PAUSED": "Paused",
+    "INACTIVE": "Inactive",
+    "ENDED": "Ended"
+  },
+  "situation": {
+    "label": "Your relationship situation",
+    "SINGLE": "Single",
+    "IN_RELATIONSHIP": "In a relationship",
+    "MARRIED": "Married",
+    "POLYAMOROUS": "Polyamorous",
+    "OTHER": "Other"
+  },
+  "milestone": {
+    "title": "Relationship story",
+    "add": "Add milestone",
+    "formTitle": "New milestone",
+    "editTitle": "Edit milestone",
+    "milestoneTitle": "Title",
+    "description": "Description",
+    "date": "Date",
+    "type": "Type",
+    "empty": {
+      "title": "Your story starts here",
+      "body": "Save the first date, trips, moving in together… whatever you want to remember."
+    },
+    "deleteConfirm": "Delete this milestone?"
+  },
+  "milestoneType": {
+    "FIRST_DATE": "First date",
+    "STARTED_DATING": "Started dating",
+    "RELATIONSHIP_STARTED": "Became a couple",
+    "ENGAGEMENT": "Engagement",
+    "MARRIAGE": "Marriage",
+    "MOVED_IN_TOGETHER": "Moved in together",
+    "TRIP": "Trip",
+    "CUSTOM": "Custom"
+  },
+  "cycle": {
+    "title": "Cycle",
+    "config": "Cycle settings",
+    "avgCycleLength": "Average cycle length",
+    "avgCycleLengthHint": "Between 15 and 60 days. Adjusts automatically with history.",
+    "avgPeriodLength": "Average period length",
+    "lastPeriodStart": "Last period start",
+    "trackingEnabled": "Cycle tracking enabled",
+    "trackingDisabledNote": "Without tracking, no phases or predictions are shown.",
+    "phaseToday": "Current phase",
+    "cycleDayN": "Day {{day}}",
+    "nextPeriod": "Next period",
+    "ovulationEstimated": "Estimated ovulation",
+    "fertileWindow": "Estimated fertile window",
+    "cycleLengthUsed": "~{{days}}-day cycle",
+    "disclaimer": {
+      "estimate": "Estimate based on the recorded cycles.",
+      "notContraception": "Not to be used as a contraceptive method or medical diagnosis."
+    },
+    "insufficient": {
+      "title": "No predictions yet",
+      "body": "Log at least one period start to estimate phases, ovulation and the next date."
+    }
+  },
+  "phase": {
+    "MENSTRUATION": { "name": "Menstruation", "desc": "Bleeding days, recorded or estimated." },
+    "FOLLICULAR": { "name": "Follicular", "desc": "From the end of the period to estimated ovulation." },
+    "OVULATION": { "name": "Ovulation", "desc": "Estimated about 14 days before the next period." },
+    "LUTEAL": { "name": "Luteal", "desc": "From estimated ovulation to the next period." }
+  },
+  "period": {
+    "log": "Log period",
+    "logFor": "Log {{name}}'s period",
+    "startedToday": "It started today",
+    "startedOn": "It started another day",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "notes": "Notes",
+    "saved": "Period logged. Predictions updated.",
+    "history": "Logged periods",
+    "empty": "No periods logged yet.",
+    "deleteConfirm": "Delete this period record?",
+    "deleteConfirmBody": "Predictions will be recalculated without this record.",
+    "ongoing": "Ongoing"
+  },
+  "checkin": {
+    "title": "Check-in",
+    "howAreYou": "How are you feeling today?",
+    "withWhom": "About which relationship?",
+    "energy": "Energy",
+    "stress": "Stress",
+    "affection": "Affection",
+    "satisfaction": "Relationship satisfaction",
+    "note": "Want to add a note?",
+    "notePlaceholder": "Only you will see it, unless you share your check-ins.",
+    "submit": "Save check-in",
+    "saved": "Check-in saved",
+    "alreadyToday": "You already checked in today. Saving again replaces it.",
+    "howDoYouSeeHer": "How does {{name}} seem today?",
+    "observationNote": "Note",
+    "observationSaved": "Observation saved",
+    "observationDisclaimer": "This records your perception, not how she actually feels.",
+    "yourRecent": "Your recent check-ins",
+    "theirRecent": "{{name}}'s check-ins",
+    "sharedBadge": "shared with you",
+    "empty": "No check-ins yet.",
+    "noPartners": "You need a registered partner to check in.",
+    "levels": { "1": "Very low", "2": "Low", "3": "Medium", "4": "High", "5": "Very high" }
+  },
+  "mood": {
+    "VERY_HAPPY": "Great",
+    "HAPPY": "Good",
+    "CALM": "Calm",
+    "NEUTRAL": "Okay",
+    "TIRED": "Tired",
+    "STRESSED": "Stressed",
+    "SAD": "Sad",
+    "ANGRY": "Angry",
+    "ANXIOUS": "Anxious",
+    "OVERWHELMED": "Overwhelmed",
+    "AFFECTIONATE": "Affectionate",
+    "CUSTOM": "Other"
+  },
+  "observationType": {
+    "VERY_HAPPY": "Very happy",
+    "HAPPY": "Happy",
+    "NEUTRAL": "Okay",
+    "TIRED": "Tired",
+    "STRESSED": "Stressed",
+    "SAD": "Sad",
+    "UPSET": "Upset",
+    "DISTANT": "Distant",
+    "AFFECTIONATE": "Affectionate",
+    "NEEDS_SPACE": "Needs space",
+    "NOT_SURE": "Not sure",
+    "OTHER": "Other"
+  },
+  "observation": {
+    "youNoted": "You noted that today {{name}} seems: {{state}}",
+    "recorded": "Based on what you recorded"
+  },
+  "adviceSource": {
+    "SELF_REPORT": "Reported by your partner",
+    "OBSERVATION": "Based on what you recorded",
+    "CYCLE": "Cycle estimate",
+    "RELATIONSHIP": "About your relationship"
+  },
+  "adviceCategory": {
+    "COMMUNICATION": "Communication",
+    "AFFECTION": "Affection",
+    "SUPPORT": "Support",
+    "SPACE": "Space",
+    "DATE_IDEA": "Plan",
+    "ANNIVERSARY": "Anniversary",
+    "CONFLICT": "Disagreements",
+    "SELF_CARE": "Self-care",
+    "INTIMACY": "Intimacy",
+    "GENERAL": "General"
+  },
+  "advice": {
+    "anniversary": {
+      "today": "Today is your anniversary: {{years}} years with {{name}}. Don't let it slip by, even something small counts.",
+      "upcoming": "Your anniversary is in {{days}} days ({{years}} years). Good moment to plan something special.",
+      "approaching": "Your anniversary is approaching ({{days}} days). If you want to organize something, now is the time."
+    },
+    "partnerReport": {
+      "sad": "{{name}} said she's not feeling great today. You can ask if she wants to talk or just wants company.",
+      "low": "{{name}} logged a rough day. Ask what she needs instead of assuming."
+    },
+    "observation": {
+      "needsSpace": "You noted she seems to need some space. Consider asking her directly what she needs instead of assuming.",
+      "sad": "You noted she seems sad today. A simple message asking how she's doing can open the door without pressure.",
+      "upset": "You noted she seems upset. Listen first and understand what happened before defending or fixing.",
+      "distant": "You noted she seems distant. Sometimes it's tiredness, sometimes something else: ask without drama."
+    },
+    "both": {
+      "stressed": "You both seem to be having a heavy day. Maybe today calls for something quiet rather than solving everything at once.",
+      "good": "You both logged a good day. Take advantage: suggest that plan you keep postponing."
+    },
+    "quietPlan": "You're tired and you've noticed stress in {{name}}. Maybe today is for a quiet plan and talking without pressure.",
+    "phase": {
+      "menstruation": "Based on the records, {{name}} might be on her period. Everyone experiences it differently: ask her what she feels like."
+    }
+  },
+  "tips": {
+    "stage": {
+      "new": {
+        "communication": "Early on, asking beats assuming. Spend some time today learning something new about them.",
+        "boundaries": "Talking about boundaries early avoids misunderstandings later. It doesn't have to be solemn.",
+        "expectations": "Are you looking for the same thing? An honest conversation now saves confusion later.",
+        "consent": "In intimacy, what works is asked, not guessed."
+      },
+      "developing": {
+        "deeper": "You know each other now. Try a conversation beyond logistics: fears, plans, quirks.",
+        "disagreements": "The first disagreements set the tone. Arguing well takes practice too.",
+        "newActivity": "Try something neither of you has done: new plans build trust faster.",
+        "routines": "Knowing each other's routines (and respecting them) is a quiet way of caring."
+      },
+      "established": {
+        "routine": "After a while together it's easy to fall into routine. Do one small thing today you don't usually do.",
+        "goals": "Any shared plans for the future? Talking about them now and then keeps you on the same path.",
+        "details": "Small details sustain more than grand gestures. One today, for no reason.",
+        "deepTalk": "How long since you talked about how you are, not just logistics? Find a moment without screens."
+      },
+      "longTerm": {
+        "growth": "Several years together: you've both changed. Ask what excites her now, you might be surprised.",
+        "individuality": "Protecting your own space also protects the relationship. A plan of your own this week isn't abandonment.",
+        "newExperience": "Against inertia, novelty: a new place, a different plan, even a small one.",
+        "intimacy": "Emotional intimacy also feeds on talking about the uncomfortable. No rush, but don't always avoid it."
+      },
+      "veryLongTerm": {
+        "memories": "You have years of history. Revisiting a good memory together (photos, places) reconnects fast.",
+        "changes": "Neither of you is the same person from years ago. Ask again about things you think you know.",
+        "projects": "Any project you're both excited about? Shared plans renew long chapters.",
+        "curiosity": "Mutual curiosity doesn't stay alive on its own, it's practiced. Today: a question you've never asked."
+      }
+    },
+    "phase": {
+      "menstruation": {
+        "comfort": "Some people appreciate pampering, others prefer not to be touched. Ask what she feels like today.",
+        "ask": "Don't assume how she feels because of the phase: ask her. The calendar estimates dates, not emotions."
+      },
+      "follicular": {
+        "plan": "If you want to plan something together, propose it early: choosing together is already part of the plan.",
+        "checkIn": "A timely \"how's your week going?\" avoids a lot of misunderstandings."
+      },
+      "ovulation": {
+        "estimate": "Remember: the ovulation shown is an estimate, not a certainty. Don't use it for contraception decisions."
+      },
+      "luteal": {
+        "patience": "If one of you is having an off day, it doesn't always need fixing: sometimes company is enough.",
+        "selfCare": "Taking care of yourselves separately also takes care of the relationship. Slowing down today is fine."
+      }
+    },
+    "general": {
+      "listen": "Listening without composing your reply while the other talks: harder and more valuable than it seems.",
+      "smallGesture": "A small gesture today (a message, her coffee, remembering something she said) beats a perfect plan someday.",
+      "time": "Time together without screens is a different thing. Even twenty minutes.",
+      "gratitude": "Saying out loud something you appreciate about each other changes the tone of the day. Try it."
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "of": "{{name}}'s calendar",
+    "legend": {
+      "title": "Legend",
+      "period": "Menstruation",
+      "predictedPeriod": "Estimated period",
+      "fertile": "Estimated fertile window",
+      "ovulation": "Estimated ovulation",
+      "event": "Relationship event",
+      "today": "Today"
+    },
+    "dayDetail": {
+      "cycleDay": "Cycle day {{day}}",
+      "events": "Events",
+      "noEvents": "Nothing recorded this day.",
+      "logPeriodHere": "Log period on this day"
+    },
+    "noPartner": "Register a partner to see her calendar.",
+    "pickPartner": "Choose whose calendar to view"
+  },
+  "leaderboard": {
+    "title": "Culitos Leaderboard",
+    "subtitle": "Optional, anonymous conquest ranking. Only your alias and your number are shown.",
+    "window": { "GLOBAL": "All time", "MONTH": "This month", "YEAR": "This year" },
+    "score_one": "{{count}} partner",
+    "score_other": "{{count}} partners",
+    "you": "You",
+    "yourPosition": "Your position",
+    "notParticipating": "You're not participating",
+    "joinTitle": "Want to appear in the ranking?",
+    "joinBody": "Completely optional. If you join, only the alias you pick, your emoji if you want, and your unique partner count are published. Never names, dates or details.",
+    "alias": "Public alias",
+    "aliasHint": "Others will see you under this name",
+    "showAvatar": "Show my emoji",
+    "enable": "Join the ranking",
+    "disable": "Leave the ranking",
+    "settingsSaved": "Ranking preferences saved",
+    "empty": {
+      "title": "Nobody has joined yet",
+      "body": "The ranking only shows people who chose to participate. You could be first."
+    },
+    "privacyNote": "The ranking never shows partner names, dates, notes or anything that could identify them."
+  },
+  "stats": {
+    "title": "Your stats",
+    "private": "Only you can see this page.",
+    "partnersRegistered": "Registered partners",
+    "uniquePartners": "Unique people",
+    "activeRelationships": "Active relationships",
+    "serious": "Serious relationships",
+    "casual": "Casual",
+    "longest": "Longest relationship",
+    "withName": "with {{name}}",
+    "milestones": "Saved milestones",
+    "situation": "Current situation",
+    "leaderboardPosition": "Ranking position",
+    "noRank": "Not participating",
+    "empty": "Register your first partner to start having numbers."
+  },
+  "history": {
+    "title": "History",
+    "subtitle": "All your relationships, including ended ones and deleted records.",
+    "ended": "Ended",
+    "deleted": "Deleted record",
+    "active": "Active",
+    "duration": "Duration",
+    "empty": {
+      "title": "No history yet",
+      "body": "Relationships you end or delete will also remain here."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "language": "Language",
+    "theme": "Appearance",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "password": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "passwordChanged": "Password updated",
+    "leaderboard": "Ranking",
+    "leaderboardConfig": "Configure my participation",
+    "privacy": "Privacy",
+    "privacyLink": "How we handle your data",
+    "account": "Account",
+    "profileSaved": "Profile updated"
+  },
+  "privacy": {
+    "title": "Privacy & consent",
+    "intro": "CulitosTracker stores sensitive information: menstrual cycles, emotions and relationship data. These are the rules it runs on.",
+    "sections": {
+      "consent": {
+        "title": "Consent",
+        "body": "When you register a person manually you confirm you have their consent to store their data, including cycle data. If that person creates their own account and links it, they decide what is shared back and can revoke it at any time."
+      },
+      "checkins": {
+        "title": "Check-ins",
+        "body": "Your check-ins are yours. The other person only sees your mood if you explicitly share it, and notes are never shared."
+      },
+      "observations": {
+        "title": "Observations",
+        "body": "What you record about how your partner seems is your perception and only you see it. The app never presents it as a fact about the other person."
+      },
+      "estimates": {
+        "title": "Cycle estimates",
+        "body": "Phases, ovulation and the fertile window are estimates computed from the recorded data. They are not medical information and don't work as contraception."
+      },
+      "leaderboard": {
+        "title": "Ranking",
+        "body": "You only appear if you opt in. Only your alias, your emoji if you want, and an aggregate number are published. Never partner names, dates or notes."
+      },
+      "authorization": {
+        "title": "Server-side authorization",
+        "body": "Every request validates on the server that the data belongs to you or was shared with you. Hiding things in the interface is never the only barrier."
+      }
+    }
+  },
+  "errors": {
+    "auth": {
+      "usernameTaken": "That username is taken.",
+      "emailTaken": "That email is already registered.",
+      "invalidCredentials": "Wrong username or password.",
+      "invalidRefreshToken": "Your session expired. Log in again."
+    },
+    "partner": {
+      "duplicate": "You already have an active partner with that name.",
+      "rateLimit": "You've created too many partners today. Try tomorrow."
+    },
+    "relationship": {
+      "monogamousConflict": "You have an active monogamous relationship: you can't have another active romantic relationship at the same time.",
+      "marriageConflict": "You already have an active marriage.",
+      "dates": {
+        "datingAfterStart": "The dating start date can't be after the relationship start.",
+        "startAfterEngagement": "The relationship start can't be after the engagement.",
+        "engagementAfterMarriage": "The engagement can't be after the marriage.",
+        "datingAfterMarriage": "Starting to date can't be after the marriage.",
+        "endWithoutEnded": "Only an ended relationship can have an end date.",
+        "endBeforeStart": "The end date can't be before the start."
+      }
+    },
+    "period": {
+      "futureStart": "A period can't start in the future.",
+      "endBeforeStart": "The period end can't be before its start."
+    },
+    "checkIn": { "futureDate": "You can't check in for a future date." },
+    "observation": { "futureDate": "You can't record an observation for a future date." },
+    "leaderboard": { "aliasRequired": "Pick an alias before enabling the ranking." },
+    "cycle": { "invalidRange": "Invalid date range." }
+  }
+}
