@@ -25,14 +25,19 @@ public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final List<String> allowedOrigins;
+    private final int bcryptStrength;
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter,
-                          @Value("${app.cors.allowed-origins}") String allowedOrigins) {
+                          @Value("${app.cors.allowed-origins}") String allowedOrigins,
+                          @Value("${app.security.bcrypt-strength:12}") int bcryptStrength) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.allowedOrigins = Arrays.stream(allowedOrigins.split(","))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .toList();
+        // 12 by default; hosts with very small CPU shares can lower it to 10
+        // (the OWASP minimum for bcrypt) so login stays responsive.
+        this.bcryptStrength = bcryptStrength;
     }
 
     @Bean
@@ -65,6 +70,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
+        return new BCryptPasswordEncoder(bcryptStrength);
     }
 }
