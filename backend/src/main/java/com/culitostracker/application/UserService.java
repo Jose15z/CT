@@ -18,15 +18,18 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AvatarService avatarService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       AvatarService avatarService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.avatarService = avatarService;
     }
 
     @Transactional(readOnly = true)
     public UserResponse me(UUID userId) {
-        return UserResponse.from(requireUser(userId));
+        return UserResponse.from(requireUser(userId), avatarService.exists(userId));
     }
 
     @Transactional
@@ -45,7 +48,7 @@ public class UserService {
         if (request.relationshipSituation() != null) {
             user.setRelationshipSituation(request.relationshipSituation());
         }
-        return UserResponse.from(userRepository.save(user));
+        return UserResponse.from(userRepository.save(user), avatarService.exists(userId));
     }
 
     @Transactional

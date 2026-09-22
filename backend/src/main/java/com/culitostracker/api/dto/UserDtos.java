@@ -19,13 +19,18 @@ public final class UserDtos {
                                String displayName,
                                String preferredLanguage,
                                String avatarEmoji,
+                               boolean hasAvatar,
                                RelationshipSituation relationshipSituation,
                                Instant createdAt) {
 
         public static UserResponse from(User user) {
+            return from(user, false);
+        }
+
+        public static UserResponse from(User user, boolean hasAvatar) {
             return new UserResponse(user.getId(), user.getUsername(), user.getEmail(),
                     user.getDisplayName(), user.getPreferredLanguage(), user.getAvatarEmoji(),
-                    user.getRelationshipSituation(), user.getCreatedAt());
+                    hasAvatar, user.getRelationshipSituation(), user.getCreatedAt());
         }
     }
 

@@ -90,21 +90,25 @@ async function parseProblem(res: Response): Promise<ApiProblem> {
   }
 }
 
-export async function api<T>(
+async function authorizedFetch(
   path: string,
-  options: { method?: string; body?: unknown; auth?: boolean } = {},
-): Promise<T> {
-  const { method = 'GET', body, auth = true } = options
-
+  method: string,
+  body: unknown,
+  auth: boolean,
+): Promise<Response> {
   const doFetch = () => {
     const headers: Record<string, string> = {}
-    if (body !== undefined) headers['Content-Type'] = 'application/json'
+    // FormData sets its own multipart boundary; only JSON gets a content type.
+    if (body !== undefined && !(body instanceof FormData)) {
+      headers['Content-Type'] = 'application/json'
+    }
     const token = tokenStore.access
     if (auth && token) headers['Authorization'] = `Bearer ${token}`
     return fetch(`${BASE_URL}${path}`, {
       method,
       headers,
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body:
+        body === undefined ? undefined : body instanceof FormData ? body : JSON.stringify(body),
     })
   }
 
@@ -119,12 +123,26 @@ export async function api<T>(
       throw new ApiError({ status: 401, code: 'auth.invalidRefreshToken' })
     }
   }
-
   if (!res.ok) {
     throw new ApiError(await parseProblem(res))
   }
+  return res
+}
+
+export async function api<T>(
+  path: string,
+  options: { method?: string; body?: unknown; auth?: boolean } = {},
+): Promise<T> {
+  const { method = 'GET', body, auth = true } = options
+  const res = await authorizedFetch(path, method, body, auth)
   if (res.status === 204) {
     return undefined as T
   }
   return (await res.json()) as T
+}
+
+/** Authenticated fetch of a binary resource (e.g. the profile photo). */
+export async function apiBlob(path: string): Promise<Blob> {
+  const res = await authorizedFetch(path, 'GET', undefined, true)
+  return res.blob()
 }

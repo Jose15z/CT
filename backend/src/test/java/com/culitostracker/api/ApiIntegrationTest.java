@@ -318,6 +318,55 @@ class ApiIntegrationTest {
                 .andExpect(jsonPath("$.partnersRegistered").value(1));
     }
 
+    @Test
+    @Order(11)
+    void avatarUploadValidateFetchDelete() throws Exception {
+        // A real tiny PNG generated in-memory.
+        var image = new java.awt.image.BufferedImage(64, 48, java.awt.image.BufferedImage.TYPE_INT_RGB);
+        var baos = new java.io.ByteArrayOutputStream();
+        javax.imageio.ImageIO.write(image, "png", baos);
+
+        // Garbage with a .png name is rejected: validation is by magic bytes.
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .multipart(org.springframework.http.HttpMethod.PUT, "/api/users/me/avatar")
+                        .file(new org.springframework.mock.web.MockMultipartFile(
+                                "file", "fake.png", "image/png", "not an image".getBytes()))
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("avatar.invalidImage"));
+
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .multipart(org.springframework.http.HttpMethod.PUT, "/api/users/me/avatar")
+                        .file(new org.springframework.mock.web.MockMultipartFile(
+                                "file", "me.png", "image/png", baos.toByteArray()))
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isNoContent());
+
+        // Owner gets it back, re-encoded as square JPEG; profile reports hasAvatar.
+        mockMvc.perform(get("/api/users/me/avatar")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk())
+                .andExpect(result -> assertThat(result.getResponse().getContentType())
+                        .isEqualTo("image/jpeg"));
+        mockMvc.perform(get("/api/users/me")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(jsonPath("$.hasAvatar").value(true));
+
+        // Another user has no avatar of their own: 404, and there is no
+        // endpoint at all to fetch someone else's photo.
+        mockMvc.perform(get("/api/users/me/avatar")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(status().isNotFound());
+
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/users/me/avatar")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isNoContent());
+        mockMvc.perform(get("/api/users/me/avatar")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isNotFound());
+    }
+
     private UUID registerIdOf(String username) throws Exception {
         String token = username.equals("alice") ? tokenA : tokenB;
         MvcResult result = mockMvc.perform(get("/api/users/me")

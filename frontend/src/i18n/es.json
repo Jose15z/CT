@@ -500,6 +500,11 @@
     "themeLight": "Claro",
     "themeDark": "Oscuro",
     "themeSystem": "Sistema",
+    "avatarUpload": "Subir foto",
+    "avatarRemove": "Quitar foto",
+    "avatarHint": "JPG o PNG, máximo 2 MB. Se recorta a cuadrado y solo la ves tú.",
+    "avatarSaved": "Foto de perfil actualizada",
+    "avatarRemoved": "Foto de perfil eliminada",
     "password": "Cambiar contraseña",
     "currentPassword": "Contraseña actual",
     "newPassword": "Nueva contraseña",
@@ -571,6 +576,10 @@
     "checkIn": { "futureDate": "No puedes hacer check-in de un día futuro." },
     "observation": { "futureDate": "No puedes registrar una observación de un día futuro." },
     "leaderboard": { "aliasRequired": "Elige un alias antes de activar el ranking." },
-    "cycle": { "invalidRange": "Rango de fechas no válido." }
+    "cycle": { "invalidRange": "Rango de fechas no válido." },
+    "avatar": {
+      "invalidImage": "El archivo no es una imagen JPG o PNG válida.",
+      "tooLarge": "La imagen supera los 2 MB."
+    }
   }
 }
