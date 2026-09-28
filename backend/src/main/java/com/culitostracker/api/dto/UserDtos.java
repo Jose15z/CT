@@ -46,4 +46,8 @@ public final class UserDtos {
             @NotBlank String currentPassword,
             @NotBlank @Size(min = 8, max = 72) String newPassword) {
     }
+
+    /** Deleting the account re-asks the password: it is irreversible. */
+    public record DeleteAccountRequest(@NotBlank String password) {
+    }
 }

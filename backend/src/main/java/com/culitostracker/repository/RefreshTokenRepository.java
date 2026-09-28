@@ -25,4 +25,9 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, UUID
     @Modifying
     @Query("delete from RefreshToken t where t.userId = :userId")
     void deleteByUserId(@Param("userId") UUID userId);
+
+    /** "Log out everywhere else": keeps only the session that asked. */
+    @Modifying
+    @Query("delete from RefreshToken t where t.userId = :userId and t.tokenHash <> :keepHash")
+    void deleteByUserIdAndTokenHashNot(@Param("userId") UUID userId, @Param("keepHash") String keepHash);
 }

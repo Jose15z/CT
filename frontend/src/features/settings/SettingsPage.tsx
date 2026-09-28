@@ -1,15 +1,28 @@
 import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Camera, ChevronRight, LogOut, ShieldCheck, Trash2, Trophy } from 'lucide-react'
+import {
+  Camera,
+  ChevronRight,
+  Download,
+  LogOut,
+  MonitorSmartphone,
+  ShieldCheck,
+  Trash2,
+  Trophy,
+} from 'lucide-react'
 import { useAuth } from '../../lib/auth'
 import {
   useChangePassword,
+  useDeleteAccount,
   useDeleteAvatar,
+  useExportData,
+  useLogoutEverywhereElse,
   useMyAvatar,
   useUpdateProfile,
   useUploadAvatar,
 } from '../../lib/queries'
+import { Sheet } from '../../components/ui/Sheet'
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
@@ -51,6 +64,12 @@ export function SettingsPage() {
   const [theme, setTheme] = useState<ThemePreference>(getThemePreference())
   const [passwords, setPasswords] = useState({ current: '', next: '' })
   const [passwordError, setPasswordError] = useState<string | null>(null)
+  const logoutEverywhereElse = useLogoutEverywhereElse()
+  const exportData = useExportData()
+  const deleteAccount = useDeleteAccount()
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [deletePassword, setDeletePassword] = useState('')
+  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   if (!user) return null
 
@@ -284,6 +303,105 @@ export function SettingsPage() {
           </div>
         </div>
       </section>
+
+      {/* Sessions, data portability, deletion */}
+      <section className="card p-4 sm:p-5">
+        <h2 className="text-[15px] font-semibold tracking-tight text-ink">{t('settings.security')}</h2>
+        <div className="mt-3 divide-y divide-border">
+          <div className="flex flex-wrap items-center justify-between gap-3 py-3">
+            <div className="min-w-0">
+              <p className="text-[13.5px] font-medium text-ink">{t('settings.logoutAll')}</p>
+              <p className="text-[12px] text-ink-3">{t('settings.logoutAllHint')}</p>
+            </div>
+            <Button
+              variant="secondary"
+              size="sm"
+              icon={<MonitorSmartphone size={13} />}
+              disabled={logoutEverywhereElse.isPending}
+              onClick={() =>
+                logoutEverywhereElse.mutate(undefined, {
+                  onSuccess: () => toast(t('settings.logoutAllDone')),
+                  onError: (err) => toast(errorMessage(err), 'error'),
+                })
+              }
+            >
+              {t('settings.logoutAll')}
+            </Button>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3 py-3">
+            <div className="min-w-0">
+              <p className="text-[13.5px] font-medium text-ink">{t('settings.exportData')}</p>
+              <p className="text-[12px] text-ink-3">{t('settings.exportDataHint')}</p>
+            </div>
+            <Button
+              variant="secondary"
+              size="sm"
+              icon={<Download size={13} />}
+              disabled={exportData.isPending}
+              onClick={() =>
+                exportData.mutate(undefined, {
+                  onError: (err) => toast(errorMessage(err), 'error'),
+                })
+              }
+            >
+              {t('settings.exportData')}
+            </Button>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3 py-3">
+            <div className="min-w-0">
+              <p className="text-[13.5px] font-medium text-ink">{t('settings.deleteAccount')}</p>
+              <p className="text-[12px] text-ink-3">{t('settings.deleteAccountHint')}</p>
+            </div>
+            <Button
+              variant="danger"
+              size="sm"
+              icon={<Trash2 size={13} />}
+              onClick={() => {
+                setDeletePassword('')
+                setDeleteError(null)
+                setDeleteOpen(true)
+              }}
+            >
+              {t('settings.deleteAccount')}
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <Sheet open={deleteOpen} onClose={() => setDeleteOpen(false)} title={t('settings.deleteAccount')}>
+        <div className="space-y-4">
+          <p className="text-[13.5px] leading-relaxed text-ink-2">{t('settings.deleteAccountBody')}</p>
+          <Field label={t('auth.password')} htmlFor="delete-password" error={deleteError ?? undefined}>
+            <Input
+              id="delete-password"
+              type="password"
+              autoComplete="current-password"
+              value={deletePassword}
+              onChange={(e) => setDeletePassword(e.target.value)}
+            />
+          </Field>
+          <div className="flex justify-end gap-2">
+            <Button variant="secondary" onClick={() => setDeleteOpen(false)} disabled={deleteAccount.isPending}>
+              {t('common.cancel')}
+            </Button>
+            <Button
+              variant="danger"
+              disabled={!deletePassword || deleteAccount.isPending}
+              onClick={() =>
+                deleteAccount.mutate(deletePassword, {
+                  onSuccess: async () => {
+                    await logout()
+                    navigate('/')
+                  },
+                  onError: (err) => setDeleteError(errorMessage(err)),
+                })
+              }
+            >
+              {deleteAccount.isPending ? t('common.saving') : t('settings.deleteAccountConfirm')}
+            </Button>
+          </div>
+        </div>
+      </Sheet>
 
       {/* Account */}
       <section className="flex items-center justify-between card px-4 py-3.5 sm:px-5">

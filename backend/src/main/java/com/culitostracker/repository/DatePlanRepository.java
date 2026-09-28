@@ -17,4 +17,6 @@ public interface DatePlanRepository extends JpaRepository<DatePlan, UUID> {
 
     List<DatePlan> findFirst5ByOwnerUserIdAndDateGreaterThanEqualOrderByDateAscStartTimeAsc(
             UUID ownerUserId, LocalDate from);
+
+    List<DatePlan> findByOwnerUserIdOrderByDateAsc(UUID ownerUserId);
 }

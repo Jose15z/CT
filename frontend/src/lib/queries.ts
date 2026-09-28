@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { api, apiBlob } from './api'
+import { api, apiBlob, tokenStore } from './api'
 import type {
   AccessScope,
   CheckIn,
@@ -505,6 +505,39 @@ export function useChangePassword() {
   return useMutation({
     mutationFn: (payload: { currentPassword: string; newPassword: string }) =>
       api<void>('/api/users/me/password', { method: 'PATCH', body: payload }),
+  })
+}
+
+/** Revokes every other session; this device keeps its refresh token. */
+export function useLogoutEverywhereElse() {
+  return useMutation({
+    mutationFn: () =>
+      api<void>('/api/auth/logout-all', {
+        method: 'POST',
+        body: { refreshToken: tokenStore.refresh },
+      }),
+  })
+}
+
+/** Downloads the JSON export and hands it to the browser as a file. */
+export function useExportData() {
+  return useMutation({
+    mutationFn: async () => {
+      const blob = await apiBlob('/api/users/me/export')
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'culitostracker-export.json'
+      a.click()
+      URL.revokeObjectURL(url)
+    },
+  })
+}
+
+export function useDeleteAccount() {
+  return useMutation({
+    mutationFn: (password: string) =>
+      api<void>('/api/users/me', { method: 'DELETE', body: { password } }),
   })
 }
 

@@ -11,6 +11,9 @@ import java.util.UUID;
 public interface PartnerObservationRepository extends JpaRepository<PartnerObservation, UUID> {
 
     /** Observations are private to their observer; every query filters by it. */
+    /** Everything the user recorded, for the data export. */
+    List<PartnerObservation> findByObserverUserIdOrderByObservationDateDesc(UUID observerUserId);
+
     List<PartnerObservation> findTop30ByPartnerIdAndObserverUserIdOrderByCreatedAtDesc(
             UUID partnerId, UUID observerUserId);
 

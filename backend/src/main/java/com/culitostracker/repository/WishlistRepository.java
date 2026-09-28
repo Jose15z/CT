@@ -14,4 +14,6 @@ public interface WishlistRepository extends JpaRepository<WishlistItem, UUID> {
     List<WishlistItem> findByPartnerIdOrderByDoneAscCreatedAtDesc(UUID partnerId);
 
     long countByPartnerIdAndDoneFalse(UUID partnerId);
+
+    List<WishlistItem> findByOwnerUserIdOrderByCreatedAtDesc(UUID ownerUserId);
 }

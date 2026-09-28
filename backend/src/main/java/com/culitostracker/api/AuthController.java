@@ -51,6 +51,13 @@ public class AuthController {
         authService.logout(request.refreshToken());
     }
 
+    /** Closes every other session; the caller keeps the refresh token it sent. */
+    @PostMapping("/logout-all")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logoutAll(@Valid @RequestBody LogoutRequest request) {
+        authService.logoutEverywhereElse(request.refreshToken());
+    }
+
     /** Always 204: whether the email exists is never revealed. */
     @PostMapping("/forgot")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -9,6 +9,7 @@ import com.culitostracker.domain.model.User;
 import com.culitostracker.domain.service.DomainRuleException;
 import com.culitostracker.infrastructure.security.JwtProperties;
 import com.culitostracker.infrastructure.security.JwtService;
+import com.culitostracker.infrastructure.security.LoginAttemptLimiter;
 import com.culitostracker.repository.RefreshTokenRepository;
 import com.culitostracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final Duration refreshTtl;
     private final int bcryptStrength;
+    private final LoginAttemptLimiter loginAttemptLimiter;
     private final SecureRandom secureRandom = new SecureRandom();
 
     public AuthService(UserRepository userRepository,
@@ -42,12 +44,14 @@ public class AuthService {
                        PasswordEncoder passwordEncoder,
                        JwtService jwtService,
                        JwtProperties jwtProperties,
+                       LoginAttemptLimiter loginAttemptLimiter,
                        @Value("${app.security.bcrypt-strength:12}") int bcryptStrength) {
         this.userRepository = userRepository;
         this.refreshTokenRepository = refreshTokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.refreshTtl = Duration.ofDays(jwtProperties.refreshDays());
+        this.loginAttemptLimiter = loginAttemptLimiter;
         this.bcryptStrength = bcryptStrength;
     }
 
@@ -76,15 +80,27 @@ public class AuthService {
     @Transactional
     public AuthResponse login(LoginRequest request) {
         String identifier = request.usernameOrEmail().toLowerCase(Locale.ROOT);
+        loginAttemptLimiter.check(identifier);
         User user = userRepository.findByUsername(identifier)
                 .or(() -> userRepository.findByEmail(identifier))
                 .orElse(null);
         // Same error for unknown user and wrong password: no account enumeration.
         if (user == null || !passwordEncoder.matches(request.password(), user.getPasswordHash())) {
+            loginAttemptLimiter.recordFailure(identifier);
             throw new DomainRuleException("auth.invalidCredentials", "Invalid credentials");
         }
+        loginAttemptLimiter.recordSuccess(identifier);
         rehashIfCostChanged(user, request.password());
         return issueTokens(user);
+    }
+
+    /** Revokes every refresh token of the user except the one presented. */
+    @Transactional
+    public void logoutEverywhereElse(String rawRefreshToken) {
+        String hash = sha256(rawRefreshToken);
+        RefreshToken current = refreshTokenRepository.findByTokenHash(hash)
+                .orElseThrow(() -> new DomainRuleException("auth.invalidRefreshToken", "Unknown refresh token"));
+        refreshTokenRepository.deleteByUserIdAndTokenHashNot(current.getUserId(), hash);
     }
 
     /**

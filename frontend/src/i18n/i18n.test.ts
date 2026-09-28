@@ -99,6 +99,7 @@ describe('translation bundles', () => {
     'errors.encounter.dateInFuture',
     'errors.encounter.dailyLimit',
     'errors.auth.invalidResetToken',
+    'errors.auth.tooManyAttempts',
     'errors.invite.invalid',
     'errors.invite.selfLink',
     'errors.invite.alreadyLinked',

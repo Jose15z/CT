@@ -896,7 +896,17 @@
     "privacy": "Privacidad",
     "privacyLink": "Cómo tratamos tus datos",
     "account": "Cuenta",
-    "profileSaved": "Perfil actualizado"
+    "profileSaved": "Perfil actualizado",
+    "security": "Seguridad y datos",
+    "logoutAll": "Cerrar sesión en otros dispositivos",
+    "logoutAllHint": "Este dispositivo sigue conectado; el resto tendrá que entrar de nuevo.",
+    "logoutAllDone": "Sesiones cerradas en los demás dispositivos",
+    "exportData": "Descargar mis datos",
+    "exportDataHint": "Un archivo JSON con todo lo que has registrado.",
+    "deleteAccount": "Eliminar mi cuenta",
+    "deleteAccountHint": "Borra tu cuenta y todo lo asociado. No se puede deshacer.",
+    "deleteAccountBody": "Se eliminarán tus parejas, ciclos, check-ins, agenda, encuentros y XP. Las cuentas vinculadas a ti dejarán de estarlo. Escribe tu contraseña para confirmar.",
+    "deleteAccountConfirm": "Eliminar definitivamente"
   },
   "privacy": {
     "title": "Privacidad y consentimiento",
@@ -934,7 +944,8 @@
       "emailTaken": "Ese email ya está registrado.",
       "invalidCredentials": "Usuario o contraseña incorrectos.",
       "invalidRefreshToken": "Tu sesión expiró. Entra de nuevo.",
-      "invalidResetToken": "El enlace de restablecimiento no es válido o ya caducó. Pide uno nuevo."
+      "invalidResetToken": "El enlace de restablecimiento no es válido o ya caducó. Pide uno nuevo.",
+      "tooManyAttempts": "Demasiados intentos fallidos. Espera 15 minutos y vuelve a intentarlo."
     },
     "partner": {
       "duplicate": "Ya tienes una pareja activa con ese nombre.",

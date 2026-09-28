@@ -644,6 +644,83 @@ class ApiIntegrationTest {
                 .andExpect(jsonPath("$").isEmpty());
     }
 
+    @Test
+    @Order(18)
+    void loginIsRateLimitedAfterRepeatedFailures() throws Exception {
+        register("bruteforce", "password-x1");
+        for (int i = 0; i < 10; i++) {
+            mockMvc.perform(post("/api/auth/login")
+                            .contentType(APPLICATION_JSON)
+                            .content("{\"usernameOrEmail\":\"bruteforce\",\"password\":\"wrong\"}"))
+                    .andExpect(status().isUnprocessableEntity());
+        }
+        // The 11th attempt is refused before the password is even checked.
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"usernameOrEmail\":\"bruteforce\",\"password\":\"password-x1\"}"))
+                .andExpect(status().isTooManyRequests())
+                .andExpect(jsonPath("$.code").value("auth.tooManyAttempts"));
+    }
+
+    @Test
+    @Order(19)
+    void exportSessionsAndAccountDeletion() throws Exception {
+        // Export contains what Alice owns and nothing of Bob's.
+        MvcResult export = mockMvc.perform(get("/api/users/me/export")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk())
+                .andExpect(result -> assertThat(result.getResponse().getHeader("Content-Disposition"))
+                        .contains("culitostracker-export.json"))
+                .andReturn();
+        JsonNode dump = objectMapper.readTree(export.getResponse().getContentAsString());
+        assertThat(dump.get("user").get("username").asText()).isEqualTo("alice");
+        assertThat(dump.get("partners")).isNotEmpty();
+        assertThat(dump.get("encounters")).hasSize(1);
+        assertThat(dump.get("user").has("passwordHash")).isFalse();
+
+        // Two sessions for Alice; "log out everywhere else" keeps only the caller's.
+        MvcResult s1 = mockMvc.perform(post("/api/auth/login")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"usernameOrEmail\":\"alice\",\"password\":\"new-password-a1\"}"))
+                .andExpect(status().isOk()).andReturn();
+        MvcResult s2 = mockMvc.perform(post("/api/auth/login")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"usernameOrEmail\":\"alice\",\"password\":\"new-password-a1\"}"))
+                .andExpect(status().isOk()).andReturn();
+        String refresh1 = objectMapper.readTree(s1.getResponse().getContentAsString()).get("refreshToken").asText();
+        String refresh2 = objectMapper.readTree(s2.getResponse().getContentAsString()).get("refreshToken").asText();
+        mockMvc.perform(post("/api/auth/logout-all")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"refreshToken\":\"%s\"}".formatted(refresh2)))
+                .andExpect(status().isNoContent());
+        mockMvc.perform(post("/api/auth/refresh")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"refreshToken\":\"%s\"}".formatted(refresh1)))
+                .andExpect(status().isUnprocessableEntity());
+        mockMvc.perform(post("/api/auth/refresh")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"refreshToken\":\"%s\"}".formatted(refresh2)))
+                .andExpect(status().isOk());
+
+        // Deleting the account needs the right password and then removes everything.
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/users/me")
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON).content("{\"password\":\"nope-nope-nope\"}"))
+                .andExpect(status().isUnprocessableEntity());
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/users/me")
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON).content("{\"password\":\"new-password-a1\"}"))
+                .andExpect(status().isNoContent());
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"usernameOrEmail\":\"alice\",\"password\":\"new-password-a1\"}"))
+                .andExpect(status().isUnprocessableEntity());
+        assertThat(partnerRepository.findByOwnerUserIdOrderByCreatedAtDesc(
+                UUID.fromString(dump.get("user").get("id").asText()))).isEmpty();
+    }
+
     private UUID registerIdOf(String username) throws Exception {
         String token = username.equals("alice") ? tokenA : tokenB;
         MvcResult result = mockMvc.perform(get("/api/users/me")

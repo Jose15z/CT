@@ -38,6 +38,14 @@ public class ApiExceptionHandler {
         return problem;
     }
 
+    @ExceptionHandler(com.culitostracker.infrastructure.security.RateLimitedException.class)
+    public ProblemDetail handleRateLimited(com.culitostracker.infrastructure.security.RateLimitedException e) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.TOO_MANY_REQUESTS);
+        problem.setTitle("Too many requests");
+        problem.setProperty("code", e.getCode());
+        return problem;
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidation(MethodArgumentNotValidException e) {
         ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);

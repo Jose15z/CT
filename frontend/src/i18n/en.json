@@ -896,7 +896,17 @@
     "privacy": "Privacy",
     "privacyLink": "How we handle your data",
     "account": "Account",
-    "profileSaved": "Profile updated"
+    "profileSaved": "Profile updated",
+    "security": "Security & data",
+    "logoutAll": "Log out on other devices",
+    "logoutAllHint": "This device stays signed in; the rest will have to log in again.",
+    "logoutAllDone": "Signed out on the other devices",
+    "exportData": "Download my data",
+    "exportDataHint": "A JSON file with everything you've recorded.",
+    "deleteAccount": "Delete my account",
+    "deleteAccountHint": "Deletes your account and everything tied to it. This can't be undone.",
+    "deleteAccountBody": "Your partners, cycles, check-ins, agenda, encounters and XP will be deleted. Accounts linked to you will be unlinked. Type your password to confirm.",
+    "deleteAccountConfirm": "Delete permanently"
   },
   "privacy": {
     "title": "Privacy & consent",
@@ -934,7 +944,8 @@
       "emailTaken": "That email is already registered.",
       "invalidCredentials": "Wrong username or password.",
       "invalidRefreshToken": "Your session expired. Log in again.",
-      "invalidResetToken": "The reset link is invalid or has expired. Request a new one."
+      "invalidResetToken": "The reset link is invalid or has expired. Request a new one.",
+      "tooManyAttempts": "Too many failed attempts. Wait 15 minutes and try again."
     },
     "partner": {
       "duplicate": "You already have an active partner with that name.",
