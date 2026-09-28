@@ -661,6 +661,42 @@
       "9": "If it goes wrong, there's another chance tomorrow."
     }
   },
+  "invite": {
+    "title": "Invitation",
+    "headline": "{{inviter}} invites you to link your account to their record \"{{name}}\".",
+    "consentNote": "Linking shares nothing by itself. You decide what the other person sees (your check-ins, for example) and can revoke it whenever you want. Either of you can unlink at any time.",
+    "expires": "The link expires on {{date}} and works only once.",
+    "acceptingAs": "You'll accept as {{name}}.",
+    "accept": "Link my account",
+    "needAccount": "You need an account to accept. You'll come back here afterwards.",
+    "done": "Accounts linked. From your home page you can choose what to share.",
+    "invalid": "This invitation is not valid, was already used or has expired. Ask the person who invited you for a new one."
+  },
+  "link": {
+    "sectionTitle": "Linked account",
+    "invite": "Invite {{name}}",
+    "inviteTitle": "Invitation link",
+    "inviteBody": "Send this link. When accepted, that account gets linked to this record and can decide what to share with you.",
+    "inviteExpires": "Expires on {{date}}. Generating another link cancels this one.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "linkedWith": "Linked with @{{username}}. Choose what you share:",
+    "notLinkedHint": "If this person creates an account and accepts your invite, they can make their own check-ins and decide what to share with you.",
+    "shareCheckIns": "Share my check-ins",
+    "shareCheckInsHint": "They'll see your daily mood, never your notes.",
+    "shareCycle": "Share the cycle calendar",
+    "shareCycleHint": "They'll see the periods you log and the estimates.",
+    "unlink": "Unlink",
+    "unlinkConfirmTitle": "Unlink the accounts?",
+    "unlinkConfirmBody": "Every permission in both directions is cancelled. The record stays; it just stops being connected to the other account.",
+    "dashboardTitle": "Linked with you",
+    "rowTitle": "{{owner}} has you registered as \"{{name}}\"",
+    "shareMyCheckIns": "Share my check-ins",
+    "shareMyCheckInsHint": "{{owner}} will see your daily mood, never your notes.",
+    "theyShare": "{{owner}} shares with you: {{scopes}}.",
+    "theyShareNothing": "{{owner}} isn't sharing anything with you yet.",
+    "scope": { "CYCLE": "cycle calendar", "CHECK_INS": "check-ins" }
+  },
   "agenda": {
     "title": "Agenda",
     "subtitle": "Planned dates and logged encounters, all in one calendar.",
@@ -874,6 +910,11 @@
       "duplicate": "You already have an active partner with that name.",
       "rateLimit": "You've created too many partners today. Try tomorrow.",
       "mustBeAdult": "The birth date must belong to an adult (18+)."
+    },
+    "invite": {
+      "invalid": "The invitation is not valid, was already used or has expired.",
+      "selfLink": "You can't accept your own invitation.",
+      "alreadyLinked": "This record is already linked to an account."
     },
     "encounter": {
       "dateInFuture": "You can't log an encounter in the future.",

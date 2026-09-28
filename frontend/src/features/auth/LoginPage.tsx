@@ -8,6 +8,7 @@ import { Input } from '../../components/ui/Input'
 import { Button } from '../../components/ui/Button'
 import { useAuth } from '../../lib/auth'
 import { errorMessage } from '../../lib/errors'
+import { readPendingInvite } from '../links/InvitePage'
 
 export function LoginPage() {
   const { t } = useTranslation()
@@ -24,7 +25,8 @@ export function LoginPage() {
     setBusy(true)
     try {
       await login(identifier.trim(), password)
-      navigate('/dashboard')
+      const pending = readPendingInvite()
+      navigate(pending ? `/invite/${pending}` : '/dashboard')
     } catch (err) {
       setError(errorMessage(err))
     } finally {

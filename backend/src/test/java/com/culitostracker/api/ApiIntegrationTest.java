@@ -511,6 +511,99 @@ class ApiIntegrationTest {
                 .andExpect(jsonPath("$.code").value("auth.invalidResetToken"));
     }
 
+    @Test
+    @Order(16)
+    void inviteLinksARealAccountWithConsent() throws Exception {
+        // Alice registers a new partner and mints an invite link for her.
+        MvcResult created = mockMvc.perform(post("/api/partners")
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                {"name":"Carla Ruiz","relationshipType":"DATING","consentConfirmed":true}
+                                """))
+                .andExpect(status().isCreated())
+                .andReturn();
+        String carlaId = objectMapper.readTree(created.getResponse().getContentAsString()).get("id").asText();
+
+        MvcResult invite = mockMvc.perform(post("/api/partners/" + carlaId + "/invite")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.url").isNotEmpty())
+                .andReturn();
+        String url = objectMapper.readTree(invite.getResponse().getContentAsString()).get("url").asText();
+        String token = url.substring(url.lastIndexOf('/') + 1);
+
+        // The preview is public and minimal; garbage tokens are rejected.
+        mockMvc.perform(get("/api/invites/" + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.inviterDisplayName").value("alice"))
+                .andExpect(jsonPath("$.partnerName").value("Carla Ruiz"));
+        mockMvc.perform(get("/api/invites/not-a-token"))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("invite.invalid"));
+
+        // Alice cannot accept her own invite; a third user (Carol) can.
+        mockMvc.perform(post("/api/invites/" + token + "/accept")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("invite.selfLink"));
+        String tokenC = register("carol", "password-c1");
+        mockMvc.perform(post("/api/invites/" + token + "/accept")
+                        .header("Authorization", "Bearer " + tokenC))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ownerDisplayName").value("alice"))
+                .andExpect(jsonPath("$.partnerName").value("Carla Ruiz"));
+
+        // Single use, and the owner now sees the link.
+        mockMvc.perform(post("/api/invites/" + token + "/accept")
+                        .header("Authorization", "Bearer " + tokenC))
+                .andExpect(status().isUnprocessableEntity());
+        mockMvc.perform(get("/api/partners/" + carlaId)
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(jsonPath("$.linked").value(true))
+                .andExpect(jsonPath("$.linkedUsername").value("carol"));
+        mockMvc.perform(get("/api/links")
+                        .header("Authorization", "Bearer " + tokenC))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].partnerId").value(carlaId));
+
+        // Carol can check in about the relationship; Alice sees it only once
+        // Carol grants CHECK_INS, through the existing consent endpoint.
+        mockMvc.perform(post("/api/check-ins")
+                        .header("Authorization", "Bearer " + tokenC)
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                {"partnerId":"%s","mood":"CALM","energyLevel":3,"stressLevel":2}
+                                """.formatted(carlaId)))
+                .andExpect(status().isCreated());
+        MvcResult before = mockMvc.perform(get("/api/partners/" + carlaId + "/check-ins")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk()).andReturn();
+        assertThat(objectMapper.readTree(before.getResponse().getContentAsString())).isEmpty();
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .put("/api/partners/" + carlaId + "/access/CHECK_INS")
+                        .header("Authorization", "Bearer " + tokenC)
+                        .contentType(APPLICATION_JSON).content("{\"enabled\":true}"))
+                .andExpect(status().isOk());
+        MvcResult after = mockMvc.perform(get("/api/partners/" + carlaId + "/check-ins")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk()).andReturn();
+        assertThat(objectMapper.readTree(after.getResponse().getContentAsString())).hasSize(1);
+
+        // Carol unlinks: the record is hers no more and every grant is gone.
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/links/" + carlaId)
+                        .header("Authorization", "Bearer " + tokenC))
+                .andExpect(status().isNoContent());
+        mockMvc.perform(get("/api/partners/" + carlaId)
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(jsonPath("$.linked").value(false));
+        mockMvc.perform(get("/api/links")
+                        .header("Authorization", "Bearer " + tokenC))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
     private UUID registerIdOf(String username) throws Exception {
         String token = username.equals("alice") ? tokenA : tokenB;
         MvcResult result = mockMvc.perform(get("/api/users/me")

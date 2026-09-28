@@ -19,6 +19,7 @@ import { useToast } from '../../components/ui/Toast'
 import { PartnerFormSheet } from './PartnerFormSheet'
 import { RelationshipSheet } from './RelationshipSheet'
 import { CycleSection } from './CycleSection'
+import { LinkedAccountSection } from '../links/LinkedAccountSection'
 import { observationEmoji } from '../../lib/emoji'
 import { errorMessage } from '../../lib/errors'
 import { formatDate, formatDayMonth, formatDuration } from '../../lib/dates'
@@ -191,6 +192,11 @@ export function PartnerDetailPage() {
             </p>
           )}
         </section>
+
+        <div className="border-t border-border" />
+
+        {/* Real account behind this record + what we share with each other */}
+        <LinkedAccountSection partner={partner} />
 
         <div className="border-t border-border" />
 

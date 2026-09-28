@@ -85,6 +85,7 @@ public final class PartnerDtos {
                                   Integer age,
                                   BigDecimal weightKg,
                                   boolean linked,
+                                  String linkedUsername,
                                   boolean deleted,
                                   RelationshipResponse relationship,
                                   Instant createdAt) {

@@ -27,6 +27,7 @@ import { HistoryPage } from './features/history/HistoryPage'
 import { SettingsPage } from './features/settings/SettingsPage'
 import { PrivacyPage } from './features/settings/PrivacyPage'
 import { NotFoundPage } from './app/NotFoundPage'
+import { InvitePage } from './features/links/InvitePage'
 
 initTheme()
 
@@ -70,6 +71,8 @@ createRoot(document.getElementById('root')!).render(
                   <Route path="/privacy" element={<PrivacyPage />} />
                 </Route>
               </Route>
+              {/* Works logged in or out: the invitee may still need an account. */}
+              <Route path="/invite/:token" element={<InvitePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </BrowserRouter>

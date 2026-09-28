@@ -259,6 +259,8 @@ public class PartnerService {
                 partner.ageAt(today),
                 partner.getWeightKg(),
                 partner.getLinkedUserId() != null,
+                partner.getLinkedUserId() == null ? null : userRepository.findById(partner.getLinkedUserId())
+                        .map(User::getUsername).orElse(null),
                 partner.isDeleted(),
                 relationship == null ? null : toRelationshipResponse(relationship, today),
                 partner.getCreatedAt());

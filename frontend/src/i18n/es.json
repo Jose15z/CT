@@ -661,6 +661,42 @@
       "9": "Si sale mal, mañana hay otra oportunidad."
     }
   },
+  "invite": {
+    "title": "Invitación",
+    "headline": "{{inviter}} te invita a vincular tu cuenta con su registro «{{name}}».",
+    "consentNote": "Vincularte no comparte nada por sí solo. Tú decides qué ve la otra persona (por ejemplo, tus check-ins) y puedes revocarlo cuando quieras. Cualquiera de los dos puede desvincular en cualquier momento.",
+    "expires": "El enlace caduca el {{date}} y solo sirve una vez.",
+    "acceptingAs": "Aceptarás como {{name}}.",
+    "accept": "Vincular mi cuenta",
+    "needAccount": "Para aceptar necesitas una cuenta. Al terminar volverás aquí.",
+    "done": "Cuentas vinculadas. Desde tu inicio puedes elegir qué compartes.",
+    "invalid": "Esta invitación no es válida, ya se usó o caducó. Pide una nueva a quien te invitó."
+  },
+  "link": {
+    "sectionTitle": "Cuenta vinculada",
+    "invite": "Invitar a {{name}}",
+    "inviteTitle": "Enlace de invitación",
+    "inviteBody": "Envíale este enlace. Al aceptarlo, su cuenta quedará vinculada a este registro y podrá decidir qué comparte contigo.",
+    "inviteExpires": "Caduca el {{date}}. Generar otro enlace anula este.",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "linkedWith": "Vinculada con @{{username}}. Elige qué compartes con ella:",
+    "notLinkedHint": "Si esta persona crea su cuenta y acepta tu invitación, podrá hacer sus propios check-ins y decidir qué comparte contigo.",
+    "shareCheckIns": "Compartir mis check-ins",
+    "shareCheckInsHint": "Verá tu estado de ánimo de cada día, nunca tus notas.",
+    "shareCycle": "Compartir el calendario de ciclo",
+    "shareCycleHint": "Verá los periodos que registras y las estimaciones.",
+    "unlink": "Desvincular",
+    "unlinkConfirmTitle": "¿Desvincular las cuentas?",
+    "unlinkConfirmBody": "Se cancelan todos los permisos en ambos sentidos. El registro se conserva; solo deja de estar conectado a la otra cuenta.",
+    "dashboardTitle": "Vinculado contigo",
+    "rowTitle": "{{owner}} te tiene registrada como «{{name}}»",
+    "shareMyCheckIns": "Compartir mis check-ins",
+    "shareMyCheckInsHint": "{{owner}} verá tu ánimo diario, nunca tus notas.",
+    "theyShare": "{{owner}} comparte contigo: {{scopes}}.",
+    "theyShareNothing": "{{owner}} no comparte nada contigo por ahora.",
+    "scope": { "CYCLE": "calendario de ciclo", "CHECK_INS": "check-ins" }
+  },
   "agenda": {
     "title": "Agenda",
     "subtitle": "Citas planeadas y encuentros registrados, todo en un calendario.",
@@ -874,6 +910,11 @@
       "duplicate": "Ya tienes una pareja activa con ese nombre.",
       "rateLimit": "Has creado demasiadas parejas hoy. Inténtalo mañana.",
       "mustBeAdult": "La fecha de nacimiento debe ser de una persona adulta (18+)."
+    },
+    "invite": {
+      "invalid": "La invitación no es válida, ya se usó o caducó.",
+      "selfLink": "No puedes aceptar tu propia invitación.",
+      "alreadyLinked": "Este registro ya está vinculado a una cuenta."
     },
     "encounter": {
       "dateInFuture": "No puedes registrar un encuentro en el futuro.",

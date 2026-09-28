@@ -8,6 +8,7 @@ import { Input } from '../../components/ui/Input'
 import { Button } from '../../components/ui/Button'
 import { useAuth } from '../../lib/auth'
 import { errorMessage } from '../../lib/errors'
+import { readPendingInvite } from '../links/InvitePage'
 
 export function RegisterPage() {
   const { t, i18n } = useTranslation()
@@ -36,7 +37,8 @@ export function RegisterPage() {
         displayName: form.displayName.trim(),
         preferredLanguage: i18n.language?.startsWith('en') ? 'en' : 'es',
       })
-      navigate('/dashboard')
+      const pending = readPendingInvite()
+      navigate(pending ? `/invite/${pending}` : '/dashboard')
     } catch (err) {
       setError(errorMessage(err))
     } finally {

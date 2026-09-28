@@ -131,9 +131,40 @@ export interface Partner {
   age: number | null
   weightKg: number | null
   linked: boolean
+  linkedUsername: string | null
   deleted: boolean
   relationship: Relationship | null
   createdAt: string
+}
+
+export type AccessScope = 'CYCLE' | 'CHECK_INS'
+
+export interface GrantState {
+  scope: AccessScope
+  status: 'ACTIVE' | 'REVOKED'
+}
+
+export interface Invite {
+  url: string
+  expiresAt: string
+}
+
+export interface InvitePreview {
+  inviterDisplayName: string
+  partnerName: string
+  relationshipType: RelationshipType | null
+  expiresAt: string
+}
+
+/** A partner record where I am the linked person. */
+export interface LinkedRelationship {
+  partnerId: string
+  ownerDisplayName: string
+  ownerUsername: string
+  partnerName: string
+  relationshipType: RelationshipType | null
+  grantsGivenByMe: GrantState[]
+  grantsGivenToMe: GrantState[]
 }
 
 export interface Milestone {

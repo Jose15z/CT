@@ -4,6 +4,9 @@ import com.culitostracker.domain.model.AccessScope;
 import com.culitostracker.domain.model.AccessStatus;
 import com.culitostracker.domain.model.PartnerAccess;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +21,9 @@ public interface PartnerAccessRepository extends JpaRepository<PartnerAccess, UU
             UUID partnerId, UUID grantedToUserId, AccessScope scope, AccessStatus status);
 
     List<PartnerAccess> findByPartnerIdAndGrantedByUserId(UUID partnerId, UUID grantedByUserId);
+
+    /** Unlinking a partner record revokes everything either side granted. */
+    @Modifying
+    @Query("delete from PartnerAccess a where a.partnerId = :partnerId")
+    void deleteByPartnerId(@Param("partnerId") UUID partnerId);
 }

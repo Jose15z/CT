@@ -6,6 +6,7 @@ import {
   useCheckIns,
   useCreateCheckIn,
   useCreateObservation,
+  useLinks,
   usePartners,
 } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
@@ -98,19 +99,32 @@ export function CheckInPage() {
     () => (partners ?? []).filter((p) => p.relationship?.status !== 'ENDED'),
     [partners],
   )
+  const { data: links } = useLinks()
+  // My own partners plus relationships where someone linked me: I can check
+  // in about both, but observations only make sense about my own records.
+  const options = useMemo(
+    () => [
+      ...activePartners.map((p) => ({ id: p.id, label: p.nickname ?? p.name })),
+      ...(links ?? []).map((l) => ({
+        id: l.partnerId,
+        label: `${l.ownerDisplayName} · ${l.partnerName}`,
+      })),
+    ],
+    [activePartners, links],
+  )
 
   const [partnerId, setPartnerId] = useState('')
   useEffect(() => {
     const fromUrl = searchParams.get('partner')
-    if (fromUrl && activePartners.some((p) => p.id === fromUrl)) {
+    if (fromUrl && options.some((o) => o.id === fromUrl)) {
       setPartnerId(fromUrl)
-    } else if (!partnerId && activePartners.length > 0) {
-      setPartnerId(activePartners[0].id)
+    } else if (!partnerId && options.length > 0) {
+      setPartnerId(options[0].id)
     }
-  }, [searchParams, activePartners, partnerId])
+  }, [searchParams, options, partnerId])
 
   const partner = activePartners.find((p) => p.id === partnerId)
-  const partnerName = partner ? (partner.nickname ?? partner.name) : ''
+  const partnerName = options.find((o) => o.id === partnerId)?.label ?? ''
   const { data: checkIns } = useCheckIns(partnerId || undefined)
 
   const [mood, setMood] = useState<Mood | null>(null)
@@ -122,7 +136,7 @@ export function CheckInPage() {
 
   if (isLoading) return <PageLoader />
 
-  if (activePartners.length === 0) {
+  if (options.length === 0) {
     return (
       <div className="card">
         <EmptyState
@@ -177,16 +191,16 @@ export function CheckInPage() {
         title={t('checkin.title')}
         description={t('checkin.howAreYou')}
         actions={
-          activePartners.length > 1 ? (
-            <div className="w-44">
+          options.length > 1 ? (
+            <div className="w-52">
               <Select
                 aria-label={t('checkin.withWhom')}
                 value={partnerId}
                 onChange={(e) => setPartnerId(e.target.value)}
               >
-                {activePartners.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.nickname ?? p.name}
+                {options.map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.label}
                   </option>
                 ))}
               </Select>

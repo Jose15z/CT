@@ -24,6 +24,7 @@ import {
   toISODate,
 } from '../../lib/dates'
 import { LogPeriodSheet } from '../calendar/LogPeriodSheet'
+import { LinksSection } from '../links/LinksSection'
 import type { DashboardPartner } from '../../lib/types'
 
 function greetingKey(): string {
@@ -299,25 +300,29 @@ export function DashboardPage() {
       />
 
       {data.partners.length === 0 ? (
-        <div className="card">
-          <EmptyState
-            icon={<Heart size={22} strokeWidth={1.5} />}
-            title={t('dashboard.empty.title')}
-            body={t('dashboard.empty.body')}
-            action={
-              <Link
-                to="/partners"
-                className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-peach px-3.5 text-[13.5px] font-medium text-on-peach hover:bg-peach-strong"
-              >
-                <Plus size={15} />
-                {t('dashboard.empty.action')}
-              </Link>
-            }
-          />
+        <div className="space-y-5">
+          <LinksSection />
+          <div className="card">
+            <EmptyState
+              icon={<Heart size={22} strokeWidth={1.5} />}
+              title={t('dashboard.empty.title')}
+              body={t('dashboard.empty.body')}
+              action={
+                <Link
+                  to="/partners"
+                  className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-peach px-3.5 text-[13.5px] font-medium text-on-peach hover:bg-peach-strong"
+                >
+                  <Plus size={15} />
+                  {t('dashboard.empty.action')}
+                </Link>
+              }
+            />
+          </div>
         </div>
       ) : (
         <div className="space-y-5">
           <KpiRow />
+          <LinksSection />
           <div className="space-y-4">
             {data.partners.map((partner) => (
               <PartnerToday key={partner.partnerId} partner={partner} />

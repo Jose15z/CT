@@ -1,12 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, apiBlob } from './api'
 import type {
+  AccessScope,
   CheckIn,
   CycleProfile,
   Dashboard,
   DatePlan,
   Encounter,
+  GrantState,
+  Invite,
+  InvitePreview,
   Leaderboard,
+  LinkedRelationship,
   LeaderboardMe,
   LeaderboardWindow,
   Milestone,
@@ -145,6 +150,81 @@ export function useXp() {
   return useQuery({
     queryKey: ['xp'],
     queryFn: () => api<XpSummary>('/api/xp/me'),
+  })
+}
+
+// ---- Linked accounts (invites + consent grants) ----
+
+export function useLinks() {
+  return useQuery({
+    queryKey: ['links'],
+    queryFn: () => api<LinkedRelationship[]>('/api/links'),
+  })
+}
+
+/** Public preview of an invite; works before logging in. */
+export function useInvitePreview(token: string | undefined) {
+  return useQuery({
+    queryKey: ['invite', token],
+    queryFn: () => api<InvitePreview>(`/api/invites/${token}`, { auth: false }),
+    enabled: !!token,
+    retry: false,
+  })
+}
+
+export function useGrantsGiven(partnerId: string | undefined) {
+  return useQuery({
+    queryKey: ['grants', partnerId],
+    queryFn: () => api<GrantState[]>(`/api/partners/${partnerId}/access`),
+    enabled: !!partnerId,
+  })
+}
+
+export function useCreateInvite(partnerId: string) {
+  return useMutation({
+    mutationFn: () => api<Invite>(`/api/partners/${partnerId}/invite`, { method: 'POST' }),
+  })
+}
+
+export function useAcceptInvite() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (token: string) =>
+      api<LinkedRelationship>(`/api/invites/${token}/accept`, { method: 'POST' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['links'] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
+    },
+  })
+}
+
+export function useSetGrant(partnerId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: { scope: AccessScope; enabled: boolean }) =>
+      api<GrantState>(`/api/partners/${partnerId}/access/${payload.scope}`, {
+        method: 'PUT',
+        body: { enabled: payload.enabled },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['grants', partnerId] })
+      queryClient.invalidateQueries({ queryKey: ['links'] })
+      queryClient.invalidateQueries({ queryKey: ['check-ins', partnerId] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
+    },
+  })
+}
+
+export function useUnlink() {
+  const invalidate = useInvalidatePartnerData()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (partnerId: string) => api<void>(`/api/links/${partnerId}`, { method: 'DELETE' }),
+    onSuccess: (_, partnerId) => {
+      invalidate(partnerId)
+      queryClient.invalidateQueries({ queryKey: ['links'] })
+      queryClient.invalidateQueries({ queryKey: ['grants', partnerId] })
+    },
   })
 }
 
