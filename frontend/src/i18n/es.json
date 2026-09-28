@@ -9,6 +9,7 @@
     "calendar": "Calendario",
     "checkin": "Check-in",
     "stats": "Estadísticas",
+    "trends": "Tendencias",
     "leaderboard": "Ranking",
     "history": "Historial",
     "settings": "Ajustes",
@@ -679,6 +680,34 @@
       "8": "Es poco esfuerzo y se nota mucho.",
       "9": "Si sale mal, mañana hay otra oportunidad."
     }
+  },
+  "onboarding": {
+    "title": "Primeros pasos",
+    "progress": "{{done}} de {{total}} completados",
+    "dismiss": "Ocultar",
+    "steps": {
+      "addPartner": "Añade a tu pareja",
+      "trackCycle": "Registra el inicio de un periodo para activar las estimaciones",
+      "firstCheckIn": "Haz tu primer check-in",
+      "invitePartner": "Invita a tu pareja a vincular su cuenta"
+    }
+  },
+  "trends": {
+    "title": "Tendencias",
+    "subtitle": "Cómo han ido las últimas semanas, según lo que registraron.",
+    "mood": "Ánimo",
+    "energy": "Energía",
+    "stress": "Estrés",
+    "satisfaction": "Satisfacción",
+    "me": "Tú",
+    "partner": "Tu pareja",
+    "checkIns": "Check-ins",
+    "encountersByMonth": "Encuentros por mes",
+    "average": "Media",
+    "weeks": "{{count}} semanas",
+    "empty": "Aún no hay suficientes check-ins para ver tendencias. Registra unos días seguidos y vuelve.",
+    "partnerNote": "La serie de tu pareja solo aparece si ella comparte sus check-ins contigo.",
+    "scale": "Escala 1 a 5"
   },
   "wishlist": {
     "title": "Ideas de regalo",

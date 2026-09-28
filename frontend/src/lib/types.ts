@@ -137,6 +137,32 @@ export interface Partner {
   createdAt: string
 }
 
+export interface TrendDay {
+  date: string
+  myMood: number | null
+  myEnergy: number | null
+  myStress: number | null
+  mySatisfaction: number | null
+  partnerMood: number | null
+}
+
+export interface MonthCount {
+  /** "YYYY-MM" */
+  month: string
+  count: number
+}
+
+export interface Trends {
+  from: string
+  to: string
+  myCheckIns: number
+  partnerCheckIns: number
+  myMoodAverage: number | null
+  mySatisfactionAverage: number | null
+  days: TrendDay[]
+  encountersByMonth: MonthCount[]
+}
+
 export interface Wish {
   id: string
   partnerId: string

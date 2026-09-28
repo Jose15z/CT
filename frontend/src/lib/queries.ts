@@ -22,6 +22,7 @@ import type {
   Predictions,
   Relationship,
   Stats,
+  Trends,
   User,
   Wish,
   XpSummary,
@@ -151,6 +152,13 @@ export function useXp() {
   return useQuery({
     queryKey: ['xp'],
     queryFn: () => api<XpSummary>('/api/xp/me'),
+  })
+}
+
+export function useTrends(weeks: number) {
+  return useQuery({
+    queryKey: ['trends', weeks],
+    queryFn: () => api<Trends>(`/api/trends?weeks=${weeks}`),
   })
 }
 

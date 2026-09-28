@@ -663,6 +663,23 @@ class ApiIntegrationTest {
     }
 
     @Test
+    @Order(18)
+    void trendsAreZeroFilledSeries() throws Exception {
+        mockMvc.perform(get("/api/trends?weeks=4")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.days.length()").value(28))
+                .andExpect(jsonPath("$.encountersByMonth.length()").value(6))
+                .andExpect(jsonPath("$.myCheckIns").value(1))
+                .andExpect(jsonPath("$.days[27].myMood").value(4.0));
+        // Spans are capped so nobody can ask for years of daily rows.
+        mockMvc.perform(get("/api/trends?weeks=999")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.days.length()").value(26 * 7));
+    }
+
+    @Test
     @Order(19)
     void exportSessionsAndAccountDeletion() throws Exception {
         // Export contains what Alice owns and nothing of Bob's.

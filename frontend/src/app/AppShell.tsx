@@ -13,6 +13,7 @@ import {
   Settings,
   SmilePlus,
   Sun,
+  TrendingUp,
   Trophy,
   UserCircle,
 } from 'lucide-react'
@@ -139,6 +140,7 @@ export function AppShell() {
           </NavGroup>
           <NavGroup label={t('nav.groupInsights')}>
             <SideLink to="/stats" icon={<BarChart3 {...iconProps} />} label={t('nav.stats')} />
+            <SideLink to="/trends" icon={<TrendingUp {...iconProps} />} label={t('nav.trends')} />
             <SideLink to="/leaderboard" icon={<Trophy {...iconProps} />} label={t('nav.leaderboard')} />
             <SideLink to="/history" icon={<Clock {...iconProps} />} label={t('nav.history')} />
           </NavGroup>

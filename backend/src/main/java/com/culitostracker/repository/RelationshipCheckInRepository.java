@@ -16,6 +16,12 @@ public interface RelationshipCheckInRepository extends JpaRepository<Relationshi
     /** Everything the user wrote, for the data export. */
     List<RelationshipCheckIn> findByAuthorUserIdOrderByCheckInDateDesc(UUID authorUserId);
 
+    List<RelationshipCheckIn> findByAuthorUserIdAndCheckInDateBetween(
+            UUID authorUserId, LocalDate from, LocalDate to);
+
+    List<RelationshipCheckIn> findByRelationshipIdAndAuthorUserIdAndCheckInDateBetween(
+            UUID relationshipId, UUID authorUserId, LocalDate from, LocalDate to);
+
     List<RelationshipCheckIn> findTop30ByRelationshipIdAndAuthorUserIdOrderByCheckInDateDesc(
             UUID relationshipId, UUID authorUserId);
 

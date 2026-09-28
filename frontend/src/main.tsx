@@ -28,6 +28,7 @@ import { SettingsPage } from './features/settings/SettingsPage'
 import { PrivacyPage } from './features/settings/PrivacyPage'
 import { NotFoundPage } from './app/NotFoundPage'
 import { InvitePage } from './features/links/InvitePage'
+import { TrendsPage } from './features/trends/TrendsPage'
 
 initTheme()
 
@@ -65,6 +66,7 @@ createRoot(document.getElementById('root')!).render(
                   <Route path="/calendar" element={<AgendaPage />} />
                   <Route path="/check-in" element={<CheckInPage />} />
                   <Route path="/stats" element={<StatsPage />} />
+                  <Route path="/trends" element={<TrendsPage />} />
                   <Route path="/leaderboard" element={<LeaderboardPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/settings" element={<SettingsPage />} />

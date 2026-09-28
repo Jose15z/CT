@@ -9,6 +9,7 @@
     "calendar": "Calendar",
     "checkin": "Check-in",
     "stats": "Stats",
+    "trends": "Trends",
     "leaderboard": "Ranking",
     "history": "History",
     "settings": "Settings",
@@ -679,6 +680,34 @@
       "8": "Little effort, big difference.",
       "9": "If it goes wrong, there's another chance tomorrow."
     }
+  },
+  "onboarding": {
+    "title": "First steps",
+    "progress": "{{done}} of {{total}} done",
+    "dismiss": "Hide",
+    "steps": {
+      "addPartner": "Add your partner",
+      "trackCycle": "Log the start of a period to enable estimates",
+      "firstCheckIn": "Do your first check-in",
+      "invitePartner": "Invite your partner to link her account"
+    }
+  },
+  "trends": {
+    "title": "Trends",
+    "subtitle": "How the last weeks went, according to what you both recorded.",
+    "mood": "Mood",
+    "energy": "Energy",
+    "stress": "Stress",
+    "satisfaction": "Satisfaction",
+    "me": "You",
+    "partner": "Your partner",
+    "checkIns": "Check-ins",
+    "encountersByMonth": "Encounters per month",
+    "average": "Average",
+    "weeks": "{{count}} weeks",
+    "empty": "Not enough check-ins yet to see trends. Log a few days in a row and come back.",
+    "partnerNote": "Your partner's series only shows when she shares her check-ins with you.",
+    "scale": "Scale 1 to 5"
   },
   "wishlist": {
     "title": "Gift ideas",

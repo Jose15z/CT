@@ -25,6 +25,7 @@ import {
 } from '../../lib/dates'
 import { LogPeriodSheet } from '../calendar/LogPeriodSheet'
 import { LinksSection } from '../links/LinksSection'
+import { OnboardingCard } from './OnboardingCard'
 import type { DashboardPartner } from '../../lib/types'
 
 function greetingKey(): string {
@@ -333,6 +334,7 @@ export function DashboardPage() {
         </div>
       ) : (
         <div className="space-y-5">
+          <OnboardingCard dashboard={data} />
           <KpiRow />
           <LinksSection />
           <div className="space-y-4">

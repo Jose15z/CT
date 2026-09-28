@@ -194,6 +194,7 @@ POST   /api/encounters                   # hoy o pasado; máx. 10/día
 DELETE /api/encounters/{id}
 
 GET    /api/xp/me                        # nivel, progreso, desglose, insignias
+GET    /api/trends?weeks=8               # series diarias (ánimo, energía, estrés, satisfacción; ánimo de la pareja si lo comparte) y encuentros por mes
 
 POST   /api/partners/{id}/invite         # owner: enlace de un solo uso (7 días)
 GET    /api/invites/{token}              # público: quién invita y a qué registro

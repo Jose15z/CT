@@ -35,6 +35,9 @@
   --danger: #b0392d;
   --danger-soft: #fae5e2;
   --ring: rgb(184 73 44 / 0.22);
+  /* Chart series: validated for lightness, chroma, CVD separation and contrast. */
+  --chart-me: #b8492c;
+  --chart-partner: #0f8f7c;
   --elev-1: 0 1px 2px rgb(23 20 17 / 0.04), 0 0 0 0 transparent;
   --elev-2: 0 1px 2px rgb(23 20 17 / 0.06), 0 10px 28px -14px rgb(23 20 17 / 0.2);
   --elev-3: 0 2px 8px rgb(23 20 17 / 0.06), 0 28px 64px -18px rgb(23 20 17 / 0.35);
@@ -64,6 +67,8 @@
   --danger: #e27a6e;
   --danger-soft: #3a2522;
   --ring: rgb(226 140 112 / 0.3);
+  --chart-me: #d4775a;
+  --chart-partner: #3aa88f;
   --elev-1: 0 1px 2px rgb(0 0 0 / 0.35), 0 0 0 0 transparent;
   --elev-2: 0 1px 2px rgb(0 0 0 / 0.4), 0 14px 36px -14px rgb(0 0 0 / 0.65);
   --elev-3: 0 2px 8px rgb(0 0 0 / 0.5), 0 28px 64px -12px rgb(0 0 0 / 0.75);
