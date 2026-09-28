@@ -604,6 +604,46 @@ class ApiIntegrationTest {
                 .andExpect(jsonPath("$").isEmpty());
     }
 
+    @Test
+    @Order(17)
+    void wishlistIsOwnerScoped() throws Exception {
+        MvcResult created = mockMvc.perform(post("/api/partners/" + partnerIdOfA + "/wishlist")
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"title\":\"Libro de cocina tailandesa\",\"url\":\"https://example.com/libro\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.done").value(false))
+                .andReturn();
+        String wishId = objectMapper.readTree(created.getResponse().getContentAsString()).get("id").asText();
+
+        mockMvc.perform(get("/api/partners/" + partnerIdOfA + "/wishlist")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("Libro de cocina tailandesa"));
+
+        // Another user can neither read the list nor touch the item.
+        mockMvc.perform(get("/api/partners/" + partnerIdOfA + "/wishlist")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(patch("/api/wishlist/" + wishId)
+                        .header("Authorization", "Bearer " + tokenB)
+                        .contentType(APPLICATION_JSON).content("{\"done\":true}"))
+                .andExpect(status().isNotFound());
+
+        mockMvc.perform(patch("/api/wishlist/" + wishId)
+                        .header("Authorization", "Bearer " + tokenA)
+                        .contentType(APPLICATION_JSON).content("{\"done\":true}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.done").value(true));
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/wishlist/" + wishId)
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isNoContent());
+        mockMvc.perform(get("/api/partners/" + partnerIdOfA + "/wishlist")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
     private UUID registerIdOf(String username) throws Exception {
         String token = username.equals("alice") ? tokenA : tokenB;
         MvcResult result = mockMvc.perform(get("/api/users/me")

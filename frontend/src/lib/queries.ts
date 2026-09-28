@@ -23,6 +23,7 @@ import type {
   Relationship,
   Stats,
   User,
+  Wish,
   XpSummary,
 } from './types'
 
@@ -150,6 +151,54 @@ export function useXp() {
   return useQuery({
     queryKey: ['xp'],
     queryFn: () => api<XpSummary>('/api/xp/me'),
+  })
+}
+
+// ---- Gift ideas ----
+
+export function useWishlist(partnerId: string | undefined) {
+  return useQuery({
+    queryKey: ['wishlist', partnerId],
+    queryFn: () => api<Wish[]>(`/api/partners/${partnerId}/wishlist`),
+    enabled: !!partnerId,
+  })
+}
+
+export function useCreateWish(partnerId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: { title: string; note?: string; url?: string }) =>
+      api<Wish>(`/api/partners/${partnerId}/wishlist`, { method: 'POST', body: payload }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['wishlist', partnerId] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
+    },
+  })
+}
+
+export function useUpdateWish(partnerId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: { id: string; done?: boolean; title?: string }) =>
+      api<Wish>(`/api/wishlist/${payload.id}`, {
+        method: 'PATCH',
+        body: { done: payload.done, title: payload.title },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['wishlist', partnerId] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
+    },
+  })
+}
+
+export function useDeleteWish(partnerId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => api<void>(`/api/wishlist/${id}`, { method: 'DELETE' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['wishlist', partnerId] })
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
+    },
   })
 }
 

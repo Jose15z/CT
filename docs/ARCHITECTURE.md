@@ -64,6 +64,7 @@ frontend/src/
 - **PartnerAccess** — permisos de una cuenta vinculada: qué puede ver el otro usuario (por scope) y con posibilidad de revocarlo.
 - **LeaderboardProfile** — participación opt-in en el ranking.
 - **TipCatalog** (sin tabla) — banco de consejos genéricos compuesto en código a partir de fragmentos etiquetados; el texto vive en `es.json`/`en.json`.
+- **WishlistItem** — ideas de regalo por pareja, privadas del owner; el motor de consejos usa el número de ideas abiertas en las reglas de cumpleaños (`advice.birthday.*`, calculadas desde `partner.birthDate`).
 - **PartnerInvite** — invitación de un solo uso (token hasheado, 7 días) para que la persona real detrás de un Partner vincule su propia cuenta. Al aceptar, `partner.linkedUserId` apunta a ella y los grants (PartnerAccess) deciden qué ve cada parte; desvincular borra todos los grants.
 - **RefreshToken** — refresh tokens opacos, hasheados, revocables.
 
@@ -196,6 +197,11 @@ GET    /api/invites/{token}              # público: quién invita y a qué regi
 POST   /api/invites/{token}/accept       # el invitado vincula su cuenta
 GET    /api/links                        # registros donde soy la persona vinculada
 DELETE /api/links/{partnerId}            # cualquiera de las dos partes desvincula
+
+GET    /api/partners/{id}/wishlist       # ideas de regalo (solo owner)
+POST   /api/partners/{id}/wishlist
+PATCH  /api/wishlist/{id}                # título, nota, url, done
+DELETE /api/wishlist/{id}
 ```
 
 Cambios sobre la propuesta del enunciado: se añade `logout`, `users/me/password`, `partners/history` y el parámetro `window` del leaderboard; `PATCH /api/partners/{id}/relationship` absorbe finalizar/reactivar (un solo endpoint de estado en lugar de verbos ad hoc).

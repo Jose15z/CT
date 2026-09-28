@@ -124,6 +124,8 @@
     "viewCalendar": "View calendar",
     "adviceToday": "Today's suggestion",
     "nextAnniversary": "Next anniversary",
+    "nextBirthday": "Birthday",
+    "turns": "turns {{age}}",
     "anniversaryYears": "{{years}} year anniversary",
     "cycleDay": "Cycle day {{day}}",
     "nextPeriod": "Next period",
@@ -384,6 +386,23 @@
         "1": "Your anniversary is coming up ({{days}} days). If you want to plan something ahead, now is the time.",
         "2": "{{days}} days to the anniversary. Jot down one idea today, even if you settle it later.",
         "3": "The anniversary with {{name}} is in {{days}} days. Without giving anything away, ask what kind of plan sounds good lately."
+      }
+    },
+    "birthday": {
+      "today": {
+        "1": "Today is {{name}}'s birthday: she turns {{age}}. Make yours the first message she gets.",
+        "2": "{{name}} turns {{age}} today. You have {{wishes}} ideas saved on her list; if you didn't get there in time, an improvised plan counts too.",
+        "3": "{{name}}'s birthday. Time before gifts: keep the evening free for her."
+      },
+      "upcoming": {
+        "1": "In {{days}} days {{name}} turns {{age}}. Check her saved gift ideas ({{wishes}}) and decide now.",
+        "2": "{{days}} days to {{name}}'s birthday. If you're booking something, this is the week.",
+        "3": "{{name}}'s birthday is in {{days}} days. Without giving anything away, ask whether she'd rather have a quiet plan or a celebration."
+      },
+      "approaching": {
+        "1": "{{name}}'s birthday is coming up ({{days}} days). Add one idea to her gift list today.",
+        "2": "{{days}} days until {{name}} turns {{age}}. Notice what she mentions these weeks: that's the gift.",
+        "3": "{{name}}'s birthday is in {{days}} days. If you want to organize something with more people, start letting them know."
       }
     },
     "partnerReport": {
@@ -661,6 +680,16 @@
       "9": "If it goes wrong, there's another chance tomorrow."
     }
   },
+  "wishlist": {
+    "title": "Gift ideas",
+    "hint": "Things she mentioned or would like. Only you see them; the daily tip will remind you before her birthday.",
+    "add": "Add",
+    "placeholder": "Something she mentioned…",
+    "empty": "No ideas saved yet.",
+    "markDone": "Mark as gifted",
+    "markPending": "Back to pending",
+    "deleteConfirm": "Delete this idea?"
+  },
   "invite": {
     "title": "Invitation",
     "headline": "{{inviter}} invites you to link your account to their record \"{{name}}\".",
@@ -710,7 +739,8 @@
     "cycleCalendars": "Cycle calendars",
     "encounterWith": "Encounter with {{name}}",
     "unknownPartner": "Deleted record",
-    "legend": { "plan": "Date", "encounter": "Encounter" },
+    "legend": { "plan": "Date", "encounter": "Encounter", "birthday": "Birthday" },
+    "birthday": "{{name}}'s birthday",
     "deletePlanConfirm": "Delete this date?",
     "deleteEncounterConfirm": "Delete this encounter from the log?",
     "planSaved": "Date scheduled",

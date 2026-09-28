@@ -124,6 +124,8 @@
     "viewCalendar": "Ver calendario",
     "adviceToday": "Sugerencia de hoy",
     "nextAnniversary": "Próximo aniversario",
+    "nextBirthday": "Cumpleaños",
+    "turns": "cumple {{age}}",
     "anniversaryYears": "{{years}}º aniversario",
     "cycleDay": "Día {{day}} del ciclo",
     "nextPeriod": "Próximo periodo",
@@ -384,6 +386,23 @@
         "1": "Su aniversario se acerca ({{days}} días). Si quieres organizar algo con tiempo, este es el momento.",
         "2": "Faltan {{days}} días para el aniversario. Apunta hoy una idea, aunque la concretes más adelante.",
         "3": "En {{days}} días es el aniversario con {{name}}. Pregúntale, sin desvelar nada, qué tipo de plan le apetece últimamente."
+      }
+    },
+    "birthday": {
+      "today": {
+        "1": "Hoy es el cumpleaños de {{name}}: cumple {{age}}. Que lo primero que reciba sea tu felicitación.",
+        "2": "{{name}} cumple {{age}} hoy. Tienes {{wishes}} ideas guardadas en su lista; si no llegaste a tiempo, un plan improvisado también cuenta.",
+        "3": "Cumpleaños de {{name}}. Antes que el regalo, el tiempo: reserva la tarde para esa persona."
+      },
+      "upcoming": {
+        "1": "En {{days}} días {{name}} cumple {{age}}. Revisa sus ideas de regalo guardadas ({{wishes}}) y decide ya.",
+        "2": "Quedan {{days}} días para el cumpleaños de {{name}}. Si vas a reservar algo, esta semana.",
+        "3": "El cumpleaños de {{name}} es en {{days}} días. Pregúntale, sin desvelar nada, si prefiere plan tranquilo o celebración."
+      },
+      "approaching": {
+        "1": "El cumpleaños de {{name}} se acerca ({{days}} días). Anota hoy una idea en su lista de regalos.",
+        "2": "Faltan {{days}} días para que {{name}} cumpla {{age}}. Fíjate en lo que menciona estas semanas: ahí está el regalo.",
+        "3": "En {{days}} días es el cumpleaños de {{name}}. Si quieres organizar algo con más gente, empieza a avisar."
       }
     },
     "partnerReport": {
@@ -661,6 +680,16 @@
       "9": "Si sale mal, mañana hay otra oportunidad."
     }
   },
+  "wishlist": {
+    "title": "Ideas de regalo",
+    "hint": "Cosas que mencionó o que le gustarían. Solo tú las ves; el consejo del día te las recordará antes de su cumpleaños.",
+    "add": "Añadir",
+    "placeholder": "Algo que mencionó…",
+    "empty": "Aún no has guardado ideas.",
+    "markDone": "Marcar como regalado",
+    "markPending": "Volver a pendiente",
+    "deleteConfirm": "¿Eliminar esta idea?"
+  },
   "invite": {
     "title": "Invitación",
     "headline": "{{inviter}} te invita a vincular tu cuenta con su registro «{{name}}».",
@@ -710,7 +739,8 @@
     "cycleCalendars": "Calendarios de ciclo",
     "encounterWith": "Encuentro con {{name}}",
     "unknownPartner": "Registro eliminado",
-    "legend": { "plan": "Cita", "encounter": "Encuentro" },
+    "legend": { "plan": "Cita", "encounter": "Encuentro", "birthday": "Cumpleaños" },
+    "birthday": "Cumpleaños de {{name}}",
     "deletePlanConfirm": "¿Eliminar esta cita?",
     "deleteEncounterConfirm": "¿Eliminar este encuentro del registro?",
     "planSaved": "Cita agendada",

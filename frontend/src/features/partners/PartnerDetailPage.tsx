@@ -20,6 +20,7 @@ import { PartnerFormSheet } from './PartnerFormSheet'
 import { RelationshipSheet } from './RelationshipSheet'
 import { CycleSection } from './CycleSection'
 import { LinkedAccountSection } from '../links/LinkedAccountSection'
+import { WishlistSection } from './WishlistSection'
 import { observationEmoji } from '../../lib/emoji'
 import { errorMessage } from '../../lib/errors'
 import { formatDate, formatDayMonth, formatDuration } from '../../lib/dates'
@@ -202,6 +203,11 @@ export function PartnerDetailPage() {
 
         {/* Cycle */}
         <CycleSection partnerId={partner.id} partnerName={partner.nickname ?? partner.name} />
+
+        <div className="border-t border-border" />
+
+        {/* Gift ideas */}
+        <WishlistSection partnerId={partner.id} />
 
         {/* Observations */}
         {observations && observations.length > 0 && (

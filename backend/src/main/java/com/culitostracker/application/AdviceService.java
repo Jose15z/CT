@@ -22,6 +22,7 @@ import com.culitostracker.repository.PartnerObservationRepository;
 import com.culitostracker.repository.PeriodRecordRepository;
 import com.culitostracker.repository.RelationshipCheckInRepository;
 import com.culitostracker.repository.RelationshipRepository;
+import com.culitostracker.repository.WishlistRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +46,7 @@ public class AdviceService {
     private final PartnerObservationRepository observationRepository;
     private final CycleProfileRepository cycleProfileRepository;
     private final PeriodRecordRepository periodRecordRepository;
+    private final WishlistRepository wishlistRepository;
     private final CyclePredictionService predictionService;
     private final RelationshipDurationCalculator durationCalculator;
     private final RelationshipAdviceEngine adviceEngine;
@@ -55,6 +57,7 @@ public class AdviceService {
                          PartnerObservationRepository observationRepository,
                          CycleProfileRepository cycleProfileRepository,
                          PeriodRecordRepository periodRecordRepository,
+                         WishlistRepository wishlistRepository,
                          CyclePredictionService predictionService,
                          RelationshipDurationCalculator durationCalculator,
                          RelationshipAdviceEngine adviceEngine) {
@@ -64,6 +67,7 @@ public class AdviceService {
         this.observationRepository = observationRepository;
         this.cycleProfileRepository = cycleProfileRepository;
         this.periodRecordRepository = periodRecordRepository;
+        this.wishlistRepository = wishlistRepository;
         this.predictionService = predictionService;
         this.durationCalculator = durationCalculator;
         this.adviceEngine = adviceEngine;
@@ -129,6 +133,10 @@ public class AdviceService {
                         partnerId, userId, today.minusDays(2))
                 .orElse(null);
 
+        // Next birthday: "years" is the age the partner turns on that date.
+        AnniversaryInfo birthday = partner.getBirthDate() == null
+                ? null : durationCalculator.nextAnniversary(partner.getBirthDate(), today);
+
         AdviceContext context = new AdviceContext(
                 partnerId,
                 partner.getNickname() != null ? partner.getNickname() : partner.getName(),
@@ -146,6 +154,9 @@ public class AdviceService {
                 partnerCheckIn != null ? partnerCheckIn.getMood() : null,
                 partnerCheckIn != null ? partnerCheckIn.getStressLevel() : null,
                 observation != null ? observation.getObservationType() : null,
+                birthday != null ? (int) birthday.daysUntil() : null,
+                birthday != null ? birthday.years() : null,
+                (int) wishlistRepository.countByPartnerIdAndDoneFalse(partnerId),
                 today);
 
         return adviceEngine.advise(context);

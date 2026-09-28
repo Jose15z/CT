@@ -30,6 +30,8 @@ public final class DashboardDtos {
                                    LocalDate togetherSince,
                                    PartnerDtos.DurationDto duration,
                                    PartnerDtos.AnniversaryDto nextAnniversary,
+                                   /** years = the age they turn; null without a birth date. */
+                                   PartnerDtos.AnniversaryDto nextBirthday,
                                    DashboardCycleSummary cycle,
                                    CheckInDtos.CheckInResponse myCheckInToday,
                                    CheckInDtos.CheckInResponse partnerCheckInToday,

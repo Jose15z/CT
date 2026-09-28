@@ -137,6 +137,15 @@ export interface Partner {
   createdAt: string
 }
 
+export interface Wish {
+  id: string
+  partnerId: string
+  title: string
+  note: string | null
+  url: string | null
+  done: boolean
+}
+
 export type AccessScope = 'CYCLE' | 'CHECK_INS'
 
 export interface GrantState {
@@ -265,6 +274,8 @@ export interface DashboardPartner {
   togetherSince: string | null
   duration: Duration | null
   nextAnniversary: Anniversary | null
+  /** years = the age they turn; null without a birth date. */
+  nextBirthday: Anniversary | null
   cycle: DashboardCycleSummary
   myCheckInToday: CheckIn | null
   partnerCheckInToday: CheckIn | null

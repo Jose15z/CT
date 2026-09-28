@@ -137,6 +137,7 @@ public class DashboardService {
                 rel.togetherSince(),
                 rel.duration(),
                 rel.nextAnniversary(),
+                partnerService.nextBirthday(partner, today),
                 cycle,
                 myCheckIn,
                 partnerCheckIn,

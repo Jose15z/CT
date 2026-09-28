@@ -266,6 +266,15 @@ public class PartnerService {
                 partner.getCreatedAt());
     }
 
+    /** Next birthday; {@code years} is the age the partner turns. Null without a birth date. */
+    public AnniversaryDto nextBirthday(Partner partner, LocalDate today) {
+        if (partner.getBirthDate() == null) {
+            return null;
+        }
+        AnniversaryInfo b = durationCalculator.nextAnniversary(partner.getBirthDate(), today);
+        return new AnniversaryDto(b.date(), b.daysUntil(), b.years());
+    }
+
     RelationshipResponse toRelationshipResponse(Relationship r, LocalDate today) {
         LocalDate since = r.togetherSince();
         DurationDto duration = null;

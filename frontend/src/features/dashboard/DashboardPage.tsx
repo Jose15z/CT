@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CalendarDays, Droplet, Heart, Plus, SmilePlus } from 'lucide-react'
+import { CalendarDays, Droplet, Gift, Heart, Plus, SmilePlus } from 'lucide-react'
 import {
   useDashboard,
   useEncounters,
@@ -192,6 +192,18 @@ function PartnerToday({ partner }: { partner: DashboardPartner }) {
               {partner.nextAnniversary.daysUntil === 0
                 ? t('common.today')
                 : t('common.inDays', { count: partner.nextAnniversary.daysUntil })}
+            </p>
+          )}
+          {partner.nextBirthday && (
+            <p className="flex items-center gap-1.5 text-[12.5px] text-ink-2">
+              <Gift size={13} className="text-teal" aria-hidden="true" />
+              {t('dashboard.nextBirthday')}: {formatDayMonth(partner.nextBirthday.date)}
+              {' · '}
+              {t('dashboard.turns', { age: partner.nextBirthday.years })}
+              {' · '}
+              {partner.nextBirthday.daysUntil === 0
+                ? t('common.today')
+                : t('common.inDays', { count: partner.nextBirthday.daysUntil })}
             </p>
           )}
         </div>

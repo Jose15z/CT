@@ -34,5 +34,8 @@ public record AdviceContext(UUID partnerId,
                             Mood partnerMood,                 // self-reported by the partner
                             Integer partnerStress,
                             ObservationType observed,         // my recent perception
+                            Integer daysUntilBirthday,        // null without a birth date
+                            Integer birthdayAge,              // the age they turn next
+                            int wishlistCount,                // open gift ideas saved
                             LocalDate today) {
 }

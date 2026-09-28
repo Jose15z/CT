@@ -41,7 +41,22 @@ class RelationshipAdviceEngineTest {
         return new AdviceContext(partnerId, "Laura", RelationshipType.SERIOUS_RELATIONSHIP,
                 RelationshipStage.ESTABLISHED, 30L, daysUntilAnniversary, anniversaryYears,
                 phase, myMood, myStress, myEnergy, myAffection, mySatisfaction,
-                partnerMood, partnerStress, observed, date);
+                partnerMood, partnerStress, observed, null, null, 0, date);
+    }
+
+    @Test
+    void birthdayOutranksObservationsAndCarriesGiftIdeas() {
+        AdviceContext ctx = new AdviceContext(partnerId, "Laura", RelationshipType.DATING,
+                RelationshipStage.NEW, 2L, null, null, null, null, null, null, null, null,
+                null, null, ObservationType.SAD, 0, 30, 2, today);
+        List<AdviceCandidate> advice = engine.advise(ctx);
+        assertThat(ruleOf(advice.get(0))).isEqualTo("birthday.today");
+        assertThat(advice.get(0).params()).containsEntry("age", 30).containsEntry("wishes", 2);
+
+        AdviceContext soon = new AdviceContext(partnerId, "Laura", RelationshipType.DATING,
+                RelationshipStage.NEW, 2L, null, null, null, null, null, null, null, null,
+                null, null, null, 10, 30, 0, today);
+        assertThat(ruleOf(engine.advise(soon).get(0))).isEqualTo("birthday.upcoming");
     }
 
     /** Rule keys carry a variant suffix: "advice.rule.N" → "rule". */

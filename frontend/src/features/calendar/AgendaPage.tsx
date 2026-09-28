@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Clock3,
   Flame,
+  Gift,
   MapPin,
   Trash2,
 } from 'lucide-react'
@@ -75,6 +76,20 @@ export function AgendaPage() {
     encounters?.forEach((e) => map.set(e.date, [...(map.get(e.date) ?? []), e]))
     return map
   }, [encounters])
+
+  // Birthdays falling in this month, from the partners' birth dates.
+  const birthdaysByDate = useMemo(() => {
+    const map = new Map<string, string[]>()
+    ;(partners ?? [])
+      .filter((p) => p.birthDate && p.relationship?.status !== 'ENDED')
+      .forEach((p) => {
+        const birth = parseISODate(p.birthDate!)
+        if (birth.getMonth() !== month.getMonth()) return
+        const iso = toISODate(new Date(month.getFullYear(), month.getMonth(), birth.getDate()))
+        map.set(iso, [...(map.get(iso) ?? []), p.nickname ?? p.name])
+      })
+    return map
+  }, [partners, month])
 
   if (isLoading) return <PageLoader />
 
@@ -204,6 +219,9 @@ export function AgendaPage() {
                       {encountersByDate.has(iso) && (
                         <span className="h-1 w-1 rounded-full bg-peach" />
                       )}
+                      {birthdaysByDate.has(iso) && (
+                        <span className="h-1 w-1 rounded-full bg-teal" />
+                      )}
                     </span>
                   </button>
                 ),
@@ -219,6 +237,10 @@ export function AgendaPage() {
               <span className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-peach" />
                 {t('agenda.legend.encounter')}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-teal" />
+                {t('agenda.legend.birthday')}
               </span>
             </div>
           </div>
@@ -277,6 +299,12 @@ export function AgendaPage() {
         {/* Selected day detail */}
         <aside className="h-fit card p-4">
           <h2 className="text-[14px] font-semibold text-ink">{formatDate(selected)}</h2>
+          {(birthdaysByDate.get(selected) ?? []).map((name) => (
+            <p key={name} className="mt-2 flex items-center gap-1.5 text-[13px] font-medium text-teal">
+              <Gift size={13} aria-hidden="true" />
+              {t('agenda.birthday', { name })}
+            </p>
+          ))}
 
           <div className="mt-3">
             <h3 className="text-[12px] font-medium uppercase tracking-wide text-ink-3">

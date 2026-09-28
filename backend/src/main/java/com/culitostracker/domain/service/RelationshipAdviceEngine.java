@@ -33,6 +33,7 @@ public class RelationshipAdviceEngine {
     /** Every rule id the engine can emit; the i18n contract test mirrors it. */
     public static final List<String> RULES = List.of(
             "anniversary.today", "anniversary.upcoming", "anniversary.approaching",
+            "birthday.today", "birthday.upcoming", "birthday.approaching",
             "partnerReport.sad", "partnerReport.low", "partnerReport.good",
             "observation.needsSpace", "observation.sad", "observation.upset",
             "observation.distant", "observation.happy", "observation.affectionate",
@@ -66,6 +67,20 @@ public class RelationshipAdviceEngine {
                 add(out, seeded, "anniversary.upcoming", params, 90, AdviceCategory.ANNIVERSARY, AdviceSource.RELATIONSHIP);
             } else if (days <= 30) {
                 add(out, seeded, "anniversary.approaching", params, 35, AdviceCategory.ANNIVERSARY, AdviceSource.RELATIONSHIP);
+            }
+        }
+
+        // --- Birthday (needs a birth date); mentions saved gift ideas ---
+        if (ctx.daysUntilBirthday() != null && ctx.birthdayAge() != null) {
+            int days = ctx.daysUntilBirthday();
+            Map<String, Object> params = Map.of("name", ctx.partnerName(),
+                    "days", days, "age", ctx.birthdayAge(), "wishes", ctx.wishlistCount());
+            if (days == 0) {
+                add(out, seeded, "birthday.today", params, 95, AdviceCategory.AFFECTION, AdviceSource.RELATIONSHIP);
+            } else if (days <= 14) {
+                add(out, seeded, "birthday.upcoming", params, 88, AdviceCategory.DATE_IDEA, AdviceSource.RELATIONSHIP);
+            } else if (days <= 30) {
+                add(out, seeded, "birthday.approaching", params, 34, AdviceCategory.DATE_IDEA, AdviceSource.RELATIONSHIP);
             }
         }
 
