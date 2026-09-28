@@ -664,6 +664,51 @@ class ApiIntegrationTest {
 
     @Test
     @Order(18)
+    void pushIsOffWithoutVapidKeysButSubscriptionsAreStored() throws Exception {
+        // No VAPID keys in tests: the client learns push is unavailable.
+        mockMvc.perform(get("/api/push/config")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.enabled").value(false))
+                .andExpect(jsonPath("$.subscribed").value(false));
+
+        // A subscription is still accepted (keys can be added later) and it
+        // records the browser's time zone on the profile.
+        mockMvc.perform(post("/api/push/subscriptions")
+                        .header("Authorization", "Bearer " + tokenB)
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                {"endpoint":"https://push.example/abc","p256dh":"key","auth":"secret",
+                                 "timezone":"Europe/Madrid"}
+                                """))
+                .andExpect(status().isNoContent());
+        mockMvc.perform(get("/api/push/config")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(jsonPath("$.subscribed").value(true));
+        mockMvc.perform(get("/api/users/me")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(jsonPath("$.timezone").value("Europe/Madrid"))
+                .andExpect(jsonPath("$.remindersEnabled").value(true));
+
+        // Bogus zones are rejected; unsubscribing forgets the endpoint.
+        mockMvc.perform(patch("/api/users/me")
+                        .header("Authorization", "Bearer " + tokenB)
+                        .contentType(APPLICATION_JSON).content("{\"timezone\":\"Mars/Olympus\"}"))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("user.invalidTimezone"));
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .delete("/api/push/subscriptions")
+                        .header("Authorization", "Bearer " + tokenB)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"endpoint\":\"https://push.example/abc\"}"))
+                .andExpect(status().isNoContent());
+        mockMvc.perform(get("/api/push/config")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(jsonPath("$.subscribed").value(false));
+    }
+
+    @Test
+    @Order(18)
     void trendsAreZeroFilledSeries() throws Exception {
         mockMvc.perform(get("/api/trends?weeks=4")
                         .header("Authorization", "Bearer " + tokenA))

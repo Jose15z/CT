@@ -48,7 +48,29 @@ public class UserService {
         if (request.relationshipSituation() != null) {
             user.setRelationshipSituation(request.relationshipSituation());
         }
+        if (request.timezone() != null) {
+            user.setTimezone(validZone(request.timezone()));
+        }
+        if (request.remindersEnabled() != null) {
+            user.setRemindersEnabled(request.remindersEnabled());
+        }
         return UserResponse.from(userRepository.save(user), avatarService.exists(userId));
+    }
+
+    /** The browser reports its zone when subscribing to reminders. */
+    @Transactional
+    public void updateTimezone(UUID userId, String timezone) {
+        User user = requireUser(userId);
+        user.setTimezone(validZone(timezone));
+        userRepository.save(user);
+    }
+
+    private static String validZone(String zone) {
+        try {
+            return java.time.ZoneId.of(zone).getId();
+        } catch (RuntimeException e) {
+            throw new DomainRuleException("user.invalidTimezone", "Unknown time zone");
+        }
     }
 
     @Transactional

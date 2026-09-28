@@ -502,6 +502,8 @@ export function useUpdateProfile() {
       preferredLanguage?: string
       avatarEmoji?: string
       relationshipSituation?: string
+      timezone?: string
+      remindersEnabled?: boolean
     }) => api<User>('/api/users/me', { method: 'PATCH', body: payload }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dashboard'] })

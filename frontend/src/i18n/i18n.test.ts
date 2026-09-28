@@ -100,6 +100,7 @@ describe('translation bundles', () => {
     'errors.encounter.dailyLimit',
     'errors.auth.invalidResetToken',
     'errors.auth.tooManyAttempts',
+    'errors.user.invalidTimezone',
     'errors.invite.invalid',
     'errors.invite.selfLink',
     'errors.invite.alreadyLinked',

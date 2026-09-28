@@ -85,6 +85,8 @@ export interface User {
   avatarEmoji: string | null
   hasAvatar: boolean
   relationshipSituation: RelationshipSituation
+  timezone: string
+  remindersEnabled: boolean
   createdAt: string
 }
 

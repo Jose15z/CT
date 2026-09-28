@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './styles/index.css'
 import './i18n'
+import { registerSW } from 'virtual:pwa-register'
 import { initTheme } from './lib/theme'
 import { AuthProvider } from './lib/auth'
 import { ToastProvider } from './components/ui/Toast'
@@ -31,6 +32,8 @@ import { InvitePage } from './features/links/InvitePage'
 import { TrendsPage } from './features/trends/TrendsPage'
 
 initTheme()
+// Installable app + push notifications; updates apply on the next load.
+registerSW({ immediate: true })
 
 const queryClient = new QueryClient({
   defaultOptions: {

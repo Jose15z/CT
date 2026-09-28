@@ -144,6 +144,10 @@ GET    /api/users/me/export         # descarga JSON con todos mis datos
 DELETE /api/users/me                # baja definitiva (pide contraseña)
 POST   /api/auth/logout-all         # revoca las demás sesiones
 
+GET    /api/push/config             # ¿hay VAPID? clave pública; ¿este usuario tiene suscripciones?
+POST   /api/push/subscriptions      # guarda la suscripción del navegador (+ zona horaria)
+DELETE /api/push/subscriptions      # olvida un endpoint
+
 GET    /api/partners                # ?status=ACTIVE|ENDED|ALL (excluye borradas)
 POST   /api/partners
 GET    /api/partners/{id}
@@ -258,6 +262,12 @@ Añadido después del MVP: agenda de citas, registro de encuentros y gamificaci�
   - Los multiplicadores se acumulan (máx. ×2.25): la "pequeña ventaja" estructural para quien farmea XP con una sola pareja en una relación seria.
 - **Niveles**: llegar al nivel *n* cuesta `50·n·(n−1)` XP acumulado (cada nivel cuesta `100·n` más). Títulos e insignias son claves i18n (`xp.title.N`, `xp.badge.*`) resueltas en el frontend.
 - **Privacidad**: `GET /api/xp/me` es lo único que existe; no hay ranking de XP ni comparación entre usuarios.
+
+## 9c. PWA y recordatorios
+
+- El frontend es una PWA (`vite-plugin-pwa`, estrategia `injectManifest`): manifest con iconos, service worker propio (`src/sw.ts`) que precachea el bundle y muestra las notificaciones push (`push` → `showNotification`, `notificationclick` → abre la ruta).
+- **Web Push (VAPID)**: `WebPushService` envía con `nl.martijndwars:web-push`; sin `VAPID_PUBLIC_KEY`/`VAPID_PRIVATE_KEY` el push está apagado y la UI lo indica. Las suscripciones viven en `push_subscriptions` (una por navegador) y se podan cuando el servicio responde 404/410.
+- **Recordatorios**: `ReminderScheduler` corre cada hora (`0 5 * * * *`) solo para usuarios con suscripción y `reminders_enabled`; convierte el instante a la zona del usuario (`users.timezone`, que el navegador informa al suscribirse) y a las 20:00 locales avisa si falta el check-in, y a las 9:00 avisa de citas de hoy/mañana, cumpleaños y aniversarios (hoy o en 7 días) y periodo estimado en 2 días. `ReminderPlanner` es puro y está cubierto por tests; `reminder_sends (user, kind, day)` garantiza un envío por tipo y día aunque el proceso se reinicie.
 
 ## 10. Autenticación
 

@@ -23,6 +23,14 @@ import {
   useUploadAvatar,
 } from '../../lib/queries'
 import { Sheet } from '../../components/ui/Sheet'
+import { Switch } from '../../components/ui/Switch'
+import {
+  PushPermissionDenied,
+  pushSupported,
+  useDisablePush,
+  useEnablePush,
+  usePushConfig,
+} from '../../lib/push'
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
@@ -70,6 +78,9 @@ export function SettingsPage() {
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [deletePassword, setDeletePassword] = useState('')
   const [deleteError, setDeleteError] = useState<string | null>(null)
+  const { data: pushConfig } = usePushConfig()
+  const enablePush = useEnablePush()
+  const disablePush = useDisablePush()
 
   if (!user) return null
 
@@ -302,6 +313,57 @@ export function SettingsPage() {
             </Button>
           </div>
         </div>
+      </section>
+
+      {/* Reminders (Web Push) */}
+      <section className="card p-4 sm:p-5">
+        <h2 className="text-[15px] font-semibold tracking-tight text-ink">{t('settings.reminders')}</h2>
+        {!pushSupported() ? (
+          <p className="mt-2 text-[13px] leading-relaxed text-ink-3">{t('settings.remindersUnsupported')}</p>
+        ) : pushConfig && !pushConfig.enabled ? (
+          <p className="mt-2 text-[13px] leading-relaxed text-ink-3">{t('settings.remindersUnavailable')}</p>
+        ) : (
+          <div className="mt-2 divide-y divide-border">
+            <Switch
+              label={t('settings.remindersDevice')}
+              description={t('settings.remindersDeviceHint')}
+              checked={!!pushConfig?.subscribed}
+              disabled={!pushConfig || enablePush.isPending || disablePush.isPending}
+              onChange={(on) =>
+                on
+                  ? enablePush.mutate(pushConfig!.publicKey!, {
+                      onSuccess: () => toast(t('settings.remindersOn')),
+                      onError: (err) =>
+                        toast(
+                          err instanceof PushPermissionDenied
+                            ? t('settings.pushDenied')
+                            : errorMessage(err),
+                          'error',
+                        ),
+                    })
+                  : disablePush.mutate(undefined, {
+                      onSuccess: () => toast(t('settings.remindersOff')),
+                      onError: (err) => toast(errorMessage(err), 'error'),
+                    })
+              }
+            />
+            <Switch
+              label={t('settings.remindersMaster')}
+              description={t('settings.remindersMasterHint')}
+              checked={user.remindersEnabled}
+              disabled={updateProfile.isPending}
+              onChange={(on) =>
+                updateProfile.mutate(
+                  { remindersEnabled: on },
+                  {
+                    onSuccess: () => refreshUser(),
+                    onError: (err) => toast(errorMessage(err), 'error'),
+                  },
+                )
+              }
+            />
+          </div>
+        )}
       </section>
 
       {/* Sessions, data portability, deletion */}

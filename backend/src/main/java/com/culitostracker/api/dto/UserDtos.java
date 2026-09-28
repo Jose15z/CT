@@ -21,6 +21,8 @@ public final class UserDtos {
                                String avatarEmoji,
                                boolean hasAvatar,
                                RelationshipSituation relationshipSituation,
+                               String timezone,
+                               boolean remindersEnabled,
                                Instant createdAt) {
 
         public static UserResponse from(User user) {
@@ -30,7 +32,8 @@ public final class UserDtos {
         public static UserResponse from(User user, boolean hasAvatar) {
             return new UserResponse(user.getId(), user.getUsername(), user.getEmail(),
                     user.getDisplayName(), user.getPreferredLanguage(), user.getAvatarEmoji(),
-                    hasAvatar, user.getRelationshipSituation(), user.getCreatedAt());
+                    hasAvatar, user.getRelationshipSituation(), user.getTimezone(),
+                    user.isRemindersEnabled(), user.getCreatedAt());
         }
     }
 
@@ -39,7 +42,9 @@ public final class UserDtos {
             @Size(min = 1, max = 60) String displayName,
             @Size(min = 2, max = 5) String preferredLanguage,
             @Size(max = 16) String avatarEmoji,
-            RelationshipSituation relationshipSituation) {
+            RelationshipSituation relationshipSituation,
+            @Size(max = 60) String timezone,
+            Boolean remindersEnabled) {
     }
 
     public record ChangePasswordRequest(

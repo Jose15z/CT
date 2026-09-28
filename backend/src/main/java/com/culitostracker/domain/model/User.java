@@ -44,6 +44,13 @@ public class User {
     @Column(name = "relationship_situation", nullable = false, length = 20)
     private RelationshipSituation relationshipSituation = RelationshipSituation.SINGLE;
 
+    /** IANA zone; reminders fire at local hours. */
+    @Column(nullable = false, length = 60)
+    private String timezone = "America/Bogota";
+
+    @Column(name = "reminders_enabled", nullable = false)
+    private boolean remindersEnabled = true;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -67,6 +74,10 @@ public class User {
     public void setAvatarEmoji(String avatarEmoji) { this.avatarEmoji = avatarEmoji; }
     public RelationshipSituation getRelationshipSituation() { return relationshipSituation; }
     public void setRelationshipSituation(RelationshipSituation relationshipSituation) { this.relationshipSituation = relationshipSituation; }
+    public String getTimezone() { return timezone; }
+    public void setTimezone(String timezone) { this.timezone = timezone; }
+    public boolean isRemindersEnabled() { return remindersEnabled; }
+    public void setRemindersEnabled(boolean remindersEnabled) { this.remindersEnabled = remindersEnabled; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
 }
