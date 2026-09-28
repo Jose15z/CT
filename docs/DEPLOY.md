@@ -20,7 +20,8 @@ Nota histórica: el plan original usaba Koyeb, pero fue adquirido por Mistral y 
 - Variables del servicio (256 MB de RAM obligan a ajustar la JVM; con esto arranca en ~100 s):
 
   ```
-  JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m -Xmx80m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=24m -Xss256k -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -XX:MaxDirectMemorySize=16m
+  JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m -Xmx80m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=24m -Xss256k -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -XX:MaxDirectMemorySize=16m -XX:-UsePerfData -XX:CICompilerCount=1
+  MALLOC_ARENA_MAX=2
   SERVER_TOMCAT_THREADS_MAX=8
   SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=2
   CORS_ALLOWED_ORIGINS=https://culitostracker.vercel.app,https://culitostracker-jose15zs-projects.vercel.app
@@ -35,6 +36,8 @@ Nota histórica: el plan original usaba Koyeb, pero fue adquirido por Mistral y 
 - **Recuperar contraseña sin SMTP**: no hay proveedor de email configurado, así que cuando alguien usa "¿Olvidaste tu contraseña?" el enlace de restablecimiento aparece en los logs del backend (Observe → Logs, busca `password reset link`). Copia el enlace y entrégaselo al usuario (caduca en 30 min y es de un solo uso). Para enviar emails de verdad, define en el servicio `SPRING_MAIL_HOST`, `SPRING_MAIL_PORT`, `SPRING_MAIL_USERNAME`, `SPRING_MAIL_PASSWORD` y `MAIL_FROM` con cualquier SMTP (p. ej. Brevo tiene 300 emails/día gratis) y reinicia; no hace falta tocar código.
 
   Con presupuestos mayores (p. ej. `-Xmx112m -XX:MaxMetaspaceSize=96m`) el cgroup mata el proceso por OOM al final del arranque: si el servicio se queda en crashloop sin excepción en logs, es esto.
+
+  `MALLOC_ARENA_MAX=2` recorta las arenas de glibc (decenas de MB de RSS nativo en la JVM) y `-XX:-UsePerfData -XX:CICompilerCount=1` ahorran algo más. Síntoma de quedarse sin margen: el log de arranque muestra `Warmup completed in` con cientos de miles de ms y las peticiones agotan el tiempo (el cgroup estrangula el proceso antes de matarlo). El cliente de Web Push (BouncyCastle) se crea perezosamente en el primer envío por la misma razón.
 - Tras cambiar variables: **Update & restart** (verifica en la vista View que los valores nuevos quedaron guardados; el editor Env a veces no aplica).
 
 ## Vercel (frontend)

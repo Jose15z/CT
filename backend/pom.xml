@@ -35,7 +35,8 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-mail</artifactId>
     </dependency>
-    <!-- Web Push (VAPID) for reminders; needs BouncyCastle for the ECDH/AES-GCM crypto. -->
+    <!-- Web Push (VAPID) for reminders; BouncyCastle does the ECDH/AES-GCM crypto
+         (web-push declares it as optional, so it is pinned here explicitly). -->
     <dependency>
       <groupId>nl.martijndwars</groupId>
       <artifactId>web-push</artifactId>

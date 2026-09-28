@@ -31,28 +31,39 @@ public class WebPushService {
     private final PushSubscriptionRepository subscriptionRepository;
     private final PushProperties properties;
     private final ObjectMapper objectMapper;
-    private final PushService client;
+    /** Built on first send: BouncyCastle + the HTTP client cost real memory in a 256 MB box. */
+    private volatile PushService client;
 
     public WebPushService(PushSubscriptionRepository subscriptionRepository,
                           PushProperties properties,
-                          ObjectMapper objectMapper) throws Exception {
+                          ObjectMapper objectMapper) {
         this.subscriptionRepository = subscriptionRepository;
         this.properties = properties;
         this.objectMapper = objectMapper;
-        if (properties.enabled()) {
-            if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
-                Security.addProvider(new BouncyCastleProvider());
-            }
-            this.client = new PushService(properties.publicKey(), properties.privateKey(),
-                    properties.subject() == null ? "mailto:admin@culitostracker.local" : properties.subject());
-        } else {
-            this.client = null;
+        if (!properties.enabled()) {
             log.info("Web Push disabled: VAPID keys not configured");
         }
     }
 
     public boolean enabled() {
-        return client != null;
+        return properties.enabled();
+    }
+
+    private PushService client() throws Exception {
+        PushService current = client;
+        if (current == null) {
+            synchronized (this) {
+                if (client == null) {
+                    if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
+                        Security.addProvider(new BouncyCastleProvider());
+                    }
+                    client = new PushService(properties.publicKey(), properties.privateKey(),
+                            properties.subject() == null ? "mailto:admin@culitostracker.local" : properties.subject());
+                }
+                current = client;
+            }
+        }
+        return current;
     }
 
     public String publicKey() {
@@ -85,7 +96,7 @@ public class WebPushService {
     /** Sends to every device of the user; returns how many deliveries were accepted. */
     @Transactional
     public int send(UUID userId, String title, String body, String url) {
-        if (client == null) {
+        if (!enabled()) {
             return 0;
         }
         List<PushSubscription> subscriptions = subscriptionRepository.findByUserId(userId);
@@ -93,7 +104,7 @@ public class WebPushService {
         for (PushSubscription subscription : subscriptions) {
             try {
                 byte[] payload = objectMapper.writeValueAsBytes(Map.of("title", title, "body", body, "url", url));
-                HttpResponse response = client.send(new Notification(
+                HttpResponse response = client().send(new Notification(
                         subscription.getEndpoint(), subscription.getP256dh(), subscription.getAuth(), payload));
                 int status = response.getStatusLine().getStatusCode();
                 if (status == 404 || status == 410) {
