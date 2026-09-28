@@ -3,6 +3,7 @@ package com.culitostracker.api;
 import com.culitostracker.api.dto.PushDtos.PushConfigResponse;
 import com.culitostracker.api.dto.PushDtos.SubscribeRequest;
 import com.culitostracker.api.dto.PushDtos.UnsubscribeRequest;
+import com.culitostracker.application.PlanService;
 import com.culitostracker.application.UserService;
 import com.culitostracker.application.WebPushService;
 import jakarta.validation.Valid;
@@ -24,10 +25,12 @@ public class PushController {
 
     private final WebPushService webPushService;
     private final UserService userService;
+    private final PlanService planService;
 
-    public PushController(WebPushService webPushService, UserService userService) {
+    public PushController(WebPushService webPushService, UserService userService, PlanService planService) {
         this.webPushService = webPushService;
         this.userService = userService;
+        this.planService = planService;
     }
 
     /** Whether push is configured on this deployment, and the VAPID public key. */
@@ -43,6 +46,7 @@ public class PushController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void subscribe(Authentication authentication, @Valid @RequestBody SubscribeRequest request) {
         UUID userId = CurrentUser.id(authentication);
+        planService.requirePro(userId); // reminders are a Pro feature once billing is on
         webPushService.subscribe(userId, request.endpoint(), request.p256dh(), request.auth());
         if (request.timezone() != null && !request.timezone().isBlank()) {
             userService.updateTimezone(userId, request.timezone());

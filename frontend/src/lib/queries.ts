@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, apiBlob, tokenStore } from './api'
 import type {
   AccessScope,
+  BillingMe,
   CheckIn,
   CycleProfile,
   Dashboard,
@@ -159,6 +160,25 @@ export function useTrends(weeks: number) {
   return useQuery({
     queryKey: ['trends', weeks],
     queryFn: () => api<Trends>(`/api/trends?weeks=${weeks}`),
+  })
+}
+
+// ---- Billing ----
+
+export function useBilling() {
+  return useQuery({
+    queryKey: ['billing'],
+    queryFn: () => api<BillingMe>('/api/billing/me'),
+  })
+}
+
+/** Both send the browser to Stripe; the page returns to /settings afterwards. */
+export function useStripeRedirect(path: '/api/billing/checkout' | '/api/billing/portal') {
+  return useMutation({
+    mutationFn: async () => {
+      const { url } = await api<{ url: string }>(path, { method: 'POST' })
+      window.location.assign(url)
+    },
   })
 }
 

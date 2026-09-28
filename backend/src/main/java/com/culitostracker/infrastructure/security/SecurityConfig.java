@@ -53,6 +53,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         // Invite preview: the invitee may not have an account yet.
                         .requestMatchers(HttpMethod.GET, "/api/invites/*").permitAll()
+                        // Stripe calls this; it is authenticated by the webhook signature.
+                        .requestMatchers(HttpMethod.POST, "/api/billing/webhook").permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().denyAll())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

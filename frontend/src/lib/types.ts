@@ -87,7 +87,17 @@ export interface User {
   relationshipSituation: RelationshipSituation
   timezone: string
   remindersEnabled: boolean
+  plan: 'FREE' | 'PRO'
   createdAt: string
+}
+
+export interface BillingMe {
+  billingEnabled: boolean
+  plan: 'FREE' | 'PRO'
+  status: string | null
+  currentPeriodEnd: string | null
+  freeTrendWeeks: number
+  freeWishlistItems: number
 }
 
 export interface AuthResponse {

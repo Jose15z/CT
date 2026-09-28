@@ -148,6 +148,11 @@ GET    /api/push/config             # ¿hay VAPID? clave pública; ¿este usuari
 POST   /api/push/subscriptions      # guarda la suscripción del navegador (+ zona horaria)
 DELETE /api/push/subscriptions      # olvida un endpoint
 
+GET    /api/billing/me              # plan, estado de la suscripción, límites del plan gratis
+POST   /api/billing/checkout        # URL de Stripe Checkout (suscripción Pro)
+POST   /api/billing/portal          # URL del Customer Portal (cambiar tarjeta, cancelar)
+POST   /api/billing/webhook         # público; autenticado por la firma de Stripe
+
 GET    /api/partners                # ?status=ACTIVE|ENDED|ALL (excluye borradas)
 POST   /api/partners
 GET    /api/partners/{id}
@@ -268,6 +273,13 @@ Añadido después del MVP: agenda de citas, registro de encuentros y gamificaci�
 - El frontend es una PWA (`vite-plugin-pwa`, estrategia `injectManifest`): manifest con iconos, service worker propio (`src/sw.ts`) que precachea el bundle y muestra las notificaciones push (`push` → `showNotification`, `notificationclick` → abre la ruta).
 - **Web Push (VAPID)**: `WebPushService` envía con `nl.martijndwars:web-push`; sin `VAPID_PUBLIC_KEY`/`VAPID_PRIVATE_KEY` el push está apagado y la UI lo indica. Las suscripciones viven en `push_subscriptions` (una por navegador) y se podan cuando el servicio responde 404/410.
 - **Recordatorios**: `ReminderScheduler` corre cada hora (`0 5 * * * *`) solo para usuarios con suscripción y `reminders_enabled`; convierte el instante a la zona del usuario (`users.timezone`, que el navegador informa al suscribirse) y a las 20:00 locales avisa si falta el check-in, y a las 9:00 avisa de citas de hoy/mañana, cumpleaños y aniversarios (hoy o en 7 días) y periodo estimado en 2 días. `ReminderPlanner` es puro y está cubierto por tests; `reminder_sends (user, kind, day)` garantiza un envío por tipo y día aunque el proceso se reinicie.
+
+## 9d. Planes y suscripciones
+
+- `users.plan` (FREE | PRO) es la única fuente de verdad para permisos; `PlanService` es el único sitio que la consulta. **Sin claves de Stripe todo el mundo es PRO**: un despliegue nuevo no tiene muro de pago hasta que el operador lo quiera.
+- Límites del plan gratis (constantes en `Plan`): tendencias de 4 semanas (se recorta la ventana, no se bloquea), 5 ideas de regalo abiertas por pareja, sin recordatorios push. Lo esencial (parejas, ciclo, check-ins, consejos, agenda, XP, vínculos, exportar y borrar cuenta) es gratis siempre.
+- Stripe: `POST /api/billing/checkout` crea una sesión de Checkout en modo suscripción con `client_reference_id = userId`; los webhooks `checkout.session.completed` y `customer.subscription.updated/deleted` (firma verificada) actualizan la tabla `subscriptions` y de ahí se deriva el plan (`active`, `trialing` y `past_due` dan acceso). El Customer Portal gestiona tarjeta y cancelación; la app nunca ve datos de pago.
+- Tiendas móviles: si la app se publica con Capacitor, las compras dentro de la app deben pasar por Apple/Google (o RevenueCat); el mismo `applySubscription(...)` sirve para volcar esos estados al plan.
 
 ## 10. Autenticación
 

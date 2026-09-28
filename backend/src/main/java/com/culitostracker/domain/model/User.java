@@ -51,6 +51,10 @@ public class User {
     @Column(name = "reminders_enabled", nullable = false)
     private boolean remindersEnabled = true;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Plan plan = Plan.FREE;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -78,6 +82,8 @@ public class User {
     public void setTimezone(String timezone) { this.timezone = timezone; }
     public boolean isRemindersEnabled() { return remindersEnabled; }
     public void setRemindersEnabled(boolean remindersEnabled) { this.remindersEnabled = remindersEnabled; }
+    public Plan getPlan() { return plan; }
+    public void setPlan(Plan plan) { this.plan = plan; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
 }

@@ -1,5 +1,6 @@
 package com.culitostracker.api.dto;
 
+import com.culitostracker.domain.model.Plan;
 import com.culitostracker.domain.model.RelationshipSituation;
 import com.culitostracker.domain.model.User;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ public final class UserDtos {
                                RelationshipSituation relationshipSituation,
                                String timezone,
                                boolean remindersEnabled,
+                               Plan plan,
                                Instant createdAt) {
 
         public static UserResponse from(User user) {
@@ -33,7 +35,7 @@ public final class UserDtos {
             return new UserResponse(user.getId(), user.getUsername(), user.getEmail(),
                     user.getDisplayName(), user.getPreferredLanguage(), user.getAvatarEmoji(),
                     hasAvatar, user.getRelationshipSituation(), user.getTimezone(),
-                    user.isRemindersEnabled(), user.getCreatedAt());
+                    user.isRemindersEnabled(), user.getPlan(), user.getCreatedAt());
         }
     }
 

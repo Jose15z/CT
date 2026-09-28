@@ -1,24 +1,30 @@
-import { useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Camera,
   ChevronRight,
+  CreditCard,
   Download,
   LogOut,
   MonitorSmartphone,
   ShieldCheck,
+  Sparkles,
   Trash2,
   Trophy,
 } from 'lucide-react'
+import { Tag } from '../../components/ui/Tag'
+import { formatDate } from '../../lib/dates'
 import { useAuth } from '../../lib/auth'
 import {
+  useBilling,
   useChangePassword,
   useDeleteAccount,
   useDeleteAvatar,
   useExportData,
   useLogoutEverywhereElse,
   useMyAvatar,
+  useStripeRedirect,
   useUpdateProfile,
   useUploadAvatar,
 } from '../../lib/queries'
@@ -81,6 +87,18 @@ export function SettingsPage() {
   const { data: pushConfig } = usePushConfig()
   const enablePush = useEnablePush()
   const disablePush = useDisablePush()
+  const { data: billing } = useBilling()
+  const checkout = useStripeRedirect('/api/billing/checkout')
+  const portal = useStripeRedirect('/api/billing/portal')
+  const [searchParams] = useSearchParams()
+
+  // Stripe sends the browser back here with ?billing=success|cancel.
+  useEffect(() => {
+    const outcome = searchParams.get('billing')
+    if (outcome === 'success') toast(t('settings.billingSuccess'))
+    else if (outcome === 'cancel') toast(t('settings.billingCancel'), 'error')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!user) return null
 
@@ -313,6 +331,59 @@ export function SettingsPage() {
             </Button>
           </div>
         </div>
+      </section>
+
+      {/* Plan & billing */}
+      <section className="card p-4 sm:p-5">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-[15px] font-semibold tracking-tight text-ink">{t('settings.plan')}</h2>
+          {billing && (
+            <Tag tone={billing.plan === 'PRO' ? 'peach' : 'neutral'}>
+              {billing.plan === 'PRO' ? t('settings.planPro') : t('settings.planFree')}
+            </Tag>
+          )}
+        </div>
+        {billing && !billing.billingEnabled ? (
+          <p className="mt-2 text-[13px] leading-relaxed text-ink-3">{t('settings.planAllIncluded')}</p>
+        ) : billing?.plan === 'PRO' ? (
+          <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-[13px] leading-relaxed text-ink-2">
+              {billing.currentPeriodEnd
+                ? t('settings.renews', { date: formatDate(billing.currentPeriodEnd.slice(0, 10)) })
+                : t('settings.planProPerks')}
+            </p>
+            <Button
+              variant="secondary"
+              size="sm"
+              icon={<CreditCard size={13} />}
+              disabled={portal.isPending}
+              onClick={() =>
+                portal.mutate(undefined, { onError: (err) => toast(errorMessage(err), 'error') })
+              }
+            >
+              {t('settings.manageSubscription')}
+            </Button>
+          </div>
+        ) : billing ? (
+          <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-[13px] leading-relaxed text-ink-2">
+              {t('settings.planProPerks', {
+                weeks: billing.freeTrendWeeks,
+                items: billing.freeWishlistItems,
+              })}
+            </p>
+            <Button
+              size="sm"
+              icon={<Sparkles size={13} />}
+              disabled={checkout.isPending}
+              onClick={() =>
+                checkout.mutate(undefined, { onError: (err) => toast(errorMessage(err), 'error') })
+              }
+            >
+              {t('settings.upgrade')}
+            </Button>
+          </div>
+        ) : null}
       </section>
 
       {/* Reminders (Web Push) */}

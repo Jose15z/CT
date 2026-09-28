@@ -16,10 +16,14 @@ public class WishlistService {
 
     private final WishlistRepository wishlistRepository;
     private final PartnerAccessService partnerAccessService;
+    private final PlanService planService;
 
-    public WishlistService(WishlistRepository wishlistRepository, PartnerAccessService partnerAccessService) {
+    public WishlistService(WishlistRepository wishlistRepository,
+                           PartnerAccessService partnerAccessService,
+                           PlanService planService) {
         this.wishlistRepository = wishlistRepository;
         this.partnerAccessService = partnerAccessService;
+        this.planService = planService;
     }
 
     @Transactional(readOnly = true)
@@ -33,6 +37,9 @@ public class WishlistService {
     @Transactional
     public WishResponse create(UUID userId, UUID partnerId, CreateWishRequest request) {
         partnerAccessService.requireOwned(partnerId, userId);
+        if (wishlistRepository.countByPartnerIdAndDoneFalse(partnerId) >= planService.maxWishlistItems(userId)) {
+            planService.requirePro(userId);
+        }
         WishlistItem item = new WishlistItem();
         item.setOwnerUserId(userId);
         item.setPartnerId(partnerId);

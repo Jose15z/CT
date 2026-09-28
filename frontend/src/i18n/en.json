@@ -926,6 +926,16 @@
     "privacyLink": "How we handle your data",
     "account": "Account",
     "profileSaved": "Profile updated",
+    "plan": "Plan",
+    "planFree": "Free",
+    "planPro": "Pro",
+    "planAllIncluded": "This deployment has no payments configured: every feature, Pro included, is available.",
+    "planProPerks": "Pro includes trends up to 26 weeks (free: {{weeks}}), push reminders and an unlimited gift list (free: {{items}} ideas per partner).",
+    "upgrade": "Go Pro",
+    "manageSubscription": "Manage subscription",
+    "renews": "Pro subscription active. Renews on {{date}}.",
+    "billingSuccess": "Subscription activated. Thank you.",
+    "billingCancel": "Payment cancelled; you're still on the free plan.",
     "reminders": "Reminders",
     "remindersDevice": "Notifications on this device",
     "remindersDeviceHint": "Pending check-in at 8 pm, today's and tomorrow's dates, birthdays and anniversaries, and an estimated period two days ahead.",
@@ -992,6 +1002,12 @@
       "mustBeAdult": "The birth date must belong to an adult (18+)."
     },
     "user": { "invalidTimezone": "Invalid time zone." },
+    "plan": { "proRequired": "This is a Pro feature. You can enable it in Settings." },
+    "billing": {
+      "disabled": "Payments are not configured on this deployment.",
+      "noSubscription": "You don't have a subscription yet.",
+      "providerError": "Payment provider error. Please try again in a moment."
+    },
     "invite": {
       "invalid": "The invitation is not valid, was already used or has expired.",
       "selfLink": "You can't accept your own invitation.",

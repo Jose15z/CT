@@ -709,6 +709,25 @@ class ApiIntegrationTest {
 
     @Test
     @Order(18)
+    void withoutStripeEveryoneIsProAndCheckoutIsRefused() throws Exception {
+        mockMvc.perform(get("/api/billing/me")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.billingEnabled").value(false))
+                .andExpect(jsonPath("$.plan").value("PRO"));
+        mockMvc.perform(post("/api/billing/checkout")
+                        .header("Authorization", "Bearer " + tokenB))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value("billing.disabled"));
+        // The webhook is public but never trusted without a valid signature.
+        mockMvc.perform(post("/api/billing/webhook")
+                        .header("Stripe-Signature", "t=1,v1=bogus")
+                        .contentType(APPLICATION_JSON).content("{}"))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @Order(18)
     void trendsAreZeroFilledSeries() throws Exception {
         mockMvc.perform(get("/api/trends?weeks=4")
                         .header("Authorization", "Bearer " + tokenA))

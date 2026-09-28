@@ -45,6 +45,11 @@ app:
     public-key: ${VAPID_PUBLIC_KEY:}
     private-key: ${VAPID_PRIVATE_KEY:}
     subject: ${VAPID_SUBJECT:mailto:admin@culitostracker.local}
+  # Stripe subscriptions. Unset = billing off and every account is PRO.
+  billing:
+    stripe-secret-key: ${STRIPE_SECRET_KEY:}
+    stripe-webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+    stripe-price-id: ${STRIPE_PRICE_ID:}
   limits:
     partners-per-day: 10
     encounters-per-day: 10

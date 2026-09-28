@@ -926,6 +926,16 @@
     "privacyLink": "Cómo tratamos tus datos",
     "account": "Cuenta",
     "profileSaved": "Perfil actualizado",
+    "plan": "Plan",
+    "planFree": "Gratis",
+    "planPro": "Pro",
+    "planAllIncluded": "Este despliegue no tiene pagos configurados: todas las funciones, incluidas las Pro, están disponibles.",
+    "planProPerks": "Pro incluye tendencias de hasta 26 semanas (gratis: {{weeks}}), recordatorios push y lista de regalos ilimitada (gratis: {{items}} ideas por pareja).",
+    "upgrade": "Pasar a Pro",
+    "manageSubscription": "Gestionar suscripción",
+    "renews": "Suscripción Pro activa. Se renueva el {{date}}.",
+    "billingSuccess": "Suscripción activada. Gracias.",
+    "billingCancel": "Pago cancelado; sigues en el plan gratis.",
     "reminders": "Recordatorios",
     "remindersDevice": "Notificaciones en este dispositivo",
     "remindersDeviceHint": "Check-in pendiente a las 20:00, citas del día y de mañana, cumpleaños y aniversarios, y periodo estimado en dos días.",
@@ -992,6 +1002,12 @@
       "mustBeAdult": "La fecha de nacimiento debe ser de una persona adulta (18+)."
     },
     "user": { "invalidTimezone": "Zona horaria no válida." },
+    "plan": { "proRequired": "Esta función es del plan Pro. Puedes activarlo en Ajustes." },
+    "billing": {
+      "disabled": "Los pagos no están configurados en este despliegue.",
+      "noSubscription": "Aún no tienes una suscripción.",
+      "providerError": "Error con el proveedor de pagos. Inténtalo de nuevo en un momento."
+    },
     "invite": {
       "invalid": "La invitación no es válida, ya se usó o caducó.",
       "selfLink": "No puedes aceptar tu propia invitación.",

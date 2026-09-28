@@ -38,17 +38,20 @@ public class TrendsService {
     private final RelationshipRepository relationshipRepository;
     private final EncounterRepository encounterRepository;
     private final PartnerAccessService partnerAccessService;
+    private final PlanService planService;
 
     public TrendsService(RelationshipCheckInRepository checkInRepository,
                          PartnerRepository partnerRepository,
                          RelationshipRepository relationshipRepository,
                          EncounterRepository encounterRepository,
-                         PartnerAccessService partnerAccessService) {
+                         PartnerAccessService partnerAccessService,
+                         PlanService planService) {
         this.checkInRepository = checkInRepository;
         this.partnerRepository = partnerRepository;
         this.relationshipRepository = relationshipRepository;
         this.encounterRepository = encounterRepository;
         this.partnerAccessService = partnerAccessService;
+        this.planService = planService;
     }
 
     /** Moods on a 1–5 scale so they can share an axis with the levels. */
@@ -66,7 +69,8 @@ public class TrendsService {
 
     @Transactional(readOnly = true)
     public TrendsResponse forUser(UUID userId, int weeks) {
-        int span = Math.max(1, Math.min(weeks, MAX_WEEKS));
+        // The free plan sees a shorter window; the response still says what it covers.
+        int span = Math.max(1, Math.min(Math.min(weeks, MAX_WEEKS), planService.maxTrendWeeks(userId)));
         LocalDate to = LocalDate.now();
         LocalDate from = to.minusWeeks(span).plusDays(1);
 
