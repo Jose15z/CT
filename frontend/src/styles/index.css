@@ -6,58 +6,67 @@
 
 /*
  * CulitosTracker design tokens.
+ * Quiet warm-neutral canvas, hairline borders defined as alpha so they sit
+ * correctly on any surface, three elevation levels, and one accent (peach).
+ * Plum marks relationship events, rose menstruation, teal the fertile window.
  * Semantic variables flip under .dark, so components rarely need dark: prefixes.
- * Palette: warm neutrals, terracotta-peach primary, plum for relationship
- * events, rose for menstruation, teal for the fertile window.
  */
 :root {
-  --bg: #f8f5f2;
+  --bg: #f6f5f3;
   --surface: #ffffff;
-  --surface-2: #f1ece7;
-  --border: #e5ded7;
-  --border-strong: #d2c8bf;
-  --ink: #262019;
-  --ink-2: #6b6058;
-  --ink-3: #99897d;
-  --peach: #b34a31;
-  --peach-strong: #9c3f2a;
-  --peach-soft: #f7e5de;
+  --surface-2: #f1f0ed;
+  --border: rgb(23 20 17 / 0.08);
+  --border-strong: rgb(23 20 17 / 0.14);
+  --ink: #1b1917;
+  --ink-2: #5d5853;
+  --ink-3: #8c867f;
+  --peach: #b8492c;
+  --peach-strong: #a03f26;
+  --peach-soft: #f8e9e3;
   --on-peach: #ffffff;
-  --plum: #7c4a6e;
-  --plum-soft: #f0e4ec;
-  --rose: #b13048;
-  --rose-soft: #f9e3e8;
-  --teal: #17786b;
-  --teal-soft: #dcefe9;
-  --success: #3d7a46;
-  --warning: #96690f;
-  --danger: #b03a2e;
-  --danger-soft: #f9e5e2;
+  --plum: #7a4a6e;
+  --plum-soft: #f1e6ee;
+  --rose: #b32f48;
+  --rose-soft: #fae4e9;
+  --teal: #177769;
+  --teal-soft: #ddf0ea;
+  --success: #3b7a45;
+  --warning: #93680f;
+  --danger: #b0392d;
+  --danger-soft: #fae5e2;
+  --ring: rgb(184 73 44 / 0.22);
+  --elev-1: 0 1px 2px rgb(23 20 17 / 0.04), 0 0 0 0 transparent;
+  --elev-2: 0 1px 2px rgb(23 20 17 / 0.06), 0 10px 28px -14px rgb(23 20 17 / 0.2);
+  --elev-3: 0 2px 8px rgb(23 20 17 / 0.06), 0 28px 64px -18px rgb(23 20 17 / 0.35);
 }
 
 .dark {
-  --bg: #171310;
-  --surface: #201b17;
-  --surface-2: #2a241f;
-  --border: #37302a;
-  --border-strong: #4c433b;
-  --ink: #efe9e3;
-  --ink-2: #b2a79c;
-  --ink-3: #83786e;
-  --peach: #e08b70;
-  --peach-strong: #eb9c83;
-  --peach-soft: #3a2a23;
-  --on-peach: #24140e;
-  --plum: #c08bb0;
-  --plum-soft: #342533;
-  --rose: #e06a80;
-  --rose-soft: #3d2229;
-  --teal: #4dbfaa;
-  --teal-soft: #1d322d;
-  --success: #7cc287;
+  --bg: #121110;
+  --surface: #1a1918;
+  --surface-2: #232120;
+  --border: rgb(255 250 245 / 0.08);
+  --border-strong: rgb(255 250 245 / 0.15);
+  --ink: #ece7e1;
+  --ink-2: #aca49b;
+  --ink-3: #7d766e;
+  --peach: #e28c70;
+  --peach-strong: #ec9d84;
+  --peach-soft: #35251f;
+  --on-peach: #22120c;
+  --plum: #c28db2;
+  --plum-soft: #312432;
+  --rose: #e06b81;
+  --rose-soft: #3b2128;
+  --teal: #4fc0aa;
+  --teal-soft: #1b302b;
+  --success: #7dc389;
   --warning: #d9a94a;
-  --danger: #e0796d;
-  --danger-soft: #3c2523;
+  --danger: #e27a6e;
+  --danger-soft: #3a2522;
+  --ring: rgb(226 140 112 / 0.3);
+  --elev-1: 0 1px 2px rgb(0 0 0 / 0.35), 0 0 0 0 transparent;
+  --elev-2: 0 1px 2px rgb(0 0 0 / 0.4), 0 14px 36px -14px rgb(0 0 0 / 0.65);
+  --elev-3: 0 2px 8px rgb(0 0 0 / 0.5), 0 28px 64px -12px rgb(0 0 0 / 0.75);
 }
 
 @theme inline {
@@ -86,12 +95,18 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
+
+  --shadow-card: var(--elev-1);
+  --shadow-raised: var(--elev-2);
+  --shadow-overlay: var(--elev-3);
+  --radius-card: 14px;
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -106,11 +121,21 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--peach);
+    outline: 2px solid color-mix(in srgb, var(--peach) 60%, transparent);
     outline-offset: 2px;
   }
 
   button {
     cursor: pointer;
+  }
+}
+
+@layer components {
+  /* The one container: hairline border, quiet elevation, generous radius. */
+  .card {
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    box-shadow: var(--elev-1);
   }
 }

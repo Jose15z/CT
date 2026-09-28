@@ -28,7 +28,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           <div
             key={toast.id}
             role="status"
-            className="flex items-center gap-2 rounded-lg border border-border bg-surface px-3.5 py-2.5 text-[13.5px] text-ink shadow-md"
+            className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3.5 py-2.5 text-[13.5px] text-ink shadow-raised"
           >
             {toast.kind === 'success' ? (
               <CheckCircle2 size={16} className="text-success" />

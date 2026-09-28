@@ -5,11 +5,11 @@ type Size = 'md' | 'sm'
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-peach text-on-peach hover:bg-peach-strong disabled:hover:bg-peach',
+    'bg-peach text-on-peach shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_1px_2px_rgb(23_20_17/0.12)] hover:bg-peach-strong disabled:hover:bg-peach',
   secondary:
-    'border border-border-strong bg-surface text-ink hover:bg-surface-2',
+    'border border-border-strong bg-surface text-ink shadow-card hover:bg-surface-2',
   ghost: 'text-ink-2 hover:bg-surface-2 hover:text-ink',
-  danger: 'border border-danger/40 text-danger hover:bg-danger-soft',
+  danger: 'border border-danger/30 bg-surface text-danger hover:bg-danger-soft',
 }
 
 const sizes: Record<Size, string> = {
@@ -33,7 +33,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`inline-flex items-center justify-center gap-1.5 rounded-md font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-55 ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-1.5 rounded-lg font-medium transition-[background-color,color,box-shadow,transform] duration-150 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100 ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
       {icon}

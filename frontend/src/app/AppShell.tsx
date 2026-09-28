@@ -23,8 +23,10 @@ function SideLink({ to, icon, label }: { to: string; icon: React.ReactNode; labe
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13.5px] font-medium transition-colors ${
-          isActive ? 'bg-peach-soft text-peach' : 'text-ink-2 hover:bg-surface-2 hover:text-ink'
+        `flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13.5px] font-medium transition-colors duration-150 ${
+          isActive
+            ? 'bg-surface-2 text-ink shadow-card [&>svg]:text-peach'
+            : 'text-ink-2 hover:bg-surface-2/70 hover:text-ink'
         }`
       }
     >

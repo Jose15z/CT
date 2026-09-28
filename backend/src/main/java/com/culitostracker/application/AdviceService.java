@@ -18,7 +18,6 @@ import com.culitostracker.domain.service.CyclePredictionService;
 import com.culitostracker.domain.service.RelationshipAdviceEngine;
 import com.culitostracker.domain.service.RelationshipDurationCalculator;
 import com.culitostracker.repository.CycleProfileRepository;
-import com.culitostracker.repository.DailyTipRepository;
 import com.culitostracker.repository.PartnerObservationRepository;
 import com.culitostracker.repository.PeriodRecordRepository;
 import com.culitostracker.repository.RelationshipCheckInRepository;
@@ -46,7 +45,6 @@ public class AdviceService {
     private final PartnerObservationRepository observationRepository;
     private final CycleProfileRepository cycleProfileRepository;
     private final PeriodRecordRepository periodRecordRepository;
-    private final DailyTipRepository dailyTipRepository;
     private final CyclePredictionService predictionService;
     private final RelationshipDurationCalculator durationCalculator;
     private final RelationshipAdviceEngine adviceEngine;
@@ -57,7 +55,6 @@ public class AdviceService {
                          PartnerObservationRepository observationRepository,
                          CycleProfileRepository cycleProfileRepository,
                          PeriodRecordRepository periodRecordRepository,
-                         DailyTipRepository dailyTipRepository,
                          CyclePredictionService predictionService,
                          RelationshipDurationCalculator durationCalculator,
                          RelationshipAdviceEngine adviceEngine) {
@@ -67,7 +64,6 @@ public class AdviceService {
         this.observationRepository = observationRepository;
         this.cycleProfileRepository = cycleProfileRepository;
         this.periodRecordRepository = periodRecordRepository;
-        this.dailyTipRepository = dailyTipRepository;
         this.predictionService = predictionService;
         this.durationCalculator = durationCalculator;
         this.adviceEngine = adviceEngine;
@@ -145,12 +141,11 @@ public class AdviceService {
                 myCheckIn != null ? myCheckIn.getMood() : null,
                 myCheckIn != null ? myCheckIn.getStressLevel() : null,
                 myCheckIn != null ? myCheckIn.getEnergyLevel() : null,
+                myCheckIn != null ? myCheckIn.getAffectionLevel() : null,
+                myCheckIn != null ? myCheckIn.getRelationshipSatisfaction() : null,
                 partnerCheckIn != null ? partnerCheckIn.getMood() : null,
                 partnerCheckIn != null ? partnerCheckIn.getStressLevel() : null,
                 observation != null ? observation.getObservationType() : null,
-                stage != null ? dailyTipRepository.findByRelationshipStageAndActiveTrue(stage) : List.of(),
-                phase != null ? dailyTipRepository.findByCyclePhaseAndActiveTrue(phase) : List.of(),
-                dailyTipRepository.findByRelationshipStageIsNullAndCyclePhaseIsNullAndActiveTrue(),
                 today);
 
         return adviceEngine.advise(context);

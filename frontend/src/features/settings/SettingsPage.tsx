@@ -94,7 +94,7 @@ export function SettingsPage() {
       <h1 className="font-display text-[21px] font-semibold text-ink">{t('settings.title')}</h1>
 
       {/* Profile */}
-      <section className="rounded-xl border border-border bg-surface p-4 sm:p-5">
+      <section className="card p-4 sm:p-5">
         <h2 className="text-[15px] font-semibold text-ink">{t('settings.profile')}</h2>
 
         {/* Profile photo */}
@@ -201,7 +201,7 @@ export function SettingsPage() {
       </section>
 
       {/* Appearance & language */}
-      <section className="rounded-xl border border-border bg-surface p-4 sm:p-5">
+      <section className="card p-4 sm:p-5">
         <div className="flex items-center justify-between">
           <h2 className="text-[15px] font-semibold text-ink">{t('settings.language')}</h2>
           <LanguageToggle />
@@ -222,7 +222,7 @@ export function SettingsPage() {
       </section>
 
       {/* Links: leaderboard config + privacy */}
-      <section className="divide-y divide-border rounded-xl border border-border bg-surface">
+      <section className="divide-y divide-border card">
         <Link
           to="/leaderboard"
           className="flex items-center gap-3 px-4 py-3.5 hover:bg-surface-2 sm:px-5"
@@ -246,7 +246,7 @@ export function SettingsPage() {
       </section>
 
       {/* Password */}
-      <section className="rounded-xl border border-border bg-surface p-4 sm:p-5">
+      <section className="card p-4 sm:p-5">
         <h2 className="text-[15px] font-semibold text-ink">{t('settings.password')}</h2>
         <div className="mt-3 space-y-4">
           <Field label={t('settings.currentPassword')} htmlFor="settings-current-password">
@@ -285,7 +285,7 @@ export function SettingsPage() {
       </section>
 
       {/* Account */}
-      <section className="flex items-center justify-between rounded-xl border border-border bg-surface px-4 py-3.5 sm:px-5">
+      <section className="flex items-center justify-between card px-4 py-3.5 sm:px-5">
         <div>
           <p className="text-[14px] font-medium text-ink">{user.displayName}</p>
           <p className="text-[12.5px] text-ink-3">{user.email}</p>

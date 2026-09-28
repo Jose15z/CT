@@ -30,7 +30,7 @@ export function PartnersPage() {
       </header>
 
       {!partners || partners.length === 0 ? (
-        <div className="rounded-xl border border-border bg-surface">
+        <div className="card">
           <EmptyState
             icon={<Heart size={28} strokeWidth={1.5} />}
             title={t('partner.empty.title')}
@@ -43,7 +43,7 @@ export function PartnersPage() {
           />
         </div>
       ) : (
-        <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
+        <ul className="divide-y divide-border overflow-hidden card">
           {partners.map((partner) => {
             const rel = partner.relationship
             return (

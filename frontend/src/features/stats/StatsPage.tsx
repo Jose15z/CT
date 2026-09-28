@@ -19,7 +19,7 @@ function XpCard({ xp }: { xp: XpSummary }) {
     })
 
   return (
-    <section className="rounded-xl border border-border bg-surface p-4 sm:p-5">
+    <section className="card p-4 sm:p-5">
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-[12px] font-medium uppercase tracking-wide text-ink-3">
           {t('xp.sectionTitle')}
@@ -170,7 +170,7 @@ export function StatsPage() {
       {xp && <XpCard xp={xp} />}
 
       {stats.partnersRegistered === 0 ? (
-        <div className="rounded-xl border border-border bg-surface">
+        <div className="card">
           <EmptyState
             icon={<BarChart3 size={28} strokeWidth={1.5} />}
             title={t('stats.title')}
@@ -178,7 +178,7 @@ export function StatsPage() {
           />
         </div>
       ) : (
-        <dl className="divide-y divide-border rounded-xl border border-border bg-surface">
+        <dl className="divide-y divide-border card">
           {rows.map((row) => (
             <div key={row.label} className="flex items-baseline justify-between gap-4 px-4 py-3 sm:px-5">
               <dt className="text-[13.5px] text-ink-2">{row.label}</dt>

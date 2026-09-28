@@ -31,9 +31,9 @@ export function Sheet({ open, onClose, title, children }: SheetProps) {
   if (!open) return null
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
       <div
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-black/30 backdrop-blur-[2px] dark:bg-black/60"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -41,16 +41,16 @@ export function Sheet({ open, onClose, title, children }: SheetProps) {
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="relative z-10 max-h-[88vh] w-full overflow-y-auto rounded-t-xl border border-border bg-surface p-5 shadow-lg sm:max-w-lg sm:rounded-xl"
+        className="relative z-10 max-h-[88vh] w-full overflow-y-auto rounded-t-2xl border border-border bg-surface p-5 shadow-overlay sm:max-w-lg sm:rounded-2xl"
       >
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-[16px] font-semibold text-ink">{title}</h2>
+          <h2 className="text-[15px] font-semibold tracking-tight text-ink">{title}</h2>
           <button
             onClick={onClose}
             aria-label={t('common.close')}
-            className="rounded-md p-1.5 text-ink-3 hover:bg-surface-2 hover:text-ink"
+            className="rounded-md p-1.5 text-ink-3 transition-colors hover:bg-surface-2 hover:text-ink"
           >
-            <X size={17} />
+            <X size={16} />
           </button>
         </div>
         {children}

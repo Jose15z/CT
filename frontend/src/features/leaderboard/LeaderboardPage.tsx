@@ -95,7 +95,7 @@ export function LeaderboardPage() {
       )}
 
       {!ranking || ranking.entries.length === 0 ? (
-        <div className="rounded-xl border border-border bg-surface">
+        <div className="card">
           <EmptyState
             icon={<Crown size={28} strokeWidth={1.5} />}
             title={t('leaderboard.empty.title')}
@@ -108,7 +108,7 @@ export function LeaderboardPage() {
           />
         </div>
       ) : (
-        <ol className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
+        <ol className="divide-y divide-border overflow-hidden card">
           {ranking.entries.map((entry) => (
             <li
               key={`${entry.rank}-${entry.alias}`}

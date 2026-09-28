@@ -358,84 +358,295 @@
   },
   "advice": {
     "anniversary": {
-      "today": "Today is your anniversary: {{years}} years with {{name}}. Don't let it slip by, even something small counts.",
-      "upcoming": "Your anniversary is in {{days}} days ({{years}} years). Good moment to plan something special.",
-      "approaching": "Your anniversary is approaching ({{days}} days). If you want to organize something, now is the time."
+      "today": {
+        "1": "Today is your anniversary: {{years}} years with {{name}}. Don't let it pass without marking it, even with something small.",
+        "2": "{{years}} years with {{name}} today. A message first thing already changes the day.",
+        "3": "Anniversary: {{years}} years. Bring up a moment from the first year with {{name}}; it usually beats any gift."
+      },
+      "upcoming": {
+        "1": "Your anniversary is in {{days}} days ({{years}} years). Good time to prepare something special.",
+        "2": "In {{days}} days you reach {{years}} years. If you want to book something, this week is the moment.",
+        "3": "{{days}} days until the anniversary. Think about what made {{name}} happy last year and repeat the idea, not the plan."
+      },
+      "approaching": {
+        "1": "Your anniversary is coming up ({{days}} days). If you want to plan something ahead, now is the time.",
+        "2": "{{days}} days to the anniversary. Jot down one idea today, even if you settle it later.",
+        "3": "The anniversary with {{name}} is in {{days}} days. Without giving anything away, ask what kind of plan sounds good lately."
+      }
     },
     "partnerReport": {
-      "sad": "{{name}} said she's not feeling great today. You can ask if she wants to talk or just wants company.",
-      "low": "{{name}} logged a rough day. Ask what she needs instead of assuming."
+      "sad": {
+        "1": "{{name}} said she isn't feeling great today. You can ask whether she wants to talk or would rather just have company.",
+        "2": "{{name}} logged a sad day. It doesn't need fixing: a short message and being available already helps.",
+        "3": "According to her check-in, {{name}} is having a sad day. Ask what would help this evening and do it without commentary."
+      },
+      "low": {
+        "1": "{{name}} logged a hard day. Ask what she needs instead of assuming it.",
+        "2": "{{name}} marked a heavy day. Take one task off her list that you can do yourself.",
+        "3": "By her check-in, {{name}} is stressed or anxious. Skip the plans today: suggest something quiet or nothing at all."
+      },
+      "good": {
+        "1": "{{name}} logged a good day. Ask what made it good and listen.",
+        "2": "{{name}} is in good spirits according to her check-in. Good moment to bring up that pending plan.",
+        "3": "{{name}} marked a good day. Tell her something good about yours and share the mood."
+      }
     },
     "observation": {
-      "needsSpace": "You noted she seems to need some space. Consider asking her directly what she needs instead of assuming.",
-      "sad": "You noted she seems sad today. A simple message asking how she's doing can open the door without pressure.",
-      "upset": "You noted she seems upset. Listen first and understand what happened before defending or fixing.",
-      "distant": "You noted she seems distant. Sometimes it's tiredness, sometimes something else: ask without drama."
+      "needsSpace": {
+        "1": "You noted she seems to need space. Ask her directly what she needs instead of assuming.",
+        "2": "You noticed {{name}} needs space. One line, \"I'm here\", and don't push.",
+        "3": "By what you logged, {{name}} wants distance. Make a plan of your own today and leave the door open."
+      },
+      "sad": {
+        "1": "You noted she seems sad today. A simple message asking how she is can open the door without pressure.",
+        "2": "You noticed {{name}} seems sad. Instead of \"what's wrong?\", try \"do you want company or some time alone?\".",
+        "3": "You logged sadness in {{name}}. It's your perception: ask if you got it right before acting."
+      },
+      "upset": {
+        "1": "You noted she seems upset. Listen first and understand what happened before defending yourself or fixing it.",
+        "2": "You noticed {{name}} seems upset. Ask whether it has to do with you; if the answer is no, don't push.",
+        "3": "By what you logged, {{name}} is upset. Avoid pending topics today and let the anger settle before talking."
+      },
+      "distant": {
+        "1": "You noted she seems distant. Sometimes it's tiredness, sometimes something else: ask without drama.",
+        "2": "You noticed {{name}} seems distant. Suggest something small and low-pressure: a walk, a coffee.",
+        "3": "You logged distance in {{name}}. Before reading into it, ask how her day went."
+      },
+      "happy": {
+        "1": "You noted {{name}} seems happy. Good day to propose that plan you keep postponing.",
+        "2": "You noticed {{name}} in good spirits. Ask what brightened her day; telling it makes it last longer.",
+        "3": "By what you logged, {{name}} is happy. It's the moment to talk about something pending, on the right foot."
+      },
+      "affectionate": {
+        "1": "You noted {{name}} seems affectionate. Answer with time, not just words: a while together without phones.",
+        "2": "You noticed {{name}} affectionate today. Return the gesture with something concrete: a message, a plan, a note.",
+        "3": "By what you logged, {{name}} is affectionate. Good moment to suggest a date and put a date on it."
+      },
+      "tired": {
+        "1": "You noted {{name}} seems tired. Better a short plan or none today, and you handle dinner.",
+        "2": "You noticed tiredness in {{name}}. Ask if she wants an earlier night, and join her.",
+        "3": "By what you logged, {{name}} is worn out. Take one task off her day without announcing it."
+      },
+      "stressed": {
+        "1": "You noted {{name}} seems stressed. Ask what's on her plate and offer help with one concrete thing.",
+        "2": "You noticed stress in {{name}}. Today isn't the day for long talks; it is for a practical gesture.",
+        "3": "By what you logged, {{name}} is tense. Don't add plans, and ask what would take pressure off."
+      },
+      "notSure": {
+        "1": "You noted you're not sure how {{name}} is. The fastest way to know is to ask straight out.",
+        "2": "You're unsure how {{name}} seems. Try a concrete question: \"how was your day, 1 to 10?\".",
+        "3": "You marked \"not sure\". Time together without an agenda usually clears it up faster than guessing."
+      }
     },
     "both": {
-      "stressed": "You both seem to be having a heavy day. Maybe today calls for something quiet rather than solving everything at once.",
-      "good": "You both logged a good day. Take advantage: suggest that plan you keep postponing."
+      "stressed": {
+        "1": "You both seem to be having a heavy day. Maybe a quiet plan beats trying to solve everything today.",
+        "2": "Stress on both sides. Leave any thorny topic for tomorrow and have a calm dinner.",
+        "3": "You're both tense today. Split the evening chores and don't expect much from each other."
+      },
+      "good": {
+        "1": "You both logged a good day. Propose that plan you keep postponing.",
+        "2": "Good day for both of you. Go celebrate for no reason, even if it's just a drink nearby.",
+        "3": "You're both doing well today. It's the moment to talk about a shared project, big or small."
+      }
     },
-    "quietPlan": "You're tired and you've noticed stress in {{name}}. Maybe today is for a quiet plan and talking without pressure.",
-    "phase": {
-      "menstruation": "Based on the records, {{name}} might be on her period. Everyone experiences it differently: ask her what she feels like."
-    }
-  },
-  "tips": {
-    "stage": {
-      "new": {
-        "communication": "Early on, asking beats assuming. Spend some time today learning something new about them.",
-        "boundaries": "Talking about boundaries early avoids misunderstandings later. It doesn't have to be solemn.",
-        "expectations": "Are you looking for the same thing? An honest conversation now saves confusion later.",
-        "consent": "In intimacy, what works is asked, not guessed."
+    "quietPlan": {
+      "1": "You're tired and you notice stress in {{name}}. Maybe today calls for a quiet plan and talking without pressure.",
+      "2": "You're low on energy and {{name}} is stressed. Simple dinner, sofa, and nothing to solve today.",
+      "3": "Not the day for big plans: you're tired and {{name}} is tense. A short walk may be enough."
+    },
+    "self": {
+      "low": {
+        "1": "You logged that you're not okay today. Tell {{name}} in one sentence; she doesn't have to guess.",
+        "2": "Your check-in marks a low day. Ask for what you need, even if it's just quiet company.",
+        "3": "You're not okay today, by your own log. Take care of yourself first: one small thing for you before the relationship."
       },
-      "developing": {
-        "deeper": "You know each other now. Try a conversation beyond logistics: fears, plans, quirks.",
-        "disagreements": "The first disagreements set the tone. Arguing well takes practice too.",
-        "newActivity": "Try something neither of you has done: new plans build trust faster.",
-        "routines": "Knowing each other's routines (and respecting them) is a quiet way of caring."
+      "stressed": {
+        "1": "You logged high stress. Let {{name}} know so she doesn't read it as distance.",
+        "2": "You're stressed. Before talking about anything important, give yourself a moment to slow down.",
+        "3": "Your stress is high today. Make clear it isn't about the relationship, if that's the case."
       },
-      "established": {
-        "routine": "After a while together it's easy to fall into routine. Do one small thing today you don't usually do.",
-        "goals": "Any shared plans for the future? Talking about them now and then keeps you on the same path.",
-        "details": "Small details sustain more than grand gestures. One today, for no reason.",
-        "deepTalk": "How long since you talked about how you are, not just logistics? Find a moment without screens."
+      "tired": {
+        "1": "You logged low energy. Suggest a short plan or none; don't force it.",
+        "2": "You're running on empty today. Say so before it comes across as disinterest.",
+        "3": "Low energy by your check-in. Delegate dinner or ask for help with one thing."
       },
-      "longTerm": {
-        "growth": "Several years together: you've both changed. Ask what excites her now, you might be surprised.",
-        "individuality": "Protecting your own space also protects the relationship. A plan of your own this week isn't abandonment.",
-        "newExperience": "Against inertia, novelty: a new place, a different plan, even a small one.",
-        "intimacy": "Emotional intimacy also feeds on talking about the uncomfortable. No rush, but don't always avoid it."
+      "lowSatisfaction": {
+        "1": "You logged low satisfaction with the relationship. Write down in two lines what you're missing before bringing it up.",
+        "2": "Your check-in marks dissatisfaction. Pick one concrete thing you'd like to change and propose it this week.",
+        "3": "Low satisfaction today. Ask yourself whether it's a bad day or a trend; if it's a trend, it's time to talk."
       },
-      "veryLongTerm": {
-        "memories": "You have years of history. Revisiting a good memory together (photos, places) reconnects fast.",
-        "changes": "Neither of you is the same person from years ago. Ask again about things you think you know.",
-        "projects": "Any project you're both excited about? Shared plans renew long chapters.",
-        "curiosity": "Mutual curiosity doesn't stay alive on its own, it's practiced. Today: a question you've never asked."
+      "affectionate": {
+        "1": "You're feeling affectionate today. Say it or show it before the day slips by.",
+        "2": "You logged a lot of affection. A small physical gesture is worth more than keeping it in.",
+        "3": "You're in the mood for closeness. Suggest time together without screens tonight."
+      },
+      "good": {
+        "1": "You logged a good day. Share the mood: tell {{name}} what went well.",
+        "2": "You're doing well today. Do something for {{name}} you've been putting off.",
+        "3": "Good day by your check-in. Propose a weekend plan while the energy is there."
       }
     },
     "phase": {
       "menstruation": {
-        "comfort": "Some people appreciate pampering, others prefer not to be touched. Ask what she feels like today.",
-        "ask": "Don't assume how she feels because of the phase: ask her. The calendar estimates dates, not emotions."
-      },
-      "follicular": {
-        "plan": "If you want to plan something together, propose it early: choosing together is already part of the plan.",
-        "checkIn": "A timely \"how's your week going?\" avoids a lot of misunderstandings."
-      },
-      "ovulation": {
-        "estimate": "Remember: the ovulation shown is an estimate, not a certainty. Don't use it for contraception decisions."
-      },
-      "luteal": {
-        "patience": "If one of you is having an off day, it doesn't always need fixing: sometimes company is enough.",
-        "selfCare": "Taking care of yourselves separately also takes care of the relationship. Slowing down today is fine."
+        "1": "According to what's logged, {{name}} may be on her period. Everyone experiences it differently: ask what she feels like.",
+        "2": "The calendar estimates {{name}} is on her period. Keep what relieves her handy and ask before suggesting plans.",
+        "3": "By the estimate, {{name}} would be on her period. It's a calendar figure, not a mood: ask how she is."
       }
+    }
+  },
+  "tips": {
+    "composed": "{{lead}} {{action}} {{closer}}",
+    "lead": {
+      "1": "No grand gesture needed today.",
+      "2": "Relationships hold together through the small stuff of every day.",
+      "3": "An ordinary day is also an opportunity.",
+      "4": "What goes unsaid piles up.",
+      "5": "Sometimes paying attention is enough.",
+      "6": "Nobody guesses what the other person needs.",
+      "7": "The week's tiredness shows up in the relationship too.",
+      "8": "Routine isn't bad; not noticing it is.",
+      "9": "Caring for the relationship doesn't mean hovering.",
+      "10": "Important conversations rarely start on their own.",
+      "11": "It's easy to take for granted the person you see every day.",
+      "12": "Small things count more when nobody expects them.",
+      "13": "Each of you arrives at the day carrying your own weight.",
+      "14": "A good moment together almost always starts with a question.",
+      "15": "Listening is a form of affection too.",
+      "16": "Agreeing on everything isn't the goal.",
+      "17": "Early on, a lot gets assumed and little gets said.",
+      "18": "Over time, talking logistics replaces actually talking.",
+      "19": "A packed week leaves little room for a calm conversation.",
+      "20": "Misunderstandings grow fast when each of you is busy with your own thing.",
+      "21": "Some topics get postponed because they seem minor.",
+      "22": "Over time, gratitude goes quiet.",
+      "23": "Nobody gets tired of knowing they're seen.",
+      "24": "What you value in the other person doesn't always reach them.",
+      "25": "The first months are full of compliments; later they're taken as given.",
+      "26": "Recognizing an effort on time beats celebrating it late.",
+      "27": "The best plan isn't the most expensive one.",
+      "28": "Weeks fill themselves if nobody books a gap.",
+      "29": "Early on, every plan is a way of getting to know each other.",
+      "30": "After so many plans together, novelty has to be sought out.",
+      "31": "There are days for going out and days for staying in.",
+      "32": "Intimacy is cared for outside the bedroom too.",
+      "33": "What you feel like changes from day to day, and that's normal.",
+      "34": "With trust, it's easier to talk about what you like and what you don't.",
+      "35": "Early on, ask more and assume less.",
+      "36": "Desire doesn't always line up for both of you.",
+      "37": "Being together all the time proves nothing.",
+      "38": "Each of you needs time that is only yours.",
+      "39": "According to what's logged, these days may call for calm rather than activity.",
+      "40": "Having plans of your own takes nothing from the relationship.",
+      "41": "Time alone recharges the couple too.",
+      "42": "Arguing isn't the problem; arguing badly is.",
+      "43": "The first disagreements set how the next ones get resolved.",
+      "44": "Over the years, some arguments repeat with the same script.",
+      "45": "When one of you arrives tense, any comment weighs double.",
+      "46": "Being right and fixing things don't always go together.",
+      "47": "There's still a lot you don't know about this person.",
+      "48": "Over the years, it's easy to believe you already know everything about each other.",
+      "49": "Curiosity about the other person is practiced; it doesn't come on its own.",
+      "50": "Last year's answers may have changed.",
+      "51": "Knowing their routines says more than any big question.",
+      "52": "According to the calendar, these may be lower-energy days for {{name}}.",
+      "53": "A bad day doesn't always need a solution.",
+      "54": "Keeping company is different from fixing.",
+      "55": "Sometimes the support that works is the quietest kind.",
+      "56": "According to the calendar, {{name}} would be near ovulation. It's an estimate, not a certainty."
     },
-    "general": {
-      "listen": "Listening without composing your reply while the other talks: harder and more valuable than it seems.",
-      "smallGesture": "A small gesture today (a message, her coffee, remembering something she said) beats a perfect plan someday.",
-      "time": "Time together without screens is a different thing. Even twenty minutes.",
-      "gratitude": "Saying out loud something you appreciate about each other changes the tone of the day. Try it."
+    "action": {
+      "1": "Ask how her week is going before telling her about yours.",
+      "2": "Find ten screen-free minutes to talk about something that isn't logistics.",
+      "3": "If there's something you've kept quiet for days, say it today in one short sentence.",
+      "4": "Repeat in your own words what she tells you before answering; you'll see if you understood.",
+      "5": "Tell her one thing that worries you, even if it seems small.",
+      "6": "Ask what she needs instead of assuming.",
+      "7": "Send a midday message with no reason and no question.",
+      "8": "When she talks, put the phone face down.",
+      "9": "Suggest a fixed slot this week to catch up calmly.",
+      "10": "Ask what drained her energy today and listen without solving.",
+      "11": "Say out loud one concrete thing she did this week that you liked.",
+      "12": "Thank her for something everyday that usually passes without comment.",
+      "13": "Recall a recent moment that made you smile and tell her about it.",
+      "14": "Make her coffee, her tea or whatever she usually has, unasked.",
+      "15": "Write a short note and leave it where she'll find it.",
+      "16": "Compliment something that isn't physical.",
+      "17": "Notice an effort of hers nobody has acknowledged and name it.",
+      "18": "Tell her what you admire about how she handled a hard situation.",
+      "19": "When she gets home, pause what you're doing for a moment to say hello.",
+      "20": "Remind her why you like spending time with her.",
+      "21": "Propose a plan for this week and give it a day and a time.",
+      "22": "Pick somewhere new for dinner, even if it's around the corner.",
+      "23": "Plan a short walk with no set destination.",
+      "24": "Cook something together that neither of you has made before.",
+      "25": "Set aside an afternoon with no obligations and decide the plan as you go.",
+      "26": "Suggest redoing your first date, same place or somewhere similar.",
+      "27": "Find an event in your city for the weekend and ask if she's up for it.",
+      "28": "A night in counts: a film, a blanket and no phones.",
+      "29": "Let her choose the plan and don't argue the choice.",
+      "30": "Go out for breakfast on a weekday.",
+      "31": "Ask what she feels like today instead of assuming.",
+      "32": "Talk about what you like as naturally as you'd talk about a film.",
+      "33": "If you don't feel like something, say so without excuses; clarity is care too.",
+      "34": "Spend a while on touch with no expectations: a long hug, a hand on the back.",
+      "35": "Ask what she'd like to try, and listen without judging.",
+      "36": "Remind her that a \"no\" from either of you needs no explanation.",
+      "37": "Talk about what worked last time, not only what didn't.",
+      "38": "Start the day with a small physical gesture before rushing out.",
+      "39": "Suggest talking about intimacy at a calm moment, not in bed.",
+      "40": "Ask whether there's anything she'd like to change and thank her for the answer, whatever it is.",
+      "41": "Make a plan of your own today, without your partner, and tell her without justifying it.",
+      "42": "Ask whether she'd rather have company or some time alone, and respect the answer.",
+      "43": "Don't fill the silence; sometimes being close without talking is enough.",
+      "44": "Encourage her to see her friends without having to ask permission.",
+      "45": "Set aside half an hour for something only you enjoy.",
+      "46": "If you notice she needs space, say it in one sentence and leave it there.",
+      "47": "Go to bed when you need to, even if the other is still up.",
+      "48": "Ask before proposing a plan: maybe today isn't the day.",
+      "49": "Let a hard conversation wait today if neither of you has the energy.",
+      "50": "Look after your own rest: sleeping well looks after the relationship too.",
+      "51": "If there's an argument pending, suggest talking it through tomorrow calmly instead of today in a rush.",
+      "52": "In the next argument, listen to the end before answering.",
+      "53": "Apologize for your part, even if the other doesn't.",
+      "54": "Swap \"you always\" for \"today I felt\".",
+      "55": "Agree on a signal to pause when an argument heats up.",
+      "56": "Ask what she needs to feel heard, not who's right.",
+      "57": "Clear up a recent misunderstanding instead of letting it slide.",
+      "58": "Before replying to a comment that bothered you, count to ten.",
+      "59": "Acknowledge out loud one point where the other was right.",
+      "60": "If the argument keeps repeating, write in two lines what really bothers you.",
+      "61": "Ask her a question you've never asked before.",
+      "62": "Ask about her best childhood memory.",
+      "63": "Ask what excites her right now, even if you think you know.",
+      "64": "Take an interest in something of hers that you don't find interesting.",
+      "65": "Ask what she'd do with a whole free day and no obligations.",
+      "66": "Find out which song puts her in a good mood and play it.",
+      "67": "Ask what she'd change about her routine if she could.",
+      "68": "Ask about her day with a concrete question, not a \"how was it?\".",
+      "69": "Ask what she learned this week.",
+      "70": "Ask her to tell you something she's never told you.",
+      "71": "Ask whether she wants to talk or would rather just have company.",
+      "72": "Offer help with a specific task instead of a \"let me know if you need anything\".",
+      "73": "Keep handy whatever usually relieves her on hard days.",
+      "74": "Send a short message: \"thinking of you\", and nothing else.",
+      "75": "Listen without offering solutions unless she asks for them.",
+      "76": "Take care of dinner today without announcing it.",
+      "77": "Ask what would help her tomorrow, not just today.",
+      "78": "If she comes home late and drained, greet her with calm, not questions.",
+      "79": "Note down what helped this time; it'll be useful next time.",
+      "80": "Make clear that a bad day of hers isn't a problem for you."
+    },
+    "closer": {
+      "1": "Without expecting anything back.",
+      "2": "Small, but today.",
+      "3": "It doesn't have to come out perfect.",
+      "4": "That's enough.",
+      "5": "The rest can wait.",
+      "6": "And notice how the day changes.",
+      "7": "Better today than when it's due.",
+      "8": "Little effort, big difference.",
+      "9": "If it goes wrong, there's another chance tomorrow."
     }
   },
   "agenda": {

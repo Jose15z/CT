@@ -26,55 +26,47 @@ describe('translation bundles', () => {
   })
 
   // Every message key the BACKEND can emit must resolve in the frontend.
-  const backendAdviceKeys = [
-    'advice.anniversary.today',
-    'advice.anniversary.upcoming',
-    'advice.anniversary.approaching',
-    'advice.partnerReport.sad',
-    'advice.partnerReport.low',
-    'advice.observation.needsSpace',
-    'advice.observation.sad',
-    'advice.observation.upset',
-    'advice.observation.distant',
-    'advice.both.stressed',
-    'advice.both.good',
-    'advice.quietPlan',
-    'advice.phase.menstruation',
+  // Rules and variant count mirror RelationshipAdviceEngine.RULES / VARIANTS.
+  const adviceRules = [
+    'anniversary.today',
+    'anniversary.upcoming',
+    'anniversary.approaching',
+    'partnerReport.sad',
+    'partnerReport.low',
+    'partnerReport.good',
+    'observation.needsSpace',
+    'observation.sad',
+    'observation.upset',
+    'observation.distant',
+    'observation.happy',
+    'observation.affectionate',
+    'observation.tired',
+    'observation.stressed',
+    'observation.notSure',
+    'both.stressed',
+    'both.good',
+    'quietPlan',
+    'self.low',
+    'self.stressed',
+    'self.tired',
+    'self.lowSatisfaction',
+    'self.affectionate',
+    'self.good',
+    'phase.menstruation',
   ]
+  const ADVICE_VARIANTS = 3
+  const backendAdviceKeys = adviceRules.flatMap((rule) =>
+    Array.from({ length: ADVICE_VARIANTS }, (_, i) => `advice.${rule}.${i + 1}`),
+  )
 
-  // Must match V2__daily_tips.sql exactly.
+  // Fragment counts mirror TipCatalog.java (LEADS, ACTIONS_PER_TOPIC × 8, CLOSERS).
+  const range = (prefix: string, n: number) =>
+    Array.from({ length: n }, (_, i) => `${prefix}.${i + 1}`)
   const backendTipKeys = [
-    'tips.stage.new.communication',
-    'tips.stage.new.boundaries',
-    'tips.stage.new.expectations',
-    'tips.stage.new.consent',
-    'tips.stage.developing.deeper',
-    'tips.stage.developing.disagreements',
-    'tips.stage.developing.newActivity',
-    'tips.stage.developing.routines',
-    'tips.stage.established.routine',
-    'tips.stage.established.goals',
-    'tips.stage.established.details',
-    'tips.stage.established.deepTalk',
-    'tips.stage.longTerm.growth',
-    'tips.stage.longTerm.individuality',
-    'tips.stage.longTerm.newExperience',
-    'tips.stage.longTerm.intimacy',
-    'tips.stage.veryLongTerm.memories',
-    'tips.stage.veryLongTerm.changes',
-    'tips.stage.veryLongTerm.projects',
-    'tips.stage.veryLongTerm.curiosity',
-    'tips.phase.menstruation.comfort',
-    'tips.phase.menstruation.ask',
-    'tips.phase.follicular.plan',
-    'tips.phase.follicular.checkIn',
-    'tips.phase.ovulation.estimate',
-    'tips.phase.luteal.patience',
-    'tips.phase.luteal.selfCare',
-    'tips.general.listen',
-    'tips.general.smallGesture',
-    'tips.general.time',
-    'tips.general.gratitude',
+    'tips.composed',
+    ...range('tips.lead', 56),
+    ...range('tips.action', 80),
+    ...range('tips.closer', 9),
   ]
 
   const backendErrorCodes = [

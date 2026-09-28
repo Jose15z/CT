@@ -125,7 +125,7 @@ export function PartnerCalendarPage() {
       </header>
 
       <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
-        <div className="rounded-xl border border-border bg-surface p-4">
+        <div className="card p-4">
           {/* Month navigation */}
           <div className="mb-3 flex items-center justify-between">
             <button
@@ -222,7 +222,7 @@ export function PartnerCalendarPage() {
         </div>
 
         {/* Selected day detail */}
-        <aside className="rounded-xl border border-border bg-surface p-4">
+        <aside className="card p-4">
           <h2 className="text-[14px] font-semibold text-ink">{formatDate(selected)}</h2>
 
           {selectedInfo?.phase ? (

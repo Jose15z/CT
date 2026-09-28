@@ -123,7 +123,7 @@ export function CheckInPage() {
 
   if (activePartners.length === 0) {
     return (
-      <div className="rounded-xl border border-border bg-surface">
+      <div className="card">
         <EmptyState
           icon={<SmilePlus size={28} strokeWidth={1.5} />}
           title={t('checkin.title')}
@@ -192,7 +192,7 @@ export function CheckInPage() {
       </header>
 
       {/* My check-in */}
-      <section className="rounded-xl border border-border bg-surface p-4 sm:p-5">
+      <section className="card p-4 sm:p-5">
         <h2 className="text-[15px] font-semibold text-ink">{t('checkin.howAreYou')}</h2>
         {alreadyCheckedInToday && (
           <p className="mt-1 text-[12.5px] text-ink-3">{t('checkin.alreadyToday')}</p>
@@ -241,7 +241,7 @@ export function CheckInPage() {
 
       {/* How do I perceive my partner */}
       {partner && (
-        <section className="rounded-xl border border-border bg-surface p-4 sm:p-5">
+        <section className="card p-4 sm:p-5">
           <h2 className="text-[15px] font-semibold text-ink">
             {t('checkin.howDoYouSeeHer', { name: partnerName })}
           </h2>
@@ -298,7 +298,7 @@ export function CheckInPage() {
           <h2 className="text-[13px] font-medium uppercase tracking-wide text-ink-3">
             {t('checkin.yourRecent')}
           </h2>
-          <ul className="mt-2 divide-y divide-border rounded-xl border border-border bg-surface">
+          <ul className="mt-2 divide-y divide-border card">
             {checkIns.slice(0, 10).map((checkIn) => (
               <li key={checkIn.id} className="flex items-center gap-3 px-4 py-2.5 text-[13.5px]">
                 <span className="text-[17px]" aria-hidden="true">{moodEmoji[checkIn.mood]}</span>

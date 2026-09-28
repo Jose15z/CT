@@ -21,7 +21,7 @@ export function HistoryPage() {
       </header>
 
       {!partners || partners.length === 0 ? (
-        <div className="rounded-xl border border-border bg-surface">
+        <div className="card">
           <EmptyState
             icon={<Clock size={28} strokeWidth={1.5} />}
             title={t('history.empty.title')}
@@ -29,7 +29,7 @@ export function HistoryPage() {
           />
         </div>
       ) : (
-        <ul className="divide-y divide-border rounded-xl border border-border bg-surface">
+        <ul className="divide-y divide-border card">
           {partners.map((partner) => {
             const rel = partner.relationship
             return (

@@ -63,7 +63,7 @@ frontend/src/
 - **PartnerObservation** — cómo *percibe* el usuario a su pareja. Siempre se presenta como percepción, nunca como hecho.
 - **PartnerAccess** — permisos de una cuenta vinculada: qué puede ver el otro usuario (por scope) y con posibilidad de revocarlo.
 - **LeaderboardProfile** — participación opt-in en el ranking.
-- **DailyTip** — catálogo de consejos: clave i18n + condiciones (fase, etapa de la relación, categoría). El texto vive en `es.json`/`en.json`.
+- **TipCatalog** (sin tabla) — banco de consejos genéricos compuesto en código a partir de fragmentos etiquetados; el texto vive en `es.json`/`en.json`.
 - **RefreshToken** — refresh tokens opacos, hasheados, revocables.
 
 ### Decisiones que se apartan del enunciado (y por qué)
@@ -82,7 +82,7 @@ Migraciones Flyway en `backend/src/main/resources/db/migration`.
 - `V1__schema.sql` — todas las tablas, FKs, constraints e índices.
 - `V2__daily_tips.sql` — catálogo de tips (claves i18n).
 
-Tablas: `users`, `refresh_tokens`, `partners`, `relationships`, `relationship_milestones`, `cycle_profiles`, `period_records`, `relationship_check_ins`, `partner_observations`, `partner_access`, `daily_tips`, `leaderboard_profiles`.
+Tablas: `users`, `refresh_tokens`, `password_reset_tokens`, `partners`, `relationships`, `relationship_milestones`, `cycle_profiles`, `period_records`, `relationship_check_ins`, `partner_observations`, `partner_access`, `leaderboard_profiles`, `date_plans`, `encounters`, `user_avatars`. (`daily_tips` existió hasta V6.)
 
 Puntos relevantes:
 
@@ -210,11 +210,12 @@ Toda respuesta de predicción incluye `disclaimerKeys` y la UI muestra siempre: 
 Motor de reglas determinista, sin ML y sin inventar emociones:
 
 1. Construye un `AdviceContext`: etapa de la relación (NEW → VERY_LONG_TERM por duración), tipo, días hasta el aniversario, fase estimada (si tracking activo), último check-in del propio usuario, último check-in de la pareja *solo si es cuenta vinculada con grant*, última observación registrada.
-2. Una lista ordenada de `AdviceRule` evalúa el contexto y emite candidatos `(categoría, clave i18n, parámetros, prioridad, fuente)`. Fuente ∈ SELF_REPORT | OBSERVATION | CYCLE | RELATIONSHIP, para que la UI diga "Laura indicó que..." vs "Registraste que notas a Laura...".
-3. Se devuelven los 1–3 candidatos de mayor prioridad; los empates se resuelven con un random sembrado por `(partnerId, fecha)` para que el consejo del día sea estable durante el día.
-4. Los textos son claves i18n (`advice.anniversary.upcoming`, ...) resueltas en el frontend con parámetros (`{name}`, `{days}`), así ES/EN salen gratis.
+2. Las reglas evalúan el contexto y emiten candidatos `(categoría, clave i18n, parámetros, prioridad, fuente)`. Fuente ∈ SELF_REPORT | OBSERVATION | CYCLE | RELATIONSHIP, para que la UI diga "Laura indicó que..." vs "Registraste que notas a Laura...". Hay 25 reglas: además de las señales negativas (tristeza, enfado, distancia, estrés, necesita espacio), reaccionan a las positivas y neutras (contenta, cariñosa, cansada, "no estoy seguro"), a lo que el propio usuario registra de sí mismo (ánimo bajo, estrés, poca energía, cariño, poca satisfacción con la relación) y al aniversario y la fase estimada.
+3. **Cada regla tiene 3 redacciones** (`advice.<regla>.1..3`); un `Random` sembrado por `(partnerId, fecha)` elige la del día. Así la misma situación se lee distinto cada día y es estable dentro del día.
+4. El consejo genérico se **compone** en `TipCatalog`: una frase de contexto (56 *leads*, etiquetados por tema, etapa y fase) + una acción concreta (80, diez por tema) + un remate opcional (9). Los fragmentos son claves i18n independientes y gramaticalmente completas, así que el frontend los resuelve y concatena; el resultado son **10.600 consejos distintos** con ~150 cadenas por idioma (`TipCatalog.distinctCombinations()`, cubierto por test). El tema se elige con pesos según contexto (p. ej. menstruación → apoyo y espacio; etapa NEW → curiosidad).
+5. Se devuelven los 1–3 candidatos de mayor prioridad; el compuesto siempre está presente como último recurso.
 
-El catálogo genérico (`daily_tips`) aporta los consejos por etapa y por fase cuando ninguna regla contextual dispara. Ninguna clave de fase afirma estados emocionales ("estará irritable"); son sugerencias neutras de cuidado y comunicación.
+Ninguna clave de fase afirma estados emocionales ("estará irritable"); son sugerencias neutras de cuidado y comunicación, y las que dependen del ciclo se presentan como estimación.
 
 ## 9. Leaderboard
 

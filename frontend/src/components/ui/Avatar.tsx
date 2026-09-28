@@ -17,7 +17,7 @@ export function Avatar({ emoji, name, size = 'md', imageUrl }: AvatarProps) {
   return (
     <div
       aria-hidden="true"
-      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-peach-soft ${sizes[size]}`}
+      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-peach-soft ring-1 ring-inset ring-border ${sizes[size]}`}
     >
       {imageUrl ? (
         <img src={imageUrl} alt="" className="h-full w-full object-cover" />

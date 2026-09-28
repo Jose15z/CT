@@ -47,18 +47,18 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="mt-12 grid gap-x-8 gap-y-6 border-t border-border pt-8 sm:grid-cols-2">
+        <section className="mt-12 grid gap-3 sm:grid-cols-2">
           {features.map(({ key, icon: Icon }) => (
-            <div key={key} className="flex gap-3">
-              <Icon size={18} strokeWidth={1.9} className="mt-0.5 shrink-0 text-peach" />
-              <div>
-                <h2 className="text-[14px] font-semibold text-ink">
-                  {t(`landing.features.${key}.title`)}
-                </h2>
-                <p className="mt-0.5 text-[13.5px] leading-relaxed text-ink-2">
-                  {t(`landing.features.${key}.body`)}
-                </p>
+            <div key={key} className="card p-5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-peach-soft text-peach">
+                <Icon size={16} strokeWidth={1.9} aria-hidden="true" />
               </div>
+              <h2 className="mt-3 text-[14px] font-semibold tracking-tight text-ink">
+                {t(`landing.features.${key}.title`)}
+              </h2>
+              <p className="mt-1 text-[13.5px] leading-relaxed text-ink-2">
+                {t(`landing.features.${key}.body`)}
+              </p>
             </div>
           ))}
         </section>

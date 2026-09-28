@@ -145,7 +145,7 @@ export function PartnerDetailPage() {
         </Link>
       </div>
 
-      <div className="space-y-6 rounded-xl border border-border bg-surface p-4 sm:p-5">
+      <div className="space-y-6 card p-4 sm:p-5">
         {/* Relationship dates */}
         <section>
           <div className="flex items-center justify-between">

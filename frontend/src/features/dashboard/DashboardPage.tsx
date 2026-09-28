@@ -8,6 +8,7 @@ import { EmptyState } from '../../components/ui/EmptyState'
 import { Avatar } from '../../components/ui/Avatar'
 import { Tag } from '../../components/ui/Tag'
 import { moodEmoji, observationEmoji } from '../../lib/emoji'
+import { adviceText } from '../../lib/advice'
 import { formatDate, formatDayMonth, formatDuration, formatFullDay } from '../../lib/dates'
 import { LogPeriodSheet } from '../calendar/LogPeriodSheet'
 import type { DashboardPartner } from '../../lib/types'
@@ -26,7 +27,7 @@ function PartnerToday({ partner }: { partner: DashboardPartner }) {
   const cycle = partner.cycle
 
   return (
-    <article className="rounded-xl border border-border bg-surface">
+    <article className="card">
       {/* Header: who + what kind of relationship + how long */}
       <header className="flex items-center gap-3 px-4 pt-4 sm:px-5">
         <Avatar emoji={partner.avatarEmoji} name={partner.name} />
@@ -92,11 +93,14 @@ function PartnerToday({ partner }: { partner: DashboardPartner }) {
           </div>
 
           {partner.adviceOfTheDay && (
-            <div className="border-l-2 border-peach pl-3">
-              <p className="text-[13.5px] leading-relaxed text-ink">
-                {t(partner.adviceOfTheDay.messageKey, partner.adviceOfTheDay.params)}
+            <div className="rounded-lg border border-border bg-surface-2/60 px-3.5 py-3">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-ink-3">
+                {t('dashboard.adviceToday')}
               </p>
-              <p className="mt-0.5 text-[11.5px] text-ink-3">
+              <p className="mt-1 text-[13.5px] leading-relaxed text-ink">
+                {adviceText(partner.adviceOfTheDay)}
+              </p>
+              <p className="mt-1.5 text-[11.5px] text-ink-3">
                 {t(`adviceSource.${partner.adviceOfTheDay.source}`)}
               </p>
             </div>
@@ -214,7 +218,7 @@ export function DashboardPage() {
       </header>
 
       {data.partners.length === 0 ? (
-        <div className="rounded-xl border border-border bg-surface">
+        <div className="card">
           <EmptyState
             icon={<Heart size={28} strokeWidth={1.5} />}
             title={t('dashboard.empty.title')}

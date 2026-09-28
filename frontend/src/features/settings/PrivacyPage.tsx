@@ -29,7 +29,7 @@ export function PrivacyPage() {
         <p className="mt-1 text-[13.5px] leading-relaxed text-ink-2">{t('privacy.intro')}</p>
       </header>
 
-      <div className="space-y-5 rounded-xl border border-border bg-surface p-4 sm:p-5">
+      <div className="space-y-5 card p-4 sm:p-5">
         {SECTIONS.map((section, index) => (
           <section key={section} className={index > 0 ? 'border-t border-border pt-5' : ''}>
             <h2 className="text-[14.5px] font-semibold text-ink">

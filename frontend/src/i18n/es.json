@@ -358,84 +358,295 @@
   },
   "advice": {
     "anniversary": {
-      "today": "Hoy es su aniversario: {{years}} años con {{name}}. Que no se pase sin celebrarlo, aunque sea con algo pequeño.",
-      "upcoming": "Su aniversario es en {{days}} días ({{years}} años). Buen momento para preparar algo especial.",
-      "approaching": "Su aniversario se acerca ({{days}} días). Si quieres organizar algo con tiempo, este es el momento."
+      "today": {
+        "1": "Hoy es su aniversario: {{years}} años con {{name}}. Que no se pase sin celebrarlo, aunque sea con algo pequeño.",
+        "2": "{{years}} años con {{name}} se cumplen hoy. Un mensaje a primera hora ya cambia el día.",
+        "3": "Aniversario: {{years}} años. Recuerda con {{name}} un momento del primer año; suele valer más que cualquier regalo."
+      },
+      "upcoming": {
+        "1": "Su aniversario es en {{days}} días ({{years}} años). Buen momento para preparar algo especial.",
+        "2": "En {{days}} días cumplen {{years}} años. Si quieres reservar algo, esta semana es el momento.",
+        "3": "Quedan {{days}} días para el aniversario. Piensa en qué le hizo ilusión a {{name}} el año pasado y repite la idea, no el plan."
+      },
+      "approaching": {
+        "1": "Su aniversario se acerca ({{days}} días). Si quieres organizar algo con tiempo, este es el momento.",
+        "2": "Faltan {{days}} días para el aniversario. Apunta hoy una idea, aunque la concretes más adelante.",
+        "3": "En {{days}} días es el aniversario con {{name}}. Pregúntale, sin desvelar nada, qué tipo de plan le apetece últimamente."
+      }
     },
     "partnerReport": {
-      "sad": "{{name}} indicó que hoy no se siente muy bien. Puedes preguntarle si quiere hablar o si prefiere simplemente compañía.",
-      "low": "{{name}} registró que hoy tiene un día difícil. Pregúntale qué necesita en lugar de asumirlo."
+      "sad": {
+        "1": "{{name}} indicó que hoy no se siente muy bien. Puedes preguntarle si quiere hablar o si prefiere simplemente compañía.",
+        "2": "{{name}} registró que hoy está triste. No hace falta arreglarlo: un mensaje breve y estar disponible ya ayuda.",
+        "3": "Según su check-in, {{name}} tiene un día triste. Pregúntale qué le vendría bien esta tarde y hazlo sin comentarios."
+      },
+      "low": {
+        "1": "{{name}} registró que hoy tiene un día difícil. Pregúntale qué necesita en lugar de asumirlo.",
+        "2": "{{name}} marcó un día pesado. Quita de su lista una tarea que puedas hacer tú.",
+        "3": "Por su check-in, {{name}} viene con estrés o ansiedad. Hoy sobran los planes: propón algo tranquilo o nada."
+      },
+      "good": {
+        "1": "{{name}} registró un buen día. Pregúntale qué lo hizo bueno y escucha.",
+        "2": "{{name}} está de buen ánimo según su check-in. Buen momento para proponer ese plan pendiente.",
+        "3": "Hoy {{name}} marcó que está bien. Cuéntale algo bueno de tu día y comparte el ánimo."
+      }
     },
     "observation": {
-      "needsSpace": "Registraste que parece necesitar espacio. Considera preguntarle directamente qué necesita en vez de asumirlo.",
-      "sad": "Registraste que hoy la notas triste. Un mensaje sencillo preguntando cómo está puede abrir la puerta sin presionar.",
-      "upset": "Registraste que la notas molesta. Mejor escuchar primero y entender qué pasó antes de defenderte o resolver.",
-      "distant": "Registraste que la notas distante. A veces es cansancio, a veces otra cosa: pregunta sin dramatizar."
+      "needsSpace": {
+        "1": "Registraste que parece necesitar espacio. Pregúntale directamente qué necesita en vez de asumirlo.",
+        "2": "Notaste que {{name}} necesita espacio. Dile una frase, «aquí estoy», y no insistas.",
+        "3": "Según lo que registraste, {{name}} pide distancia. Ocúpate hoy de un plan tuyo y deja la puerta abierta."
+      },
+      "sad": {
+        "1": "Registraste que hoy la notas triste. Un mensaje sencillo preguntando cómo está puede abrir la puerta sin presionar.",
+        "2": "Notaste a {{name}} triste. En vez de «¿qué te pasa?», prueba con «¿quieres compañía o prefieres un rato a solas?».",
+        "3": "Registraste tristeza en {{name}}. Es tu percepción: pregúntale si acertaste antes de actuar."
+      },
+      "upset": {
+        "1": "Registraste que la notas molesta. Mejor escuchar primero y entender qué pasó antes de defenderte o resolver.",
+        "2": "Notaste a {{name}} molesta. Pregunta si tiene que ver contigo; si la respuesta es no, no insistas.",
+        "3": "Según registraste, {{name}} está molesta. Evita hoy los temas pendientes y deja que el enfado baje antes de hablar."
+      },
+      "distant": {
+        "1": "Registraste que la notas distante. A veces es cansancio, a veces otra cosa: pregunta sin dramatizar.",
+        "2": "Notaste a {{name}} distante. Propón algo pequeño y sin presión: un paseo, un café.",
+        "3": "Registraste distancia en {{name}}. Antes de interpretarlo, pregúntale cómo fue su día."
+      },
+      "happy": {
+        "1": "Registraste que notas a {{name}} contenta. Buen día para proponer ese plan que llevan tiempo aplazando.",
+        "2": "Notaste a {{name}} de buen ánimo. Pregúntale qué le alegró el día; contarlo lo alarga.",
+        "3": "Según registraste, {{name}} está feliz. Es el momento de hablar de algo pendiente, con buen pie."
+      },
+      "affectionate": {
+        "1": "Registraste que {{name}} está cariñosa. Responde con tiempo, no solo con palabras: un rato juntos sin teléfono.",
+        "2": "Notaste a {{name}} cariñosa hoy. Devuelve el gesto con algo concreto: un mensaje, un plan, una nota.",
+        "3": "Según registraste, {{name}} está afectuosa. Buen momento para proponer una cita y ponerle fecha."
+      },
+      "tired": {
+        "1": "Registraste que notas a {{name}} cansada. Hoy mejor un plan corto o ninguno, y la cena la resuelves tú.",
+        "2": "Notaste cansancio en {{name}}. Pregúntale si quiere adelantar la hora de dormir, y acompaña.",
+        "3": "Según registraste, {{name}} está agotada. Quita de su día una tarea sin anunciarlo."
+      },
+      "stressed": {
+        "1": "Registraste que notas a {{name}} estresada. Pregunta qué tiene encima y ofrece ayuda con una cosa concreta.",
+        "2": "Notaste estrés en {{name}}. Hoy no es el día para conversaciones largas; sí para un gesto práctico.",
+        "3": "Según registraste, {{name}} viene tensa. No añadas planes y pregúntale qué le quitaría presión."
+      },
+      "notSure": {
+        "1": "Registraste que no sabes cómo está {{name}}. La forma más rápida de saberlo es preguntar sin rodeos.",
+        "2": "No tienes claro cómo notas a {{name}}. Prueba con una pregunta concreta: «¿cómo fue tu día, del 1 al 10?».",
+        "3": "Marcaste «no estoy seguro». Un rato juntos sin agenda suele aclararlo más que darle vueltas."
+      }
     },
     "both": {
-      "stressed": "Los dos parecen tener un día pesado. Quizá hoy sea mejor un plan tranquilo que intentar resolverlo todo.",
-      "good": "Los dos registraron un buen día. Aprovecha: propón ese plan que llevan tiempo posponiendo."
+      "stressed": {
+        "1": "Los dos parecen tener un día pesado. Quizá hoy sea mejor un plan tranquilo que intentar resolverlo todo.",
+        "2": "Estrés por los dos lados. Dejen para mañana cualquier tema espinoso y cenen tranquilos.",
+        "3": "Hoy vienen tensos los dos. Repartan las tareas de la noche y no esperen mucho el uno del otro."
+      },
+      "good": {
+        "1": "Los dos registraron un buen día. Propón ese plan que llevan tiempo posponiendo.",
+        "2": "Buen día para ambos. Salgan a celebrarlo sin motivo, aunque sea a tomar algo cerca.",
+        "3": "Ambos están bien hoy. Es el momento de hablar de un proyecto en común, grande o pequeño."
+      }
     },
-    "quietPlan": "Tú estás cansado y notas estrés en {{name}}. Tal vez hoy toque un plan tranquilo y hablar sin presión.",
-    "phase": {
-      "menstruation": "Según lo registrado, {{name}} podría estar en sus días. Cada persona lo vive distinto: pregúntale qué le apetece."
-    }
-  },
-  "tips": {
-    "stage": {
-      "new": {
-        "communication": "Al principio, preguntar es mejor que suponer. Dedica hoy un rato a conocer algo nuevo de esa persona.",
-        "boundaries": "Hablar de límites pronto evita malentendidos después. No hace falta que sea solemne.",
-        "expectations": "¿Buscan lo mismo? Una conversación honesta ahora ahorra confusiones más adelante.",
-        "consent": "En la intimidad, lo que funciona se pregunta, no se adivina."
+    "quietPlan": {
+      "1": "Tú estás cansado y notas estrés en {{name}}. Tal vez hoy toque un plan tranquilo y hablar sin presión.",
+      "2": "Tú con poca energía y {{name}} con estrés. Cena sencilla, sofá y sin resolver nada hoy.",
+      "3": "Hoy no es el día para grandes planes: tú cansado y {{name}} tensa. Un paseo corto puede ser suficiente."
+    },
+    "self": {
+      "low": {
+        "1": "Registraste que hoy no estás bien. Díselo a {{name}} en una frase; no tiene que adivinarlo.",
+        "2": "Tu check-in marca un día bajo. Pide lo que necesites, aunque sea solo compañía en silencio.",
+        "3": "Hoy no estás bien, según tu registro. Cuídate primero: una cosa pequeña por ti antes que por la pareja."
       },
-      "developing": {
-        "deeper": "Ya se conocen. Prueba una conversación que vaya más allá de la agenda: miedos, planes, manías.",
-        "disagreements": "Los primeros desacuerdos marcan el tono. Discutir bien también se practica.",
-        "newActivity": "Prueben algo que ninguno haya hecho: los planes nuevos aceleran la confianza.",
-        "routines": "Conocer las rutinas del otro (y respetarlas) es una forma silenciosa de cuidar."
+      "stressed": {
+        "1": "Registraste estrés alto. Avisa a {{name}} para que no lo lea como distancia.",
+        "2": "Vienes con estrés. Antes de hablar de algo importante, date un rato para bajar el ritmo.",
+        "3": "Tu estrés está alto hoy. Deja claro que no tiene que ver con la pareja, si es el caso."
       },
-      "established": {
-        "routine": "Después de un tiempo juntos es fácil caer en la rutina. Haz hoy algo pequeño que no hagan normalmente.",
-        "goals": "¿Tienen algún plan compartido a futuro? Hablarlo de vez en cuando mantiene el rumbo común.",
-        "details": "Los detalles pequeños sostienen más que los gestos grandes. Uno hoy, sin motivo.",
-        "deepTalk": "¿Cuánto hace que no hablan de cómo están, y no solo de logística? Busca un rato sin pantallas."
+      "tired": {
+        "1": "Registraste poca energía. Propón un plan corto o ninguno; no te fuerces.",
+        "2": "Hoy vas sin batería. Dilo antes de que se note como desinterés.",
+        "3": "Poca energía según tu check-in. Delega la cena o pide ayuda con una cosa."
       },
-      "longTerm": {
-        "growth": "Varios años juntos: han cambiado los dos. Pregúntale qué le ilusiona ahora, quizá te sorprenda.",
-        "individuality": "Cuidar tu propio espacio también cuida la relación. Un plan tuyo esta semana no es abandono.",
-        "newExperience": "Contra la inercia, novedad: un sitio nuevo, un plan distinto, aunque sea pequeño.",
-        "intimacy": "La intimidad emocional se alimenta hablando también de lo incómodo. Sin prisa, pero sin evitarlo siempre."
+      "lowSatisfaction": {
+        "1": "Registraste poca satisfacción con la relación. Anota en dos líneas qué echas en falta antes de hablarlo.",
+        "2": "Tu check-in marca insatisfacción. Elige una sola cosa concreta que quieras cambiar y proponla esta semana.",
+        "3": "Poca satisfacción hoy. Pregúntate si es un mal día o una tendencia; si es tendencia, toca conversación."
       },
-      "veryLongTerm": {
-        "memories": "Tienen años de historia. Recordar juntos un buen momento (fotos, lugares) reconecta rápido.",
-        "changes": "Ninguno es la misma persona de hace años. Vuelve a preguntar cosas que crees que ya sabes.",
-        "projects": "¿Hay algún proyecto que les haga ilusión a los dos? Los planes comunes renuevan etapas largas.",
-        "curiosity": "La curiosidad mutua no caduca sola, se practica. Hoy: una pregunta que nunca le hayas hecho."
+      "affectionate": {
+        "1": "Hoy te sientes cariñoso. Díselo o demuéstralo antes de que se pase el día.",
+        "2": "Registraste mucho cariño. Un gesto físico pequeño vale más que guardárselo.",
+        "3": "Vienes con ganas de cariño. Propón un rato juntos sin pantallas esta noche."
+      },
+      "good": {
+        "1": "Registraste un buen día. Comparte el ánimo: cuéntale a {{name}} qué salió bien.",
+        "2": "Hoy estás bien. Haz por {{name}} algo que lleves tiempo posponiendo.",
+        "3": "Buen día según tu check-in. Propón un plan para el fin de semana mientras hay energía."
       }
     },
     "phase": {
       "menstruation": {
-        "comfort": "Hay quien agradece mimos y hay quien prefiere que no la toquen. Pregunta qué le apetece hoy.",
-        "ask": "No asumas cómo se siente por la fase: pregúntale. El calendario estima fechas, no emociones."
-      },
-      "follicular": {
-        "plan": "Si quieren hacer un plan juntos, proponlo con tiempo: elegir juntos ya es parte del plan.",
-        "checkIn": "Un \"¿cómo vienes esta semana?\" a tiempo evita muchos malentendidos."
-      },
-      "ovulation": {
-        "estimate": "Recuerda: la ovulación mostrada es una estimación, no una certeza. No la uses para decidir sobre anticoncepción."
-      },
-      "luteal": {
-        "patience": "Si alguno tiene un día torcido, no siempre hay que arreglarlo: a veces basta con acompañar.",
-        "selfCare": "Cuidarse cada uno por su lado también es cuidar la relación. Hoy vale bajar el ritmo."
+        "1": "Según lo registrado, {{name}} podría estar en sus días. Cada persona lo vive distinto: pregúntale qué le apetece.",
+        "2": "El calendario estima que {{name}} está con el periodo. Ten a mano lo que le alivia y pregunta antes de proponer planes.",
+        "3": "Según la estimación, {{name}} estaría en sus días. Es un dato del calendario, no un estado de ánimo: pregúntale cómo está."
       }
+    }
+  },
+  "tips": {
+    "composed": "{{lead}} {{action}} {{closer}}",
+    "lead": {
+      "1": "Hoy no hace falta un gran gesto.",
+      "2": "Las relaciones se sostienen en lo pequeño de cada día.",
+      "3": "Un día normal también es una oportunidad.",
+      "4": "Lo que no se dice se acumula.",
+      "5": "A veces basta con prestar atención.",
+      "6": "Nadie adivina lo que el otro necesita.",
+      "7": "El cansancio de la semana también se nota en la pareja.",
+      "8": "La rutina no es mala; el problema es no verla.",
+      "9": "Cuidar la relación no significa estar siempre encima.",
+      "10": "Las conversaciones importantes rara vez salen solas.",
+      "11": "Es fácil dar por hecho a la persona que ves a diario.",
+      "12": "Los detalles cuentan más cuando nadie los espera.",
+      "13": "Cada uno llega al día con su propio peso.",
+      "14": "Un buen momento juntos empieza casi siempre con una pregunta.",
+      "15": "Escuchar también es una forma de cariño.",
+      "16": "Estar de acuerdo en todo no es el objetivo.",
+      "17": "Al principio, muchas cosas se sobreentienden y pocas se dicen.",
+      "18": "Con el tiempo, hablar de logística sustituye a hablar de verdad.",
+      "19": "Una semana cargada deja poco espacio para conversar con calma.",
+      "20": "Los malentendidos crecen rápido cuando cada uno va a lo suyo.",
+      "21": "Hay temas que se posponen porque parecen menores.",
+      "22": "Con el tiempo, el agradecimiento se vuelve silencioso.",
+      "23": "Nadie se cansa de saber que lo ven.",
+      "24": "Lo que valoras del otro no siempre le llega.",
+      "25": "Los primeros meses están llenos de elogios; luego se dan por dichos.",
+      "26": "Reconocer un esfuerzo a tiempo vale más que celebrarlo con retraso.",
+      "27": "El mejor plan no es el más caro.",
+      "28": "Las semanas se llenan solas si nadie reserva un hueco.",
+      "29": "Al principio, cada plan es una manera de conocerse.",
+      "30": "Después de tantos planes juntos, la novedad hay que buscarla.",
+      "31": "Hay días para salir y días para quedarse.",
+      "32": "La intimidad se cuida también fuera del dormitorio.",
+      "33": "Lo que apetece cambia de un día a otro, y eso es normal.",
+      "34": "Con confianza, es más fácil hablar de lo que gusta y de lo que no.",
+      "35": "Al principio conviene preguntar más y suponer menos.",
+      "36": "El deseo no siempre va a la par en los dos.",
+      "37": "Estar juntos todo el tiempo no demuestra nada.",
+      "38": "Cada uno necesita ratos que son solo suyos.",
+      "39": "Según lo registrado, estos días pueden pedir más calma que actividad.",
+      "40": "Tener planes propios no le quita nada a la pareja.",
+      "41": "Un rato a solas también recarga a la pareja.",
+      "42": "Discutir no es el problema; hacerlo mal, sí.",
+      "43": "Los primeros desacuerdos marcan cómo se van a resolver los siguientes.",
+      "44": "Con los años, algunas discusiones se repiten con el mismo guion.",
+      "45": "Cuando uno viene tenso, cualquier comentario pesa el doble.",
+      "46": "Tener razón y arreglar las cosas no siempre van juntos.",
+      "47": "Todavía hay mucho que no sabes de esta persona.",
+      "48": "Con los años, es fácil creer que ya lo sabes todo del otro.",
+      "49": "La curiosidad por el otro se practica; no viene sola.",
+      "50": "Las respuestas de hace un año pueden haber cambiado.",
+      "51": "Conocer sus rutinas dice más que cualquier pregunta grande.",
+      "52": "Según el calendario, estos pueden ser días de menos energía para {{name}}.",
+      "53": "Un mal día no siempre necesita solución.",
+      "54": "Acompañar es distinto de resolver.",
+      "55": "A veces el apoyo que sirve es el más discreto.",
+      "56": "Según el calendario, {{name}} estaría cerca de la ovulación. Es una estimación, no una certeza."
     },
-    "general": {
-      "listen": "Escuchar sin preparar la respuesta mientras el otro habla: más difícil y más valioso de lo que parece.",
-      "smallGesture": "Un gesto pequeño hoy (un mensaje, su café, recordar algo que dijo) vale más que un plan perfecto algún día.",
-      "time": "El tiempo juntos sin pantallas es otra cosa. Aunque sean veinte minutos.",
-      "gratitude": "Decir en voz alta algo que aprecias del otro cambia el tono del día. Pruébalo."
+    "action": {
+      "1": "Pregúntale hoy cómo viene la semana antes de contarle la tuya.",
+      "2": "Busca diez minutos sin pantallas para hablar de algo que no sea logística.",
+      "3": "Si hay algo que llevas días callando, dilo hoy en una frase corta.",
+      "4": "Repite con tus palabras lo que te diga antes de responder; verás si lo entendiste.",
+      "5": "Cuéntale una cosa que te preocupa, aunque parezca pequeña.",
+      "6": "Pregunta qué necesita en vez de suponerlo.",
+      "7": "Manda un mensaje a mitad del día sin motivo ni pregunta.",
+      "8": "Cuando hable, deja el teléfono boca abajo.",
+      "9": "Propón un rato fijo esta semana para ponerse al día con calma.",
+      "10": "Pregúntale qué le quitó energía hoy y escucha sin resolver.",
+      "11": "Dile en voz alta una cosa concreta que hizo esta semana y te gustó.",
+      "12": "Agradécele algo cotidiano que normalmente pasa sin comentario.",
+      "13": "Recuerda un momento reciente que te hizo sonreír y cuéntaselo.",
+      "14": "Prepárale su café, su té o lo que suela tomar, sin que lo pida.",
+      "15": "Escríbele una nota corta y déjala donde la vaya a encontrar.",
+      "16": "Elógiale algo que no sea físico.",
+      "17": "Fíjate en un esfuerzo suyo que nadie ha reconocido y nómbralo.",
+      "18": "Dile qué admiras de cómo llevó una situación difícil.",
+      "19": "Cuando llegue a casa, deja un momento lo que estés haciendo para saludar.",
+      "20": "Recuérdale por qué te gusta pasar tiempo con esa persona.",
+      "21": "Propón un plan para esta semana y ponle día y hora.",
+      "22": "Elige un sitio nuevo para cenar, aunque sea de barrio.",
+      "23": "Planea una caminata corta sin destino fijo.",
+      "24": "Cocinen juntos algo que ninguno haya hecho antes.",
+      "25": "Reserva una tarde sin obligaciones y decide el plan sobre la marcha.",
+      "26": "Propón repetir la primera cita, en el mismo sitio o en uno parecido.",
+      "27": "Busca un evento en tu ciudad para el fin de semana y pregúntale si le apetece.",
+      "28": "Un plan casero cuenta: película, manta y sin teléfonos.",
+      "29": "Deja que elija el plan y no discutas la elección.",
+      "30": "Salgan a desayunar fuera un día entre semana.",
+      "31": "Pregúntale qué le apetece hoy en lugar de asumirlo.",
+      "32": "Habla de lo que te gusta con la misma naturalidad con que hablas de una película.",
+      "33": "Si algo no te apetece, dilo sin excusas; la claridad también es cuidado.",
+      "34": "Dedica un rato al contacto sin expectativas: un abrazo largo, una mano en la espalda.",
+      "35": "Pregunta qué le gustaría probar y escucha sin juzgar.",
+      "36": "Recuérdale que un «no» de cualquiera de los dos no necesita explicación.",
+      "37": "Habla de lo que funcionó la última vez, no solo de lo que no.",
+      "38": "Empieza el día con un gesto físico pequeño antes de salir corriendo.",
+      "39": "Propón hablar de intimidad en un momento tranquilo, no en la cama.",
+      "40": "Pregúntale si hay algo que quiera cambiar y agradece la respuesta, sea cual sea.",
+      "41": "Haz hoy un plan tuyo, sin la pareja, y cuéntaselo sin justificarte.",
+      "42": "Pregúntale si prefiere compañía o un rato a solas, y respeta la respuesta.",
+      "43": "No llenes el silencio; a veces estar cerca sin hablar es suficiente.",
+      "44": "Anímale a quedar con sus amigos sin que tenga que pedir permiso.",
+      "45": "Reserva media hora para algo que solo te guste a ti.",
+      "46": "Si notas que necesita espacio, dilo en una frase y déjalo ahí.",
+      "47": "Acuéstate a la hora que necesitas aunque el otro siga despierto.",
+      "48": "Pregunta antes de proponer un plan: quizá hoy no es el día.",
+      "49": "Deja pasar hoy una conversación difícil si ninguno tiene energía.",
+      "50": "Cuida tu propio descanso: dormir bien también cuida la relación.",
+      "51": "Si hay una discusión pendiente, propón hablarla mañana con calma en lugar de hoy con prisa.",
+      "52": "En la próxima discusión, escucha hasta el final antes de responder.",
+      "53": "Pide perdón por la parte que te toca, aunque el otro no lo haga.",
+      "54": "Cambia «tú siempre» por «hoy me sentí».",
+      "55": "Acuerden una señal para pausar cuando la discusión sube de tono.",
+      "56": "Pregunta qué necesita para sentirse escuchado, no quién tiene razón.",
+      "57": "Aclara un malentendido reciente en vez de dejarlo pasar.",
+      "58": "Antes de responder a un comentario que te molestó, cuenta hasta diez.",
+      "59": "Reconoce en voz alta un punto en el que el otro tenía razón.",
+      "60": "Si la discusión se repite, escribe en dos líneas qué es lo que de verdad te molesta.",
+      "61": "Hazle una pregunta que nunca le hayas hecho.",
+      "62": "Pregúntale por su mejor recuerdo de la infancia.",
+      "63": "Pregúntale qué le ilusiona ahora mismo, aunque creas saberlo.",
+      "64": "Interésate por algo suyo que a ti no te interesa.",
+      "65": "Pregúntale qué haría con un día entero libre y sin obligaciones.",
+      "66": "Averigua qué canción le pone de buen humor y ponla.",
+      "67": "Pregúntale qué cambiaría de su rutina si pudiera.",
+      "68": "Pregunta por su día con una pregunta concreta, no con un «¿qué tal?».",
+      "69": "Pregúntale qué aprendió esta semana.",
+      "70": "Pídele que te cuente algo que nunca te ha contado.",
+      "71": "Pregúntale si quiere hablar o prefiere solo compañía.",
+      "72": "Ofrece ayuda con una tarea concreta en lugar de un «avísame si necesitas algo».",
+      "73": "Ten a mano lo que le suele aliviar en los días difíciles.",
+      "74": "Manda un mensaje corto: «pienso en ti», y nada más.",
+      "75": "Escucha sin dar soluciones a menos que te las pida.",
+      "76": "Encárgate hoy de la cena sin anunciarlo.",
+      "77": "Pregunta qué le ayudaría mañana, no solo hoy.",
+      "78": "Si vuelve tarde y sin energía, recibe con calma, no con preguntas.",
+      "79": "Anota qué le sirvió esta vez; te será útil la próxima.",
+      "80": "Deja claro que un mal día suyo no es un problema para ti."
+    },
+    "closer": {
+      "1": "Sin esperar nada a cambio.",
+      "2": "Pequeño, pero hoy.",
+      "3": "No hace falta que salga perfecto.",
+      "4": "Con eso basta.",
+      "5": "Lo demás puede esperar.",
+      "6": "Y fíjate en cómo cambia el día.",
+      "7": "Mejor hoy que cuando toque.",
+      "8": "Es poco esfuerzo y se nota mucho.",
+      "9": "Si sale mal, mañana hay otra oportunidad."
     }
   },
   "agenda": {

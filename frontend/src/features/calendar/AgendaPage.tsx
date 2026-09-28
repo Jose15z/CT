@@ -81,7 +81,7 @@ export function AgendaPage() {
 
   if (active.length === 0) {
     return (
-      <div className="rounded-xl border border-border bg-surface">
+      <div className="card">
         <EmptyState
           icon={<CalendarDays size={28} strokeWidth={1.5} />}
           title={t('agenda.title')}
@@ -136,7 +136,7 @@ export function AgendaPage() {
 
       <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
         <div className="space-y-5">
-          <div className="rounded-xl border border-border bg-surface p-4">
+          <div className="card p-4">
             {/* Month navigation */}
             <div className="mb-3 flex items-center justify-between">
               <button
@@ -223,7 +223,7 @@ export function AgendaPage() {
           </div>
 
           {/* Upcoming dates */}
-          <section className="rounded-xl border border-border bg-surface p-4">
+          <section className="card p-4">
             <h2 className="text-[12px] font-medium uppercase tracking-wide text-ink-3">
               {t('agenda.upcoming')}
             </h2>
@@ -252,7 +252,7 @@ export function AgendaPage() {
           </section>
 
           {/* Cycle calendars of each partner */}
-          <section className="rounded-xl border border-border bg-surface p-4">
+          <section className="card p-4">
             <h2 className="text-[12px] font-medium uppercase tracking-wide text-ink-3">
               {t('agenda.cycleCalendars')}
             </h2>
@@ -274,7 +274,7 @@ export function AgendaPage() {
         </div>
 
         {/* Selected day detail */}
-        <aside className="h-fit rounded-xl border border-border bg-surface p-4">
+        <aside className="h-fit card p-4">
           <h2 className="text-[14px] font-semibold text-ink">{formatDate(selected)}</h2>
 
           <div className="mt-3">

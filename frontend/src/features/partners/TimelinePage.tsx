@@ -109,7 +109,7 @@ export function TimelinePage() {
       </header>
 
       {!milestones || milestones.length === 0 ? (
-        <div className="rounded-xl border border-border bg-surface">
+        <div className="card">
           <EmptyState
             icon={<Heart size={28} strokeWidth={1.5} />}
             title={t('milestone.empty.title')}
