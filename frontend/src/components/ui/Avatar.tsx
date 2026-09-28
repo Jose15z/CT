@@ -24,7 +24,7 @@ export function Avatar({ emoji, name, size = 'md', imageUrl }: AvatarProps) {
       ) : emoji ? (
         <span>{emoji}</span>
       ) : (
-        <span className="font-display font-semibold text-peach">
+        <span className="font-semibold text-peach">
           {name.charAt(0).toUpperCase()}
         </span>
       )}

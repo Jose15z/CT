@@ -3,6 +3,7 @@ import { BarChart3, Flame, Gem, Info } from 'lucide-react'
 import { useStats, useXp } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
 import { EmptyState } from '../../components/ui/EmptyState'
+import { PageHeader } from '../../components/ui/PageHeader'
 import { Tag } from '../../components/ui/Tag'
 import { formatDuration } from '../../lib/dates'
 import type { XpSummary } from '../../lib/types'
@@ -34,7 +35,7 @@ function XpCard({ xp }: { xp: XpSummary }) {
       ) : (
         <>
           <div className="mt-3 flex items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-peach-soft font-display text-[17px] font-bold text-peach">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-peach-soft text-[16px] font-semibold tabular-nums text-peach">
               {xp.level}
             </div>
             <div className="min-w-0">
@@ -161,11 +162,8 @@ export function StatsPage() {
   ]
 
   return (
-    <div className="mx-auto max-w-xl space-y-5">
-      <header>
-        <h1 className="font-display text-[21px] font-semibold text-ink">{t('stats.title')}</h1>
-        <p className="text-[12.5px] text-ink-3">{t('stats.private')}</p>
-      </header>
+    <div className="mx-auto max-w-xl space-y-6">
+      <PageHeader title={t('stats.title')} description={t('stats.private')} />
 
       {xp && <XpCard xp={xp} />}
 

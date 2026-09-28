@@ -92,7 +92,7 @@ export function PartnerDetailPage() {
         <Avatar emoji={partner.avatarEmoji} name={partner.name} size="lg" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="font-display text-[21px] font-semibold text-ink">{partner.name}</h1>
+            <h1 className="text-[20px] font-semibold tracking-tight text-ink">{partner.name}</h1>
             {partner.nickname && <span className="text-[14px] text-ink-3">«{partner.nickname}»</span>}
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-1.5">

@@ -25,7 +25,7 @@ export function PrivacyPage() {
       </Link>
 
       <header>
-        <h1 className="font-display text-[21px] font-semibold text-ink">{t('privacy.title')}</h1>
+        <h1 className="text-[20px] font-semibold tracking-tight text-ink">{t('privacy.title')}</h1>
         <p className="mt-1 text-[13.5px] leading-relaxed text-ink-2">{t('privacy.intro')}</p>
       </header>
 

@@ -13,7 +13,10 @@
     "history": "History",
     "settings": "Settings",
     "profile": "Profile",
-    "logout": "Log out"
+    "logout": "Log out",
+    "groupMain": "Main",
+    "groupInsights": "Insights",
+    "groupAccount": "Account"
   },
   "common": {
     "save": "Save",
@@ -131,7 +134,16 @@
       "action": "Add partner"
     },
     "noTracking": "Cycle tracking is off",
-    "noCycleData": "No cycle data yet"
+    "noCycleData": "No cycle data yet",
+    "kpi": {
+      "partners": "Active relationships",
+      "registered_one": "{{count}} partner registered",
+      "registered_other": "{{count}} partners registered",
+      "level": "Level",
+      "encountersMonth": "Encounters this month",
+      "nextDate": "Next date",
+      "none": "Nothing scheduled"
+    }
   },
   "partner": {
     "listTitle": "Partners",

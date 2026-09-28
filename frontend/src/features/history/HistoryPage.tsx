@@ -3,6 +3,7 @@ import { Clock } from 'lucide-react'
 import { usePartnerHistory } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
 import { EmptyState } from '../../components/ui/EmptyState'
+import { PageHeader } from '../../components/ui/PageHeader'
 import { Avatar } from '../../components/ui/Avatar'
 import { Tag } from '../../components/ui/Tag'
 import { formatDate, formatDuration } from '../../lib/dates'
@@ -14,11 +15,8 @@ export function HistoryPage() {
   if (isLoading) return <PageLoader />
 
   return (
-    <div className="mx-auto max-w-xl space-y-5">
-      <header>
-        <h1 className="font-display text-[21px] font-semibold text-ink">{t('history.title')}</h1>
-        <p className="text-[13px] text-ink-2">{t('history.subtitle')}</p>
-      </header>
+    <div className="mx-auto max-w-xl space-y-6">
+      <PageHeader title={t('history.title')} description={t('history.subtitle')} />
 
       {!partners || partners.length === 0 ? (
         <div className="card">

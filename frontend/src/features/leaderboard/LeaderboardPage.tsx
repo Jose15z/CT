@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Crown, Trophy } from 'lucide-react'
+import { Crown } from 'lucide-react'
 import { useLeaderboard, useLeaderboardMe, useUpdateLeaderboardSettings } from '../../lib/queries'
 import { useAuth } from '../../lib/auth'
 import { PageLoader } from '../../components/ui/Spinner'
 import { EmptyState } from '../../components/ui/EmptyState'
+import { PageHeader } from '../../components/ui/PageHeader'
+import { Tag } from '../../components/ui/Tag'
 import { SegmentedControl } from '../../components/ui/SegmentedControl'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
@@ -55,14 +57,8 @@ export function LeaderboardPage() {
     rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : null
 
   return (
-    <div className="mx-auto max-w-xl space-y-5">
-      <header>
-        <h1 className="flex items-center gap-2 font-display text-[21px] font-semibold text-ink">
-          <Trophy size={20} className="text-warning" aria-hidden="true" />
-          {t('leaderboard.title')}
-        </h1>
-        <p className="mt-0.5 text-[13px] text-ink-2">{t('leaderboard.subtitle')}</p>
-      </header>
+    <div className="mx-auto max-w-xl space-y-6">
+      <PageHeader title={t('leaderboard.title')} description={t('leaderboard.subtitle')} />
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <SegmentedControl
@@ -108,28 +104,33 @@ export function LeaderboardPage() {
           />
         </div>
       ) : (
-        <ol className="divide-y divide-border overflow-hidden card">
-          {ranking.entries.map((entry) => (
-            <li
-              key={`${entry.rank}-${entry.alias}`}
-              className={`flex items-center gap-3 px-4 py-3 ${entry.me ? 'bg-peach-soft/60' : ''}`}
-            >
-              <span className="w-8 text-center text-[14px] font-semibold text-ink-2">
-                {medal(entry.rank) ?? entry.rank}
-              </span>
-              <span className="flex min-w-0 flex-1 items-center gap-2">
-                {entry.avatarEmoji && <span aria-hidden="true">{entry.avatarEmoji}</span>}
-                <span className="truncate text-[14px] font-medium text-ink">{entry.alias}</span>
-                {entry.me && (
-                  <span className="rounded bg-peach px-1.5 py-0.5 text-[10.5px] font-semibold text-on-peach">
-                    {t('leaderboard.you')}
-                  </span>
-                )}
-              </span>
-              <span className="text-[14px] font-semibold tabular-nums text-ink">{entry.score}</span>
-            </li>
-          ))}
-        </ol>
+        <div className="card overflow-hidden">
+          <div className="grid grid-cols-[2rem_1fr_auto] items-center gap-3 border-b border-border bg-surface-2/50 px-4 py-2 text-[11px] font-medium uppercase tracking-wider text-ink-3">
+            <span className="text-center">#</span>
+            <span>{t('leaderboard.alias')}</span>
+            <span>{t('stats.uniquePartners')}</span>
+          </div>
+          <ol className="divide-y divide-border">
+            {ranking.entries.map((entry) => (
+              <li
+                key={`${entry.rank}-${entry.alias}`}
+                className={`grid grid-cols-[2rem_1fr_auto] items-center gap-3 px-4 py-2.5 ${
+                  entry.me ? 'bg-peach-soft/50' : ''
+                }`}
+              >
+                <span className="text-center text-[13px] font-semibold tabular-nums text-ink-2">
+                  {medal(entry.rank) ?? entry.rank}
+                </span>
+                <span className="flex min-w-0 items-center gap-2">
+                  {entry.avatarEmoji && <span aria-hidden="true">{entry.avatarEmoji}</span>}
+                  <span className="truncate text-[13.5px] font-medium text-ink">{entry.alias}</span>
+                  {entry.me && <Tag tone="peach">{t('leaderboard.you')}</Tag>}
+                </span>
+                <span className="text-[13.5px] font-semibold tabular-nums text-ink">{entry.score}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
 
       <p className="text-[11.5px] leading-relaxed text-ink-3">{t('leaderboard.privacyNote')}</p>

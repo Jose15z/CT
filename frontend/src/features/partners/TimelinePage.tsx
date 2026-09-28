@@ -94,7 +94,7 @@ export function TimelinePage() {
 
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-[21px] font-semibold text-ink">{t('milestone.title')}</h1>
+          <h1 className="text-[20px] font-semibold tracking-tight text-ink">{t('milestone.title')}</h1>
           {partner.relationship?.duration && (
             <p className="text-[13px] text-ink-2">
               {t('duration.together', {

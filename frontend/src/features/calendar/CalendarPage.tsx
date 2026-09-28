@@ -116,7 +116,7 @@ export function PartnerCalendarPage() {
       </Link>
 
       <header className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-[21px] font-semibold text-ink">
+        <h1 className="text-[20px] font-semibold tracking-tight text-ink">
           {t('calendar.of', { name: partner.nickname ?? partner.name })}
         </h1>
         <Button size="sm" icon={<Droplet size={13} />} onClick={() => setLogOpen(true)}>

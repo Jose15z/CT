@@ -13,7 +13,10 @@
     "history": "Historial",
     "settings": "Ajustes",
     "profile": "Perfil",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "groupMain": "Principal",
+    "groupInsights": "Seguimiento",
+    "groupAccount": "Cuenta"
   },
   "common": {
     "save": "Guardar",
@@ -131,7 +134,16 @@
       "action": "Añadir pareja"
     },
     "noTracking": "Seguimiento de ciclo desactivado",
-    "noCycleData": "Sin datos de ciclo aún"
+    "noCycleData": "Sin datos de ciclo aún",
+    "kpi": {
+      "partners": "Relaciones activas",
+      "registered_one": "{{count}} pareja registrada",
+      "registered_other": "{{count}} parejas registradas",
+      "level": "Nivel",
+      "encountersMonth": "Encuentros este mes",
+      "nextDate": "Próxima cita",
+      "none": "Nada agendado"
+    }
   },
   "partner": {
     "listTitle": "Parejas",

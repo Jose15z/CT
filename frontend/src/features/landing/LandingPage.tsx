@@ -25,7 +25,7 @@ export function LandingPage() {
 
       <main className="mx-auto max-w-3xl px-5 pb-16">
         <section className="pt-10 sm:pt-16">
-          <h1 className="font-display text-[26px] font-semibold leading-tight tracking-tight text-ink sm:text-[32px]">
+          <h1 className="text-[30px] font-semibold leading-[1.15] tracking-[-0.02em] text-ink sm:text-[38px]">
             {t('app.tagline')}
           </h1>
           <p className="mt-3 max-w-xl text-[14.5px] leading-relaxed text-ink-2">

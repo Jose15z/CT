@@ -13,7 +13,7 @@ export function AuthLayout({ title, children }: { title: string; children: React
         <LanguageToggle />
       </header>
       <main className="mx-auto w-full max-w-sm flex-1 px-5 pb-16 pt-6 sm:pt-12">
-        <h1 className="font-display text-[22px] font-semibold text-ink">{title}</h1>
+        <h1 className="text-[22px] font-semibold tracking-tight text-ink">{title}</h1>
         <div className="mt-5">{children}</div>
       </main>
     </div>

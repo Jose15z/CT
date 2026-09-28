@@ -10,6 +10,7 @@ import {
 } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
 import { EmptyState } from '../../components/ui/EmptyState'
+import { PageHeader } from '../../components/ui/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
 import { Select, Textarea } from '../../components/ui/Input'
@@ -172,24 +173,27 @@ export function CheckInPage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
-      <header className="flex items-center justify-between gap-3">
-        <h1 className="font-display text-[21px] font-semibold text-ink">{t('checkin.title')}</h1>
-        {activePartners.length > 1 && (
-          <div className="w-44">
-            <Select
-              aria-label={t('checkin.withWhom')}
-              value={partnerId}
-              onChange={(e) => setPartnerId(e.target.value)}
-            >
-              {activePartners.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.nickname ?? p.name}
-                </option>
-              ))}
-            </Select>
-          </div>
-        )}
-      </header>
+      <PageHeader
+        title={t('checkin.title')}
+        description={t('checkin.howAreYou')}
+        actions={
+          activePartners.length > 1 ? (
+            <div className="w-44">
+              <Select
+                aria-label={t('checkin.withWhom')}
+                value={partnerId}
+                onChange={(e) => setPartnerId(e.target.value)}
+              >
+                {activePartners.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.nickname ?? p.name}
+                  </option>
+                ))}
+              </Select>
+            </div>
+          ) : undefined
+        }
+      />
 
       {/* My check-in */}
       <section className="card p-4 sm:p-5">

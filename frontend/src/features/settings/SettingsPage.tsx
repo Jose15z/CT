@@ -14,6 +14,7 @@ import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { Field } from '../../components/ui/Field'
 import { Input, Select } from '../../components/ui/Input'
+import { PageHeader } from '../../components/ui/PageHeader'
 import { SegmentedControl } from '../../components/ui/SegmentedControl'
 import { useToast } from '../../components/ui/Toast'
 import { LanguageToggle } from './LanguageToggle'
@@ -91,7 +92,7 @@ export function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
-      <h1 className="font-display text-[21px] font-semibold text-ink">{t('settings.title')}</h1>
+      <PageHeader title={t('settings.title')} description={t('settings.account')} />
 
       {/* Profile */}
       <section className="card p-4 sm:p-5">

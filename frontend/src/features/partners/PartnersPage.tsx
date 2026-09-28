@@ -5,6 +5,7 @@ import { ChevronRight, Heart, Plus, Link2 } from 'lucide-react'
 import { usePartners } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
 import { EmptyState } from '../../components/ui/EmptyState'
+import { PageHeader } from '../../components/ui/PageHeader'
 import { Avatar } from '../../components/ui/Avatar'
 import { Tag } from '../../components/ui/Tag'
 import { Button } from '../../components/ui/Button'
@@ -19,15 +20,16 @@ export function PartnersPage() {
   if (isLoading) return <PageLoader />
 
   return (
-    <div className="space-y-5">
-      <header className="flex items-center justify-between">
-        <h1 className="font-display text-[21px] font-semibold text-ink">
-          {t('partner.listTitle')}
-        </h1>
-        <Button size="sm" icon={<Plus size={14} />} onClick={() => setFormOpen(true)}>
-          {t('partner.add')}
-        </Button>
-      </header>
+    <div className="space-y-6">
+      <PageHeader
+        title={t('partner.listTitle')}
+        description={t('partner.empty.body')}
+        actions={
+          <Button size="sm" icon={<Plus size={14} />} onClick={() => setFormOpen(true)}>
+            {t('partner.add')}
+          </Button>
+        }
+      />
 
       {!partners || partners.length === 0 ? (
         <div className="card">

@@ -21,6 +21,7 @@ import {
 } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
 import { EmptyState } from '../../components/ui/EmptyState'
+import { PageHeader } from '../../components/ui/PageHeader'
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
@@ -113,26 +114,26 @@ export function AgendaPage() {
   const selectedEncounters = encountersByDate.get(selected) ?? []
 
   return (
-    <div className="space-y-5">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="font-display text-[21px] font-semibold text-ink">{t('agenda.title')}</h1>
-          <p className="text-[12.5px] text-ink-3">{t('agenda.subtitle')}</p>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            size="sm"
-            variant="secondary"
-            icon={<Flame size={13} />}
-            onClick={() => setLogOpen(true)}
-          >
-            {t('agenda.logEncounter')}
-          </Button>
-          <Button size="sm" icon={<CalendarPlus size={13} />} onClick={() => setPlanOpen(true)}>
-            {t('agenda.schedulePlan')}
-          </Button>
-        </div>
-      </header>
+    <div className="space-y-6">
+      <PageHeader
+        title={t('agenda.title')}
+        description={t('agenda.subtitle')}
+        actions={
+          <>
+            <Button
+              size="sm"
+              variant="secondary"
+              icon={<Flame size={13} />}
+              onClick={() => setLogOpen(true)}
+            >
+              {t('agenda.logEncounter')}
+            </Button>
+            <Button size="sm" icon={<CalendarPlus size={13} />} onClick={() => setPlanOpen(true)}>
+              {t('agenda.schedulePlan')}
+            </Button>
+          </>
+        }
+      />
 
       <div className="grid gap-5 lg:grid-cols-[1fr_280px]">
         <div className="space-y-5">
