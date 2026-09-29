@@ -27,6 +27,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -105,6 +106,13 @@ class ApiIntegrationTest {
     void protectedEndpointsRequireAuth() throws Exception {
         mockMvc.perform(get("/api/partners")).andExpect(status().isUnauthorized());
         mockMvc.perform(get("/api/dashboard")).andExpect(status().isUnauthorized());
+        // An unknown route with a valid token is a plain 404, not a logged 500.
+        mockMvc.perform(get("/api/does-not-exist")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/api/dashboard")
+                        .header("Authorization", "Bearer " + tokenA))
+                .andExpect(status().isMethodNotAllowed());
     }
 
     @Test
