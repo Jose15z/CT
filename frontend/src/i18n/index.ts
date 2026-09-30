@@ -11,14 +11,15 @@ const stored = (() => {
   }
 })()
 
-const browserLang = navigator.language?.startsWith('en') ? 'en' : 'es'
-
+// Spanish is the product's language: it is what the static <head> promises and
+// what a crawler (which reports an English browser) should render. The toggle
+// persists an explicit choice.
 i18n.use(initReactI18next).init({
   resources: {
     es: { translation: es },
     en: { translation: en },
   },
-  lng: stored ?? browserLang,
+  lng: stored ?? 'es',
   fallbackLng: 'es',
   interpolation: { escapeValue: false },
 })
