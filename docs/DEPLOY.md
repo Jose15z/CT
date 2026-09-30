@@ -51,12 +51,9 @@ Nota histórica: el plan original usaba Koyeb, pero fue adquirido por Mistral y 
 
 El frontend ya lleva lo que un buscador necesita para indexar una SPA: `index.html` con título, descripción, canonical, Open Graph/Twitter (imagen `public/og.png`, 1200×630) y datos estructurados `WebApplication`; `public/robots.txt` (permite todo salvo `/invite/` y `/reset-password`) y `public/sitemap.xml` con `/`, `/register`, `/privacy` y `/login`. Cada ruta ajusta título, descripción, `robots` y canonical desde `src/lib/seo.ts` (`usePageMeta`): solo la portada, el registro y la política de privacidad son indexables; login, recuperación, invitaciones, 404 y todo lo que está detrás del login llevan `noindex`. `/privacy` es pública (sin sesión se muestra con la cabecera de la portada). `vercel.json` excluye `.xml` del rewrite de la SPA para que el sitemap se sirva tal cual.
 
-Lo que solo puede hacer el dueño del dominio, una vez:
+Search Console (hecho el 2026-09-29): la propiedad de tipo **Prefijo de URL** `https://culitostracker.vercel.app/` está registrada en la cuenta de Google `rodriguezospinajosemanuel@gmail.com` (el tipo "Dominio" exige DNS y `vercel.app` no es nuestro). La verificación de propiedad se apoya en dos cosas que no hay que borrar: el archivo `frontend/public/googlea12d97953ef0320e.html` y la etiqueta `<meta name="google-site-verification">` del `<head>` de `frontend/index.html` (`vercel.json` excluye `.html` del rewrite y el service worker no lo precachea). El sitemap está enviado y se pidió la indexación de `/` y `/register`. Para dar acceso a otra cuenta: Ajustes → Usuarios y permisos.
 
-1. Entrar en https://search.google.com/search-console con la cuenta de Google que se quiera usar y añadir la propiedad de tipo **Prefijo de URL** `https://culitostracker.vercel.app/` (el tipo "Dominio" exige DNS y `vercel.app` no es nuestro).
-2. Verificar con el método **Etiqueta HTML**: Google entrega `<meta name="google-site-verification" content="…">`; se pega en el `<head>` de `frontend/index.html`, se hace push y se pulsa "Verificar" cuando Vercel haya desplegado.
-3. En Sitemaps, enviar `https://culitostracker.vercel.app/sitemap.xml`.
-4. En Inspección de URL, pedir la indexación de `https://culitostracker.vercel.app/` (y de `/register`). La primera aparición suele tardar entre unos días y dos semanas; buscar `site:culitostracker.vercel.app` muestra qué hay indexado.
+La primera aparición suele tardar entre unos días y dos semanas; buscar `site:culitostracker.vercel.app` muestra qué hay indexado, y en Search Console → Páginas se ve el motivo si algo no se indexa.
 
 Bing Webmaster Tools (https://www.bing.com/webmasters) permite importar la propiedad desde Search Console con un clic y cubre también DuckDuckGo.
 

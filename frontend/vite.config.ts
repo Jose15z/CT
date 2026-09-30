@@ -33,7 +33,7 @@ export default defineConfig({
       injectManifest: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         // Link-preview image only; no reason to precache it on every install.
-        globIgnores: ['**/og.png'],
+        globIgnores: ['**/og.png', '**/google*.html'],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },
       devOptions: { enabled: false },
