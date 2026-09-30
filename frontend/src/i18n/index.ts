@@ -23,6 +23,14 @@ i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
 })
 
+// Keeps <html lang> honest for screen readers and search engines.
+if (typeof document !== 'undefined') {
+  document.documentElement.lang = i18n.language
+  i18n.on('languageChanged', (lng) => {
+    document.documentElement.lang = lng
+  })
+}
+
 export function setLanguage(lang: 'es' | 'en') {
   i18n.changeLanguage(lang)
   try {

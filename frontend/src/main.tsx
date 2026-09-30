@@ -9,7 +9,7 @@ import { initTheme } from './lib/theme'
 import { AuthProvider } from './lib/auth'
 import { ToastProvider } from './components/ui/Toast'
 import { AppShell } from './app/AppShell'
-import { RedirectIfAuthed, RequireAuth } from './app/guards'
+import { RedirectIfAuthed, RequireAuth, ShellOrPublic } from './app/guards'
 import { LandingPage } from './features/landing/LandingPage'
 import { LoginPage } from './features/auth/LoginPage'
 import { RegisterPage } from './features/auth/RegisterPage'
@@ -73,8 +73,11 @@ createRoot(document.getElementById('root')!).render(
                   <Route path="/leaderboard" element={<LeaderboardPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
-                  <Route path="/privacy" element={<PrivacyPage />} />
                 </Route>
+              </Route>
+              {/* Public for search engines and visitors; inside the shell once signed in. */}
+              <Route path="/privacy" element={<ShellOrPublic />}>
+                <Route index element={<PrivacyPage />} />
               </Route>
               {/* Works logged in or out: the invitee may still need an account. */}
               <Route path="/invite/:token" element={<InvitePage />} />

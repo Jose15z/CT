@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { usePageMeta } from '../../lib/seo'
 import { AuthLayout } from './AuthLayout'
 import { Field } from '../../components/ui/Field'
 import { Input } from '../../components/ui/Input'
@@ -12,6 +13,11 @@ import { readPendingInvite } from '../links/InvitePage'
 
 export function RegisterPage() {
   const { t, i18n } = useTranslation()
+  usePageMeta({
+    title: t('seo.register.title'),
+    description: t('seo.register.description'),
+    index: true,
+  })
   const { register } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ username: '', email: '', password: '', displayName: '' })

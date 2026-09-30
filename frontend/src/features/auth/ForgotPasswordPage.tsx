@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { usePageMeta } from '../../lib/seo'
 import { MailCheck } from 'lucide-react'
 import { AuthLayout } from './AuthLayout'
 import { Field } from '../../components/ui/Field'
@@ -12,6 +13,7 @@ import { errorMessage } from '../../lib/errors'
 
 export function ForgotPasswordPage() {
   const { t } = useTranslation()
+  usePageMeta({ title: t('seo.forgot.title') })
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
   const [error, setError] = useState<string | null>(null)

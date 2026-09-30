@@ -2,19 +2,80 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/peach.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="CulitosTracker" />
+    <title>CulitosTracker · Ciclo, relación y cómo están los dos</title>
+    <meta
+      name="description"
+      content="CulitosTracker registra el ciclo de tu pareja con su consentimiento, la relación y cómo están los dos, con consejos diarios y recordatorios. Gratis, en la web y como app."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://culitostracker.vercel.app/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CulitosTracker" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:url" content="https://culitostracker.vercel.app/" />
+    <meta property="og:title" content="CulitosTracker · Ciclo, relación y cómo están los dos" />
+    <meta
+      property="og:description"
+      content="Registra el ciclo de tu pareja con su consentimiento, la relación y cómo están los dos. Consejos diarios, recordatorios y agenda. Gratis."
+    />
+    <meta property="og:image" content="https://culitostracker.vercel.app/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CulitosTracker: el ciclo, la relación y cómo están los dos. En un solo lugar." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CulitosTracker · Ciclo, relación y cómo están los dos" />
+    <meta
+      name="twitter:description"
+      content="Registra el ciclo de tu pareja con su consentimiento, la relación y cómo están los dos. Consejos diarios, recordatorios y agenda. Gratis."
+    />
+    <meta name="twitter:image" content="https://culitostracker.vercel.app/og.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/peach.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Culitos" />
-    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-    <title>CulitosTracker</title>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "CulitosTracker",
+        "url": "https://culitostracker.vercel.app/",
+        "description": "Registra el ciclo de tu pareja con su consentimiento, la relación y cómo están los dos. Consejos diarios, recordatorios, agenda de citas y tendencias.",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Web, iOS, Android",
+        "browserRequirements": "Requiere JavaScript",
+        "inLanguage": ["es", "en"],
+        "isAccessibleForFree": true,
+        "image": "https://culitostracker.vercel.app/og.png",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main style="font-family: system-ui, sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 1.25rem">
+        <h1>CulitosTracker</h1>
+        <p>
+          El ciclo, la relación y cómo están los dos. En un solo lugar. Registra el ciclo de tu pareja
+          con su consentimiento, guarda las fechas que importan y recibe consejos según cómo están.
+        </p>
+        <p>CulitosTracker necesita JavaScript para funcionar.</p>
+        <p><a href="/register">Crear cuenta</a> · <a href="/login">Iniciar sesión</a> · <a href="/privacy">Privacidad</a></p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

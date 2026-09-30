@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { usePageMeta } from '../lib/seo'
 import {
   BarChart3,
   CalendarDays,
@@ -24,6 +25,29 @@ import type { ThemePreference } from '../lib/theme'
 import { Avatar } from '../components/ui/Avatar'
 
 const iconProps = { size: 15, strokeWidth: 1.75 }
+
+/** Browser-tab title per section; everything behind login stays out of search indexes. */
+const SECTION_TITLES: [prefix: string, key: string][] = [
+  ['/dashboard', 'nav.dashboard'],
+  ['/partners', 'nav.partners'],
+  ['/calendar', 'nav.calendar'],
+  ['/check-in', 'nav.checkin'],
+  ['/stats', 'nav.stats'],
+  ['/trends', 'nav.trends'],
+  ['/leaderboard', 'nav.leaderboard'],
+  ['/history', 'nav.history'],
+  ['/settings', 'nav.settings'],
+  ['/privacy', 'privacy.title'],
+]
+
+function useSectionTitle() {
+  const { t } = useTranslation()
+  const { pathname } = useLocation()
+  const section = SECTION_TITLES.find(
+    ([prefix]) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  )
+  usePageMeta({ title: section ? `${t(section[1])} · CulitosTracker` : 'CulitosTracker' })
+}
 
 function SideLink({ to, icon, label }: { to: string; icon: React.ReactNode; label: string }) {
   return (
@@ -112,6 +136,7 @@ function BottomLink({ to, icon, label }: { to: string; icon: React.ReactNode; la
 export function AppShell() {
   const { t } = useTranslation()
   const { user, logout } = useAuth()
+  useSectionTitle()
   const { data: avatarUrl } = useMyAvatar(!!user?.hasAvatar)
   const navigate = useNavigate()
 

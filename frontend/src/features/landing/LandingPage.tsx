@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { CalendarDays, HeartHandshake, MessagesSquare, Trophy } from 'lucide-react'
-import { LanguageToggle } from '../settings/LanguageToggle'
+import { PublicHeader } from '../../app/PublicLayout'
+import { usePageMeta } from '../../lib/seo'
 
 const features = [
   { key: 'cycle', icon: CalendarDays },
@@ -12,16 +13,11 @@ const features = [
 
 export function LandingPage() {
   const { t } = useTranslation()
+  usePageMeta({ title: t('seo.home.title'), description: t('seo.home.description'), index: true })
 
   return (
     <div className="min-h-dvh">
-      <header className="mx-auto flex max-w-3xl items-center justify-between px-5 py-4">
-        <div className="flex items-center gap-2">
-          <span className="text-[20px]" aria-hidden="true">🍑</span>
-          <span className="font-display text-[16px] font-semibold text-ink">CulitosTracker</span>
-        </div>
-        <LanguageToggle />
-      </header>
+      <PublicHeader />
 
       <main className="mx-auto max-w-3xl px-5 pb-16">
         <section className="pt-10 sm:pt-16">
@@ -64,7 +60,10 @@ export function LandingPage() {
         </section>
 
         <p className="mt-10 border-t border-border pt-5 text-[12.5px] leading-relaxed text-ink-3">
-          {t('landing.consent')}
+          {t('landing.consent')}{' '}
+          <Link to="/privacy" className="font-medium text-ink-2 hover:text-ink hover:underline">
+            {t('privacy.title')}
+          </Link>
         </p>
       </main>
     </div>

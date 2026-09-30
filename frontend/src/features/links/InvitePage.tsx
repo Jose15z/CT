@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { usePageMeta } from '../../lib/seo'
 import { Link2, ShieldCheck } from 'lucide-react'
 import { AuthLayout } from '../auth/AuthLayout'
 import { Button } from '../../components/ui/Button'
@@ -36,6 +37,7 @@ export function clearPendingInvite() {
 export function InvitePage() {
   const { token } = useParams<{ token: string }>()
   const { t } = useTranslation()
+  usePageMeta({ title: t('seo.invite.title') })
   const navigate = useNavigate()
   const { user, initializing } = useAuth()
   const { data: preview, isLoading, isError } = useInvitePreview(token)

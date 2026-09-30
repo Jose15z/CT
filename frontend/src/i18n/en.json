@@ -54,6 +54,25 @@
     "fullWithDays": "{{years}}, {{months}} and {{days}}",
     "sentence": "{{me}} and {{name}} have been together for {{duration}}."
   },
+  "seo": {
+    "home": {
+      "title": "CulitosTracker · Her cycle, your relationship, how you're both doing",
+      "description": "CulitosTracker tracks your partner's cycle with her consent, the relationship and how you're both doing, with daily advice and reminders. Free, on the web and as an app."
+    },
+    "register": {
+      "title": "Create account · CulitosTracker",
+      "description": "Create your free CulitosTracker account: cycle, relationship, check-ins for both of you, agenda and daily advice."
+    },
+    "login": { "title": "Sign in · CulitosTracker" },
+    "forgot": { "title": "Recover password · CulitosTracker" },
+    "reset": { "title": "New password · CulitosTracker" },
+    "privacy": {
+      "title": "Privacy & consent · CulitosTracker",
+      "description": "How CulitosTracker handles sensitive data: consent, check-ins, observations, estimates and who can see what."
+    },
+    "invite": { "title": "Invitation · CulitosTracker" },
+    "notFound": { "title": "Page not found · CulitosTracker" }
+  },
   "landing": {
     "intro": "Track your partner's cycle with their consent, understand what phase they're in, keep the dates that matter and get suggestions based on how you're both doing.",
     "cta": "Create account",
@@ -958,6 +977,7 @@
     "deleteAccountConfirm": "Delete permanently"
   },
   "privacy": {
+    "backHome": "Home",
     "title": "Privacy & consent",
     "intro": "CulitosTracker stores sensitive information: menstrual cycles, emotions and relationship data. These are the rules it runs on.",
     "sections": {

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { usePageMeta } from '../../lib/seo'
 import { KeyRound } from 'lucide-react'
 import { AuthLayout } from './AuthLayout'
 import { Field } from '../../components/ui/Field'
@@ -12,6 +13,7 @@ import { errorMessage } from '../../lib/errors'
 
 export function ResetPasswordPage() {
   const { t } = useTranslation()
+  usePageMeta({ title: t('seo.reset.title') })
   const [params] = useSearchParams()
   const token = params.get('token') ?? ''
 

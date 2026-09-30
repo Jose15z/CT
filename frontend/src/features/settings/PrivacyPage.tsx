@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft } from 'lucide-react'
+import { useAuth } from '../../lib/auth'
+import { usePageMeta } from '../../lib/seo'
 
 const SECTIONS = [
   'consent',
@@ -13,15 +15,21 @@ const SECTIONS = [
 
 export function PrivacyPage() {
   const { t } = useTranslation()
+  const { user } = useAuth()
+  usePageMeta({
+    title: t('seo.privacy.title'),
+    description: t('seo.privacy.description'),
+    index: true,
+  })
 
   return (
     <div className="mx-auto max-w-xl space-y-5">
       <Link
-        to="/settings"
+        to={user ? '/settings' : '/'}
         className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink-3 hover:text-ink"
       >
         <ArrowLeft size={14} aria-hidden="true" />
-        {t('settings.title')}
+        {user ? t('settings.title') : t('privacy.backHome')}
       </Link>
 
       <header>

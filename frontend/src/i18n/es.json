@@ -54,6 +54,25 @@
     "fullWithDays": "{{years}}, {{months}} y {{days}}",
     "sentence": "{{me}} y {{name}} llevan {{duration}} juntos."
   },
+  "seo": {
+    "home": {
+      "title": "CulitosTracker · Ciclo, relación y cómo están los dos",
+      "description": "CulitosTracker registra el ciclo de tu pareja con su consentimiento, la relación y cómo están los dos, con consejos diarios y recordatorios. Gratis, en la web y como app."
+    },
+    "register": {
+      "title": "Crear cuenta · CulitosTracker",
+      "description": "Crea tu cuenta gratis en CulitosTracker: ciclo, relación, check-ins de los dos, agenda y consejos diarios."
+    },
+    "login": { "title": "Iniciar sesión · CulitosTracker" },
+    "forgot": { "title": "Recuperar contraseña · CulitosTracker" },
+    "reset": { "title": "Nueva contraseña · CulitosTracker" },
+    "privacy": {
+      "title": "Privacidad y consentimiento · CulitosTracker",
+      "description": "Cómo trata CulitosTracker los datos sensibles: consentimiento, check-ins, observaciones, estimaciones y quién puede ver qué."
+    },
+    "invite": { "title": "Invitación · CulitosTracker" },
+    "notFound": { "title": "Página no encontrada · CulitosTracker" }
+  },
   "landing": {
     "intro": "Registra el ciclo de tu pareja con su consentimiento, entiende en qué fase está, guarda las fechas que importan y recibe sugerencias según cómo están los dos.",
     "cta": "Crear cuenta",
@@ -958,6 +977,7 @@
     "deleteAccountConfirm": "Eliminar definitivamente"
   },
   "privacy": {
+    "backHome": "Inicio",
     "title": "Privacidad y consentimiento",
     "intro": "CulitosTracker guarda información sensible: ciclos menstruales, emociones y datos de relaciones. Estas son las reglas con las que funciona.",
     "sections": {

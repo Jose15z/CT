@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { usePageMeta } from '../lib/seo'
 
 export function NotFoundPage() {
   const { t } = useTranslation()
+  usePageMeta({ title: t('seo.notFound.title') })
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-3 px-6 text-center">
       <span className="text-4xl" aria-hidden="true">🍑</span>
