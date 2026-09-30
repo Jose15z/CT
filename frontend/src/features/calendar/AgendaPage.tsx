@@ -18,6 +18,7 @@ import {
   useDeleteEncounter,
   useEncounters,
   usePartners,
+  usePartnersPredictions,
   useUpcomingDatePlans,
 } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
@@ -28,6 +29,7 @@ import { Button } from '../../components/ui/Button'
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
 import { useToast } from '../../components/ui/Toast'
 import { SchedulePlanSheet, LogEncounterSheet } from './AgendaSheets'
+import { BombMarker, OvulationMarker } from './DayMarkers'
 import {
   formatDate,
   formatMonthYear,
@@ -62,6 +64,11 @@ export function AgendaPage() {
   const { data: plans } = useDatePlans(monthStart, monthEnd)
   const { data: encounters } = useEncounters(monthStart, monthEnd)
   const { data: upcoming } = useUpcomingDatePlans()
+  const cyclePartnerIds = useMemo(
+    () => (partners ?? []).filter((p) => p.relationship?.status !== 'ENDED').map((p) => p.id),
+    [partners],
+  )
+  const cyclePredictions = usePartnersPredictions(cyclePartnerIds, monthStart, monthEnd)
   const deletePlan = useDeleteDatePlan()
   const deleteEncounter = useDeleteEncounter()
 
@@ -90,6 +97,20 @@ export function AgendaPage() {
       })
     return map
   }, [partners, month])
+
+  // Estimated ovulation days of every active partner this month (cheap: ≤31 days each).
+  const ovulationByDate = new Map<string, string[]>()
+  cyclePredictions.forEach((result, i) => {
+    const partner = partners?.find((p) => p.id === cyclePartnerIds[i])
+    if (!partner) return
+    result.data?.days.forEach((day) => {
+      if (!day.ovulation) return
+      ovulationByDate.set(day.date, [
+        ...(ovulationByDate.get(day.date) ?? []),
+        partner.nickname ?? partner.name,
+      ])
+    })
+  })
 
   if (isLoading) return <PageLoader />
 
@@ -212,13 +233,16 @@ export function AgendaPage() {
                     <span className={iso === today ? 'text-peach' : ''}>
                       {parseISODate(iso).getDate()}
                     </span>
-                    <span aria-hidden="true" className="absolute bottom-1 flex gap-0.5">
+                    {ovulationByDate.has(iso) && (
+                      <span className="absolute -right-0.5 -top-1">
+                        <OvulationMarker />
+                      </span>
+                    )}
+                    <span aria-hidden="true" className="absolute bottom-0.5 flex items-center gap-0.5">
                       {plansByDate.has(iso) && (
                         <span className="h-1 w-1 rounded-full bg-plum" />
                       )}
-                      {encountersByDate.has(iso) && (
-                        <span className="h-1 w-1 rounded-full bg-peach" />
-                      )}
+                      {encountersByDate.has(iso) && <BombMarker />}
                       {birthdaysByDate.has(iso) && (
                         <span className="h-1 w-1 rounded-full bg-teal" />
                       )}
@@ -235,8 +259,12 @@ export function AgendaPage() {
                 {t('agenda.legend.plan')}
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-peach" />
+                <BombMarker />
                 {t('agenda.legend.encounter')}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <OvulationMarker />
+                {t('agenda.legend.ovulation')}
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-teal" />
@@ -299,6 +327,12 @@ export function AgendaPage() {
         {/* Selected day detail */}
         <aside className="h-fit card p-4">
           <h2 className="text-[14px] font-semibold text-ink">{formatDate(selected)}</h2>
+          {(ovulationByDate.get(selected) ?? []).map((name) => (
+            <p key={name} className="mt-1.5 flex items-center gap-1.5 text-[13px] text-teal">
+              <OvulationMarker size="md" />
+              {t('agenda.ovulationOf', { name })}
+            </p>
+          ))}
           {(birthdaysByDate.get(selected) ?? []).map((name) => (
             <p key={name} className="mt-2 flex items-center gap-1.5 text-[13px] font-medium text-teal">
               <Gift size={13} aria-hidden="true" />
@@ -360,7 +394,7 @@ export function AgendaPage() {
               <ul className="mt-1.5 space-y-2">
                 {selectedEncounters.map((encounter) => (
                   <li key={encounter.id} className="flex items-start gap-2 text-[13px]">
-                    <Flame size={13} className="mt-0.5 shrink-0 text-peach" aria-hidden="true" />
+                    <BombMarker size="md" />
                     <div className="min-w-0 flex-1">
                       <p className="text-ink">
                         {t('agenda.encounterWith', {

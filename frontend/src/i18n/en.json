@@ -63,15 +63,25 @@
       "title": "Create account · CulitosTracker",
       "description": "Create your free CulitosTracker account: cycle, relationship, check-ins for both of you, agenda and daily advice."
     },
-    "login": { "title": "Sign in · CulitosTracker" },
-    "forgot": { "title": "Recover password · CulitosTracker" },
-    "reset": { "title": "New password · CulitosTracker" },
+    "login": {
+      "title": "Sign in · CulitosTracker"
+    },
+    "forgot": {
+      "title": "Recover password · CulitosTracker"
+    },
+    "reset": {
+      "title": "New password · CulitosTracker"
+    },
     "privacy": {
       "title": "Privacy & consent · CulitosTracker",
       "description": "How CulitosTracker handles sensitive data: consent, check-ins, observations, estimates and who can see what."
     },
-    "invite": { "title": "Invitation · CulitosTracker" },
-    "notFound": { "title": "Page not found · CulitosTracker" }
+    "invite": {
+      "title": "Invitation · CulitosTracker"
+    },
+    "notFound": {
+      "title": "Page not found · CulitosTracker"
+    }
   },
   "landing": {
     "intro": "Track your partner's cycle with their consent, understand what phase they're in, keep the dates that matter and get suggestions based on how you're both doing.",
@@ -296,10 +306,22 @@
     }
   },
   "phase": {
-    "MENSTRUATION": { "name": "Menstruation", "desc": "Bleeding days, recorded or estimated." },
-    "FOLLICULAR": { "name": "Follicular", "desc": "From the end of the period to estimated ovulation." },
-    "OVULATION": { "name": "Ovulation", "desc": "Estimated about 14 days before the next period." },
-    "LUTEAL": { "name": "Luteal", "desc": "From estimated ovulation to the next period." }
+    "MENSTRUATION": {
+      "name": "Menstruation",
+      "desc": "Bleeding days, recorded or estimated."
+    },
+    "FOLLICULAR": {
+      "name": "Follicular",
+      "desc": "From the end of the period to estimated ovulation."
+    },
+    "OVULATION": {
+      "name": "Ovulation",
+      "desc": "Estimated about 14 days before the next period."
+    },
+    "LUTEAL": {
+      "name": "Luteal",
+      "desc": "From estimated ovulation to the next period."
+    }
   },
   "period": {
     "log": "Log period",
@@ -338,7 +360,13 @@
     "sharedBadge": "shared with you",
     "empty": "No check-ins yet.",
     "noPartners": "You need a registered partner to check in.",
-    "levels": { "1": "Very low", "2": "Low", "3": "Medium", "4": "High", "5": "Very high" }
+    "levels": {
+      "1": "Very low",
+      "2": "Low",
+      "3": "Medium",
+      "4": "High",
+      "5": "Very high"
+    }
   },
   "mood": {
     "VERY_HAPPY": "Great",
@@ -772,7 +800,10 @@
     "shareMyCheckInsHint": "{{owner}} will see your daily mood, never your notes.",
     "theyShare": "{{owner}} shares with you: {{scopes}}.",
     "theyShareNothing": "{{owner}} isn't sharing anything with you yet.",
-    "scope": { "CYCLE": "cycle calendar", "CHECK_INS": "check-ins" }
+    "scope": {
+      "CYCLE": "cycle calendar",
+      "CHECK_INS": "check-ins"
+    }
   },
   "agenda": {
     "title": "Agenda",
@@ -787,7 +818,12 @@
     "cycleCalendars": "Cycle calendars",
     "encounterWith": "Encounter with {{name}}",
     "unknownPartner": "Deleted record",
-    "legend": { "plan": "Date", "encounter": "Encounter", "birthday": "Birthday" },
+    "legend": {
+      "plan": "Date",
+      "encounter": "Encounter",
+      "birthday": "Birthday",
+      "ovulation": "Estimated ovulation"
+    },
     "birthday": "{{name}}'s birthday",
     "deletePlanConfirm": "Delete this date?",
     "deleteEncounterConfirm": "Delete this encounter from the log?",
@@ -806,7 +842,8 @@
       "location": "Place",
       "notes": "Notes",
       "noPartners": "Register a partner first to use the agenda."
-    }
+    },
+    "ovulationOf": "Estimated ovulation for {{name}}"
   },
   "xp": {
     "sectionTitle": "Level & XP",
@@ -860,7 +897,8 @@
       "fertile": "Estimated fertile window",
       "ovulation": "Estimated ovulation",
       "event": "Relationship event",
-      "today": "Today"
+      "today": "Today",
+      "encounter": "Encounter"
     },
     "dayDetail": {
       "cycleDay": "Cycle day {{day}}",
@@ -874,7 +912,11 @@
   "leaderboard": {
     "title": "Culitos Leaderboard",
     "subtitle": "Optional, anonymous conquest ranking. Only your alias and your number are shown.",
-    "window": { "GLOBAL": "All time", "MONTH": "This month", "YEAR": "This year" },
+    "window": {
+      "GLOBAL": "All time",
+      "MONTH": "This month",
+      "YEAR": "This year"
+    },
     "score_one": "{{count}} partner",
     "score_other": "{{count}} partners",
     "you": "You",
@@ -1021,8 +1063,12 @@
       "rateLimit": "You've created too many partners today. Try tomorrow.",
       "mustBeAdult": "The birth date must belong to an adult (18+)."
     },
-    "user": { "invalidTimezone": "Invalid time zone." },
-    "plan": { "proRequired": "This is a Pro feature. You can enable it in Settings." },
+    "user": {
+      "invalidTimezone": "Invalid time zone."
+    },
+    "plan": {
+      "proRequired": "This is a Pro feature. You can enable it in Settings."
+    },
     "billing": {
       "disabled": "Payments are not configured on this deployment.",
       "noSubscription": "You don't have a subscription yet.",
@@ -1053,10 +1099,18 @@
       "futureStart": "A period can't start in the future.",
       "endBeforeStart": "The period end can't be before its start."
     },
-    "checkIn": { "futureDate": "You can't check in for a future date." },
-    "observation": { "futureDate": "You can't record an observation for a future date." },
-    "leaderboard": { "aliasRequired": "Pick an alias before enabling the ranking." },
-    "cycle": { "invalidRange": "Invalid date range." },
+    "checkIn": {
+      "futureDate": "You can't check in for a future date."
+    },
+    "observation": {
+      "futureDate": "You can't record an observation for a future date."
+    },
+    "leaderboard": {
+      "aliasRequired": "Pick an alias before enabling the ranking."
+    },
+    "cycle": {
+      "invalidRange": "Invalid date range."
+    },
     "avatar": {
       "invalidImage": "The file is not a valid JPG or PNG image.",
       "tooLarge": "The image is over 2 MB."

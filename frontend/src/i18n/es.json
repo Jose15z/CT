@@ -63,15 +63,25 @@
       "title": "Crear cuenta · CulitosTracker",
       "description": "Crea tu cuenta gratis en CulitosTracker: ciclo, relación, check-ins de los dos, agenda y consejos diarios."
     },
-    "login": { "title": "Iniciar sesión · CulitosTracker" },
-    "forgot": { "title": "Recuperar contraseña · CulitosTracker" },
-    "reset": { "title": "Nueva contraseña · CulitosTracker" },
+    "login": {
+      "title": "Iniciar sesión · CulitosTracker"
+    },
+    "forgot": {
+      "title": "Recuperar contraseña · CulitosTracker"
+    },
+    "reset": {
+      "title": "Nueva contraseña · CulitosTracker"
+    },
     "privacy": {
       "title": "Privacidad y consentimiento · CulitosTracker",
       "description": "Cómo trata CulitosTracker los datos sensibles: consentimiento, check-ins, observaciones, estimaciones y quién puede ver qué."
     },
-    "invite": { "title": "Invitación · CulitosTracker" },
-    "notFound": { "title": "Página no encontrada · CulitosTracker" }
+    "invite": {
+      "title": "Invitación · CulitosTracker"
+    },
+    "notFound": {
+      "title": "Página no encontrada · CulitosTracker"
+    }
   },
   "landing": {
     "intro": "Registra el ciclo de tu pareja con su consentimiento, entiende en qué fase está, guarda las fechas que importan y recibe sugerencias según cómo están los dos.",
@@ -296,10 +306,22 @@
     }
   },
   "phase": {
-    "MENSTRUATION": { "name": "Menstruación", "desc": "Días de sangrado, registrados o estimados." },
-    "FOLLICULAR": { "name": "Folicular", "desc": "Del final del periodo a la ovulación estimada." },
-    "OVULATION": { "name": "Ovulación", "desc": "Estimada unos 14 días antes del siguiente periodo." },
-    "LUTEAL": { "name": "Lútea", "desc": "De la ovulación estimada al siguiente periodo." }
+    "MENSTRUATION": {
+      "name": "Menstruación",
+      "desc": "Días de sangrado, registrados o estimados."
+    },
+    "FOLLICULAR": {
+      "name": "Folicular",
+      "desc": "Del final del periodo a la ovulación estimada."
+    },
+    "OVULATION": {
+      "name": "Ovulación",
+      "desc": "Estimada unos 14 días antes del siguiente periodo."
+    },
+    "LUTEAL": {
+      "name": "Lútea",
+      "desc": "De la ovulación estimada al siguiente periodo."
+    }
   },
   "period": {
     "log": "Registrar periodo",
@@ -338,7 +360,13 @@
     "sharedBadge": "compartido contigo",
     "empty": "Sin check-ins todavía.",
     "noPartners": "Necesitas registrar una pareja para hacer check-in.",
-    "levels": { "1": "Muy bajo", "2": "Bajo", "3": "Medio", "4": "Alto", "5": "Muy alto" }
+    "levels": {
+      "1": "Muy bajo",
+      "2": "Bajo",
+      "3": "Medio",
+      "4": "Alto",
+      "5": "Muy alto"
+    }
   },
   "mood": {
     "VERY_HAPPY": "Muy bien",
@@ -772,7 +800,10 @@
     "shareMyCheckInsHint": "{{owner}} verá tu ánimo diario, nunca tus notas.",
     "theyShare": "{{owner}} comparte contigo: {{scopes}}.",
     "theyShareNothing": "{{owner}} no comparte nada contigo por ahora.",
-    "scope": { "CYCLE": "calendario de ciclo", "CHECK_INS": "check-ins" }
+    "scope": {
+      "CYCLE": "calendario de ciclo",
+      "CHECK_INS": "check-ins"
+    }
   },
   "agenda": {
     "title": "Agenda",
@@ -787,7 +818,12 @@
     "cycleCalendars": "Calendarios de ciclo",
     "encounterWith": "Encuentro con {{name}}",
     "unknownPartner": "Registro eliminado",
-    "legend": { "plan": "Cita", "encounter": "Encuentro", "birthday": "Cumpleaños" },
+    "legend": {
+      "plan": "Cita",
+      "encounter": "Encuentro",
+      "birthday": "Cumpleaños",
+      "ovulation": "Ovulación estimada"
+    },
     "birthday": "Cumpleaños de {{name}}",
     "deletePlanConfirm": "¿Eliminar esta cita?",
     "deleteEncounterConfirm": "¿Eliminar este encuentro del registro?",
@@ -806,7 +842,8 @@
       "location": "Lugar",
       "notes": "Notas",
       "noPartners": "Registra primero una pareja para usar la agenda."
-    }
+    },
+    "ovulationOf": "Ovulación estimada de {{name}}"
   },
   "xp": {
     "sectionTitle": "Nivel y XP",
@@ -860,7 +897,8 @@
       "fertile": "Ventana fértil estimada",
       "ovulation": "Ovulación estimada",
       "event": "Evento de la relación",
-      "today": "Hoy"
+      "today": "Hoy",
+      "encounter": "Encuentro"
     },
     "dayDetail": {
       "cycleDay": "Día {{day}} del ciclo",
@@ -874,7 +912,11 @@
   "leaderboard": {
     "title": "Culitos Leaderboard",
     "subtitle": "Ranking opcional y anónimo de conquistas. Solo se muestra tu alias y tu número.",
-    "window": { "GLOBAL": "Histórico", "MONTH": "Este mes", "YEAR": "Este año" },
+    "window": {
+      "GLOBAL": "Histórico",
+      "MONTH": "Este mes",
+      "YEAR": "Este año"
+    },
     "score_one": "{{count}} pareja",
     "score_other": "{{count}} parejas",
     "you": "Tú",
@@ -1021,8 +1063,12 @@
       "rateLimit": "Has creado demasiadas parejas hoy. Inténtalo mañana.",
       "mustBeAdult": "La fecha de nacimiento debe ser de una persona adulta (18+)."
     },
-    "user": { "invalidTimezone": "Zona horaria no válida." },
-    "plan": { "proRequired": "Esta función es del plan Pro. Puedes activarlo en Ajustes." },
+    "user": {
+      "invalidTimezone": "Zona horaria no válida."
+    },
+    "plan": {
+      "proRequired": "Esta función es del plan Pro. Puedes activarlo en Ajustes."
+    },
     "billing": {
       "disabled": "Los pagos no están configurados en este despliegue.",
       "noSubscription": "Aún no tienes una suscripción.",
@@ -1053,10 +1099,18 @@
       "futureStart": "Un periodo no puede empezar en el futuro.",
       "endBeforeStart": "El fin del periodo no puede ser anterior a su inicio."
     },
-    "checkIn": { "futureDate": "No puedes hacer check-in de un día futuro." },
-    "observation": { "futureDate": "No puedes registrar una observación de un día futuro." },
-    "leaderboard": { "aliasRequired": "Elige un alias antes de activar el ranking." },
-    "cycle": { "invalidRange": "Rango de fechas no válido." },
+    "checkIn": {
+      "futureDate": "No puedes hacer check-in de un día futuro."
+    },
+    "observation": {
+      "futureDate": "No puedes registrar una observación de un día futuro."
+    },
+    "leaderboard": {
+      "aliasRequired": "Elige un alias antes de activar el ranking."
+    },
+    "cycle": {
+      "invalidRange": "Rango de fechas no válido."
+    },
     "avatar": {
       "invalidImage": "El archivo no es una imagen JPG o PNG válida.",
       "tooLarge": "La imagen supera los 2 MB."

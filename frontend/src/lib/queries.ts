@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, apiBlob, tokenStore } from './api'
 import type {
   AccessScope,
@@ -88,6 +88,17 @@ export function usePredictions(partnerId: string | undefined, from: string, to: 
     queryFn: () =>
       api<Predictions>(`/api/partners/${partnerId}/cycle/predictions?from=${from}&to=${to}`),
     enabled: !!partnerId,
+  })
+}
+
+/** Cycle predictions for several partners at once (the agenda's month view). */
+export function usePartnersPredictions(partnerIds: string[], from: string, to: string) {
+  return useQueries({
+    queries: partnerIds.map((partnerId) => ({
+      queryKey: ['predictions', partnerId, from, to],
+      queryFn: () =>
+        api<Predictions>(`/api/partners/${partnerId}/cycle/predictions?from=${from}&to=${to}`),
+    })),
   })
 }
 

@@ -2,11 +2,12 @@ import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, ChevronLeft, ChevronRight, Droplet, Heart } from 'lucide-react'
-import { useMilestones, usePartner, usePredictions } from '../../lib/queries'
+import { useEncounters, useMilestones, usePartner, usePredictions } from '../../lib/queries'
 import { PageLoader } from '../../components/ui/Spinner'
 import { Tag } from '../../components/ui/Tag'
 import { Button } from '../../components/ui/Button'
 import { LogPeriodSheet } from './LogPeriodSheet'
+import { BombMarker, OvulationMarker } from './DayMarkers'
 import {
   formatDate,
   formatMonthYear,
@@ -15,7 +16,7 @@ import {
   todayISO,
   weekdayInitials,
 } from '../../lib/dates'
-import type { CycleDay, Milestone } from '../../lib/types'
+import type { CycleDay, Encounter, Milestone } from '../../lib/types'
 
 interface DayEvent {
   kind: 'milestone' | 'anniversary'
@@ -38,6 +39,15 @@ export function PartnerCalendarPage() {
   const monthStart = toISODate(month)
   const monthEnd = toISODate(new Date(month.getFullYear(), month.getMonth() + 1, 0))
   const { data: predictions } = usePredictions(id, monthStart, monthEnd)
+  const { data: encounters } = useEncounters(monthStart, monthEnd)
+
+  const encountersByDate = useMemo(() => {
+    const map = new Map<string, Encounter[]>()
+    encounters
+      ?.filter((e) => e.partnerId === id)
+      .forEach((e) => map.set(e.date, [...(map.get(e.date) ?? []), e]))
+    return map
+  }, [encounters, id])
 
   const dayInfo = useMemo(() => {
     const map = new Map<string, CycleDay>()
@@ -88,6 +98,7 @@ export function PartnerCalendarPage() {
 
   const selectedInfo = dayInfo.get(selected)
   const selectedEvents = eventsByDate.get(selected) ?? []
+  const selectedEncounters = encountersByDate.get(selected) ?? []
 
   const dayClasses = (iso: string): string => {
     const info = dayInfo.get(iso)
@@ -185,12 +196,17 @@ export function PartnerCalendarPage() {
                   <span className={iso === today ? 'text-peach' : ''}>
                     {parseISODate(iso).getDate()}
                   </span>
-                  {(eventsByDate.get(iso)?.length ?? 0) > 0 && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute bottom-1 h-1 w-1 rounded-full bg-plum"
-                    />
+                  {dayInfo.get(iso)?.ovulation && (
+                    <span className="absolute -right-0.5 -top-1">
+                      <OvulationMarker />
+                    </span>
                   )}
+                  <span aria-hidden="true" className="absolute bottom-0.5 flex items-center gap-0.5">
+                    {(eventsByDate.get(iso)?.length ?? 0) > 0 && (
+                      <span className="h-1 w-1 rounded-full bg-plum" />
+                    )}
+                    {encountersByDate.has(iso) && <BombMarker />}
+                  </span>
                 </button>
               ),
             )}
@@ -211,8 +227,12 @@ export function PartnerCalendarPage() {
               {t('calendar.legend.fertile')}
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-sm ring-1 ring-inset ring-teal" />
+              <OvulationMarker />
               {t('calendar.legend.ovulation')}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <BombMarker />
+              {t('calendar.legend.encounter')}
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-plum" />
@@ -249,6 +269,12 @@ export function PartnerCalendarPage() {
               {selectedInfo.fertile && (
                 <p className="text-teal">{t('calendar.legend.fertile')}</p>
               )}
+              {selectedInfo.ovulation && (
+                <p className="flex items-center gap-1.5 text-teal">
+                  <OvulationMarker size="md" />
+                  {t('calendar.legend.ovulation')}
+                </p>
+              )}
             </div>
           ) : (
             <p className="mt-2 text-[13px] text-ink-3">{t('dashboard.noCycleData')}</p>
@@ -258,7 +284,7 @@ export function PartnerCalendarPage() {
             <h3 className="text-[12px] font-medium uppercase tracking-wide text-ink-3">
               {t('calendar.dayDetail.events')}
             </h3>
-            {selectedEvents.length > 0 ? (
+            {selectedEvents.length > 0 && (
               <ul className="mt-1.5 space-y-1">
                 {selectedEvents.map((event, i) => (
                   <li key={i} className="flex items-center gap-2 text-[13px] text-ink">
@@ -267,7 +293,23 @@ export function PartnerCalendarPage() {
                   </li>
                 ))}
               </ul>
-            ) : (
+            )}
+            {selectedEncounters.length > 0 && (
+              <ul className="mt-1.5 space-y-1">
+                {selectedEncounters.map((encounter) => (
+                  <li key={encounter.id} className="flex items-start gap-2 text-[13px] text-ink">
+                    <BombMarker size="md" />
+                    <span>
+                      {t('calendar.legend.encounter')}
+                      {encounter.notes && (
+                        <span className="block text-[12px] text-ink-3">{encounter.notes}</span>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {selectedEvents.length === 0 && selectedEncounters.length === 0 && (
               <p className="mt-1.5 text-[13px] text-ink-3">{t('calendar.dayDetail.noEvents')}</p>
             )}
           </div>
